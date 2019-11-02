@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SteeringFlee : MonoBehaviour {
+public class SteeringFlee : SteeringPriority {
 
 	Move move;
 

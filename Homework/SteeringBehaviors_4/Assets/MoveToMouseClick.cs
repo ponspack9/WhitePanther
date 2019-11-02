@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class MoveToMouseClick : MonoBehaviour {
+public class MoveToMouseClick : SteeringPriority {
 
 	public LayerMask mask;
 	public int mouse_button = 0;
