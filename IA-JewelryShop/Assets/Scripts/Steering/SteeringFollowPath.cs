@@ -7,7 +7,7 @@ public class SteeringFollowPath : SteeringPriority
 {
 
     Move move;
-    SteeringSeek seek;
+    SteeringArrive seek;
 
     public float ratio_increment = 0.1f;
     public float min_distance = 1.0f;
@@ -25,7 +25,7 @@ public class SteeringFollowPath : SteeringPriority
     void Start()
     {
         move = GetComponent<Move>();
-        seek = GetComponent<SteeringSeek>();
+        seek = GetComponent<SteeringArrive>();
 
         //path = GetComponent<BansheeGz.BGSpline.Components.BGCcMath>();
     }
@@ -35,7 +35,13 @@ public class SteeringFollowPath : SteeringPriority
     {
         ratio += ratio_increment * Time.deltaTime;
 
-        move.SetMovementVelocity(math.CalcPositionByDistanceRatio(ratio) - move.aim.transform.position);
+        int section = math.CalcSectionIndexByDistanceRatio(ratio);
+
+        seek.Steer(curve.Points[section].PositionWorld);
+
+        if (section == curve.PointsCount - 1)
+            curve.Reverse();
+        //move.SetMovementVelocity(math.CalcPositionByDistanceRatio(ratio) - move.aim.transform.position);
 
         // TODO 2: Check if the tank is close enough to the desired point
         // If so, create a new point further ahead in the path

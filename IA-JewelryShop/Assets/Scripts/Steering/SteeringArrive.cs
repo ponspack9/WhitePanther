@@ -20,7 +20,7 @@ public class SteeringArrive : SteeringPriority {
 		Steer(move.target.transform.position);
 	}
 
-	public void Steer(Vector3 target)
+	public bool Steer(Vector3 target)
 	{
 		if(!move)
 			move = GetComponent<Move>();
@@ -32,7 +32,7 @@ public class SteeringArrive : SteeringPriority {
 		if(diff.magnitude < min_distance)
         {
             move.SetMovementVelocity(Vector3.zero);
-            return;
+            return true;
         }
 
         // Decide which would be our ideal velocity
@@ -55,6 +55,7 @@ public class SteeringArrive : SteeringPriority {
 		}
 
 		move.AccelerateMovement(acceleration);
+        return false;
 	}
 
 	void OnDrawGizmosSelected() 
