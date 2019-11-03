@@ -1413,6 +1413,8 @@ MonoBehaviour:
   priority: 0
   ratio_increment: 0.1
   min_distance: 1
+  curve: {fileID: 1079148647}
+  math: {fileID: 1079148646}
 --- !u!114 &653852218
 MonoBehaviour:
   m_ObjectHideFlags: 0
