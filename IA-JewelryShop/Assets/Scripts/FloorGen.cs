@@ -11,7 +11,7 @@ public class FloorGen : MonoBehaviour
     public int num_tiles_x = 5;
     public int num_tiles_y = 5;
 
-    public const float offset = 5.0f;
+    public float offset = 5.0f;
     // Start is called before the first frame update
     void Start()
     {
