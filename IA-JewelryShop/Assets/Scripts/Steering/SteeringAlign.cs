@@ -3,8 +3,8 @@ using System.Collections;
 
 public class SteeringAlign : SteeringPriority {
 
-	public float min_angle = 0.5f;
-	public float slow_angle = 5f;
+	private float min_angle = 0.5f;
+	private float slow_angle = 5f;
 
 	Move move;
 

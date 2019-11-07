@@ -39,8 +39,6 @@ public class SteeringFollowPath : SteeringPriority
 
         seek.Steer(curve.Points[section].PositionWorld);
 
-        if (section == curve.PointsCount - 1)
-            curve.Reverse();
         //move.SetMovementVelocity(math.CalcPositionByDistanceRatio(ratio) - move.aim.transform.position);
 
         // TODO 2: Check if the tank is close enough to the desired point
