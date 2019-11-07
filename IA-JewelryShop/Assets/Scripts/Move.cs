@@ -57,9 +57,7 @@ public class Move : SteeringPriority {
 
         //  if (current_velocity.x != 0 || current_velocity.y != 0)
         //  {
-        //float angle = Mathf.Atan2(current_velocity.x, current_velocity.z);
-        //      aim.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(Mathf.Rad2Deg * angle, Vector3.up), Time.deltaTime * max_rot_speed);
-        //      //aim.transform.eulerAngles = new Vector3(0, Mathf.LerpAngle(transform.eulerAngles.y, angle * Mathf.Rad2Deg, Time.deltaTime * max_rot_speed), 0);
+        //   //      //aim.transform.eulerAngles = new Vector3(0, Mathf.LerpAngle(transform.eulerAngles.y, angle * Mathf.Rad2Deg, Time.deltaTime * max_rot_speed), 0);
 
         //  }
         transform.rotation *= Quaternion.AngleAxis(current_rotation_speed * Time.deltaTime, Vector3.up);

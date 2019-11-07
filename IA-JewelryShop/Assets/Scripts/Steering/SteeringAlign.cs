@@ -5,7 +5,6 @@ public class SteeringAlign : SteeringPriority {
 
 	public float min_angle = 0.5f;
 	public float slow_angle = 5f;
-	public float time_to_accel = 0.1f;
 
 	Move move;
 
