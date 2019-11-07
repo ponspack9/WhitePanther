@@ -7,6 +7,8 @@ public class SteeringArrive : SteeringPriority {
 	public float slow_distance = 5.0f;
 	public float time_to_target = 0.1f;
 
+    private RuntimeAnimatorController animator;
+
 	Move move;
 
 	// Use this for initialization
@@ -17,7 +19,7 @@ public class SteeringArrive : SteeringPriority {
 	// Update is called once per frame
 	void Update () 
 	{
-		Steer(move.target.transform.position);
+        Steer(move.target.transform.position);
 	}
 
 	public bool Steer(Vector3 target)
@@ -26,7 +28,7 @@ public class SteeringArrive : SteeringPriority {
 			move = GetComponent<Move>();
 
 		// Velocity we are trying to match
-		float ideal_speed = 0.0f;
+		float ideal_speed = move.max_mov_speed;
 		Vector3 diff = target - transform.position;
 
 		if(diff.magnitude < min_distance)
@@ -36,9 +38,7 @@ public class SteeringArrive : SteeringPriority {
         }
 
         // Decide which would be our ideal velocity
-        if (diff.magnitude > slow_distance)
-			ideal_speed = move.max_mov_speed;
-		else
+        if (diff.magnitude < slow_distance)
             ideal_speed = move.max_mov_speed * (diff.magnitude / slow_distance);
 
 		// Create a vector that describes the ideal velocity
@@ -54,7 +54,9 @@ public class SteeringArrive : SteeringPriority {
 			acceleration = acceleration.normalized * move.max_mov_acceleration;
 		}
 
-		move.AccelerateMovement(acceleration);
+       // GetComponent<Animator>().speed = acceleration.normalized;
+
+        move.AccelerateMovement(acceleration);
         return false;
 	}
 

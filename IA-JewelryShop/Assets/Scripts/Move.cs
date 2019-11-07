@@ -12,9 +12,15 @@ public class Move : SteeringPriority {
 	public float max_rot_speed = 10.0f; // in degrees / second
 	public float max_rot_acceleration = 0.1f; // in degrees
 
+
 	[Header("-------- Read Only --------")]
 	public Vector3 current_velocity = Vector3.zero;
 	public float current_rotation_speed = 0.0f; // degrees
+
+    public bool isMoving()
+    {
+        return current_velocity.x != 0 || current_velocity.z != 0;
+    }
 
 	// Methods for behaviours to set / add velocities
 	public void SetMovementVelocity (Vector3 velocity) 
@@ -49,20 +55,32 @@ public class Move : SteeringPriority {
         // cap rotation
         current_rotation_speed = Mathf.Clamp(current_rotation_speed, -max_rot_speed, max_rot_speed);
 
-		// rotate the arrow
-		float angle = Mathf.Atan2(current_velocity.x, current_velocity.z);
-		//aim.transform.rotation = Quaternion.AngleAxis(Mathf.Rad2Deg * angle, Vector3.up);
-        aim.transform.eulerAngles = new Vector3(0, Mathf.LerpAngle(transform.eulerAngles.y, angle * Mathf.Rad2Deg, Time.deltaTime * max_rot_speed), 0);
-        // strech it
-       // arrow.value = current_velocity.magnitude * 4;
+        //  if (current_velocity.x != 0 || current_velocity.y != 0)
+        //  {
+        //float angle = Mathf.Atan2(current_velocity.x, current_velocity.z);
+        //      aim.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(Mathf.Rad2Deg * angle, Vector3.up), Time.deltaTime * max_rot_speed);
+        //      //aim.transform.eulerAngles = new Vector3(0, Mathf.LerpAngle(transform.eulerAngles.y, angle * Mathf.Rad2Deg, Time.deltaTime * max_rot_speed), 0);
 
-		// final rotate
-		transform.rotation *= Quaternion.AngleAxis(current_rotation_speed * Time.deltaTime, Vector3.up);
+        //  }
+        transform.rotation *= Quaternion.AngleAxis(current_rotation_speed * Time.deltaTime, Vector3.up);
 
-		// finally move
-		transform.position += current_velocity * Time.deltaTime;
+
+        // finally move
+        transform.position += current_velocity * Time.deltaTime;
 	}
 }
+
+// Rotation----------------
+//aim.transform.rotation = Quaternion.AngleAxis(Mathf.Rad2Deg * angle, Vector3.up);
+
+//aim.transform.eulerAngles = new Vector3(0, Mathf.LerpAngle(transform.eulerAngles.y, angle * Mathf.Rad2Deg, Time.deltaTime * max_rot_speed), 0);
+
+// strech it
+// arrow.value = current_velocity.magnitude * 4;
+
+// final rotate
+//transform.rotation *= Quaternion.AngleAxis(current_rotation_speed * Time.deltaTime, Vector3.up);
+
 //using UnityEngine;
 //using UnityEngine.UI;
 //using System.Collections;
