@@ -3,29 +3,36 @@ using System.Collections;
 using BansheeGz.BGSpline.Components;
 using BansheeGz.BGSpline.Curve;
 
+
+[RequireComponent(typeof(BGCcMath))]
 public class SteeringFollowPath : SteeringPriority
 {
 
     Move move;
     SteeringArrive seek;
 
-    public float ratio_increment = 0.1f;
-    public float min_distance = 1.0f;
-    float ratio = 0.0f;
+    //public float ratio_increment = 0.1f;
+    //public float min_distance = 1.0f;
+    //float ratio = 0.0f;
 
-    private float curveLength = 0.0f;
+    //private float curveLength = 0.0f;
 
-    private Vector3 closest_point = Vector3.zero;
+    //private Vector3 closest_point = Vector3.zero;
+
+
+    public float distance = 0.0f;
+    public float speed = 5.0f;
 
     public BGCurve curve;
     public BGCcMath math;
 
-    private float speed = 0;
     // Use this for initialization
     void Start()
     {
         move = GetComponent<Move>();
         seek = GetComponent<SteeringArrive>();
+
+        //math = curve.GetComponent<BGCcMath>();
 
         //path = GetComponent<BansheeGz.BGSpline.Components.BGCcMath>();
     }
@@ -33,11 +40,23 @@ public class SteeringFollowPath : SteeringPriority
     // Update is called once per frame
     void Update()
     {
-        ratio += ratio_increment * Time.deltaTime;
 
-        int section = math.CalcSectionIndexByDistanceRatio(ratio);
+        distance += speed * Time.deltaTime;
 
-        seek.Steer(curve.Points[section].PositionWorld);
+        Vector3 tangent;
+
+        //move.target.transform.position = math.CalcPositionAndTangentByDistance(distance, out tangent);
+
+        move.target.transform.SetPositionAndRotation(
+            math.CalcPositionAndTangentByDistance(distance, out tangent),
+            Quaternion.LookRotation(tangent)
+            );
+
+        //ratio += ratio_increment * Time.deltaTime;
+
+        //int section = math.CalcSectionIndexByDistanceRatio(ratio);
+
+        //seek.Steer(curve.Points[section].PositionWorld);
 
         //move.SetMovementVelocity(math.CalcPositionByDistanceRatio(ratio) - move.aim.transform.position);
 

@@ -5,8 +5,10 @@ using System.Collections;
 public class Move : SteeringPriority {
 
 	public GameObject target;
-	public GameObject aim;
+	public GameObject self;
+
 	public Slider arrow;
+
 	public float max_mov_speed = 5.0f;
 	public float max_mov_acceleration = 0.1f;
 	public float max_rot_speed = 10.0f; // in degrees / second
@@ -17,31 +19,7 @@ public class Move : SteeringPriority {
 	public Vector3 current_velocity = Vector3.zero;
 	public float current_rotation_speed = 0.0f; // degrees
 
-    public bool isMoving()
-    {
-        return current_velocity.x != 0 || current_velocity.z != 0;
-    }
-
-	// Methods for behaviours to set / add velocities
-	public void SetMovementVelocity (Vector3 velocity) 
-	{
-        current_velocity = velocity;
-	}
-
-	public void AccelerateMovement (Vector3 acceleration) 
-	{
-        current_velocity += acceleration;
-	}
-
-	public void SetRotationVelocity (float rotation_speed) 
-	{
-        current_rotation_speed = rotation_speed;
-	}
-
-	public void AccelerateRotation (float rotation_acceleration) 
-	{
-        current_rotation_speed += rotation_acceleration;
-	}
+    
 	
 	// Update is called once per frame
 	void Update () 
@@ -66,6 +44,32 @@ public class Move : SteeringPriority {
         // finally move
         transform.position += current_velocity * Time.deltaTime;
 	}
+
+    public bool isMoving()
+    {
+        return current_velocity.x != 0 || current_velocity.z != 0;
+    }
+
+    // Methods for behaviours to set / add velocities
+    public void SetMovementVelocity(Vector3 velocity)
+    {
+        current_velocity = velocity;
+    }
+
+    public void AccelerateMovement(Vector3 acceleration)
+    {
+        current_velocity += acceleration;
+    }
+
+    public void SetRotationVelocity(float rotation_speed)
+    {
+        current_rotation_speed = rotation_speed;
+    }
+
+    public void AccelerateRotation(float rotation_acceleration)
+    {
+        current_rotation_speed += rotation_acceleration;
+    }
 }
 
 // Rotation----------------
