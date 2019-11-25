@@ -28,6 +28,7 @@ public class Move : SteeringPriority {
 		if(current_velocity.magnitude > max_mov_speed)
 		{
             current_velocity = current_velocity.normalized * max_mov_speed;
+            current_velocity.y = 0.0f;
 		}
 
         // cap rotation

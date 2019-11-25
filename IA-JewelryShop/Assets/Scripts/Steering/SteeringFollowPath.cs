@@ -21,16 +21,20 @@ public class SteeringFollowPath : SteeringPriority
 
 
     public float distance = 0.0f;
-    public float speed = 5.0f;
+    public float distance_to_reach = 0.0f;
 
     public BGCurve curve;
     public BGCcMath math;
-
+    private Vector3 tangent;
     // Use this for initialization
     void Start()
     {
         move = GetComponent<Move>();
         seek = GetComponent<SteeringArrive>();
+
+        distance_to_reach = math.GetDistance();
+
+        //move.target.transform.position = curve[1].PositionWorld;
 
         //math = curve.GetComponent<BGCcMath>();
 
@@ -41,9 +45,11 @@ public class SteeringFollowPath : SteeringPriority
     void Update()
     {
 
-        distance += speed * Time.deltaTime;
+        distance += move.max_mov_speed * Time.deltaTime;
 
-        Vector3 tangent;
+        if (distance > distance_to_reach) distance = 0.0f;
+
+        
 
         //move.target.transform.position = math.CalcPositionAndTangentByDistance(distance, out tangent);
 
