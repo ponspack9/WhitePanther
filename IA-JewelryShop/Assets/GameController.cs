@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    [Header("Time --------------------------------------------------------")]
     public int day = 0;
     public int hour = 0;
     public int minute = 0;
 
+    [Header("Fame --------------------------------------------------------")]
+    public float fame = 1.0f;
     public float clients_rate = 0.5f;
 
-    [Header("-------- Read Only --------")]
+    [Header("Shop --------------------------------------------------------")]
     public int number_shopkeepers = 1;
     public int number_guards = 1;
     public int number_clients = 0;
