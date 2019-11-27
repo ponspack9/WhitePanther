@@ -11,7 +11,7 @@ namespace BansheeGz.BGSpline.Components
         CcDescriptor(
             Description = "Change cursor position linearly",
             Name = "Cursor Change Linear",
-            Icon = "BGCcCursorChangeLinear123")
+            Image = "Assets/BansheeGz/BGCurve/Icons/Components/BGCcCursorChangeLinear123.png")
     ]
     [AddComponentMenu("BansheeGz/BGCurve/Components/BGCcCursorChangeLinear")]
 

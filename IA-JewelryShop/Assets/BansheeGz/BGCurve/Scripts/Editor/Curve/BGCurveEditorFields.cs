@@ -13,6 +13,9 @@ namespace BansheeGz.BGSpline.Editor
         private const int LabelWidth = 30;
 
         // ====================================== Fields
+        private readonly Texture2D deleteIcon;
+        private readonly Texture2D addIcon;
+
 
         private BGTableView systemUi;
         private BGTableView customUi;
@@ -23,14 +26,13 @@ namespace BansheeGz.BGSpline.Editor
         private BGCurvePointField.TypeEnum newFieldType;
         private readonly BGCurveEditorPointsSelection editorSelection;
 
-        public override Texture2D Header2D
-        {
-            get { return BGBinaryResources.BGFields123; }
-        }
-
-        public BGCurveEditorFields(BGCurveEditor editor, SerializedObject curveObject, BGCurveEditorPointsSelection editorSelection) : base(editor, curveObject)
+        public BGCurveEditorFields(BGCurveEditor editor, SerializedObject curveObject, BGCurveEditorPointsSelection editorSelection)
+            : base(editor, curveObject, BGEditorUtility.LoadTexture2D(BGEditorUtility.Image.BGFields123))
         {
             this.editorSelection = editorSelection;
+
+            addIcon = BGEditorUtility.LoadTexture2D(BGEditorUtility.Image.BGAdd123);
+            deleteIcon = BGEditorUtility.LoadTexture2D(BGEditorUtility.Image.BGDelete123);
         }
 
 
@@ -51,7 +53,7 @@ namespace BansheeGz.BGSpline.Editor
                 customUi.NextColumn(rect => BGEditorUtility.PopupField(rect, newFieldType, @enum => newFieldType = (BGCurvePointField.TypeEnum)@enum), 50);
                 customUi.NextColumn(rect =>
                 {
-                    if (!GUI.Button(rect, BGBinaryResources.BGAdd123)) return;
+                    if (!GUI.Button(rect, addIcon)) return;
 
                     if (NameHasError(Curve, newFieldName)) return;
 
@@ -110,7 +112,7 @@ namespace BansheeGz.BGSpline.Editor
             {
                 customFields = new PointField[fields.Length];
 
-                for (var i = 0; i < fields.Length; i++) customFields[i] = new PointField(fields[i], i, BGBinaryResources.BGDelete123);
+                for (var i = 0; i < fields.Length; i++) customFields[i] = new PointField(fields[i], i, deleteIcon);
             }
 
 
@@ -746,7 +748,7 @@ namespace BansheeGz.BGSpline.Editor
             }
 
             public SystemFieldPosition(BGCurveSettings settings)
-                : base(settings, new GUIContent("#1. Positions", "Point's positions"))
+                : base(settings, new GUIContent("Positions", "Point's positions"))
             {
             }
 
@@ -821,7 +823,7 @@ namespace BansheeGz.BGSpline.Editor
 
 
             public SystemFieldControls(BGCurveSettings settings)
-                : base(settings, new GUIContent("#2. Controls", "Point's Bezier control positions"))
+                : base(settings, new GUIContent("Controls", "Point's Bezier control positions"))
             {
             }
 
@@ -844,7 +846,7 @@ namespace BansheeGz.BGSpline.Editor
             }
 
             public SystemFieldControlsType(BGCurveSettings settings)
-                : base(settings, new GUIContent("#3. Control Type", "Point's control type (Absent, Bezier)"))
+                : base(settings, new GUIContent("Control Type", "Point's control type (Absent, Bezier)"))
             {
             }
         }
@@ -859,7 +861,7 @@ namespace BansheeGz.BGSpline.Editor
             }
 
             public SystemFieldTransform(BGCurveSettings settings)
-                : base(settings, new GUIContent("#4. Transform", "Transform to use as point's position"))
+                : base(settings, new GUIContent("Transform", "Transform to use as point's position"))
             {
             }
         }

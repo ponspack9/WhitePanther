@@ -125,11 +125,5 @@ namespace BansheeGz.BGSpline.Curve
         /// <param name="pointIndex">Point's index</param>
         /// <returns>Spline's total distance</returns>
         float GetDistance(int pointIndex = -1);
-        
-        //===============================================================================================
-        //                                                  Misc
-        //===============================================================================================
-        /// <summary>Recalculate internal caches. this is a costly operation </summary>
-        void Recalculate(bool force = false);
     }
 }

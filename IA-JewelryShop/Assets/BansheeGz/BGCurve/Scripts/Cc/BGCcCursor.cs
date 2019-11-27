@@ -10,7 +10,7 @@ namespace BansheeGz.BGSpline.Components
         CcDescriptor(
             Description = "Identify location on the curve by distance.",
             Name = "Cursor",
-            Icon = "BGCcCursor123")
+            Image = "Assets/BansheeGz/BGCurve/Icons/Components/BGCcCursor123.png")
     ]
     [AddComponentMenu("BansheeGz/BGCurve/Components/BGCcCursor")]
     public class BGCcCursor : BGCcWithMath
@@ -36,11 +36,7 @@ namespace BansheeGz.BGSpline.Components
         /// <summary>Normalized distance from the start [Range(0,1)]</summary>
         public float DistanceRatio
         {
-            get
-            {
-                var totalDistance = Math.GetDistance();
-                return totalDistance == 0 ? 0 : Mathf.Clamp01(distance / totalDistance);
-            }
+            get { return Mathf.Clamp01(distance / Math.GetDistance()); }
             set
             {
                 distance = Math.GetDistance() * Mathf.Clamp01(value);

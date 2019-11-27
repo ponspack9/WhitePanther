@@ -13,7 +13,7 @@ namespace BansheeGz.BGSpline.Components
         CcDescriptor(
             Description = "Math solver for the curve (position, tangent, total distance, position by closest point). With this component you can use math functions.",
             Name = "Math",
-            Icon = "BGCcMath123")
+            Image = "Assets/BansheeGz/BGCurve/Icons/Components/BGCcMath123.png")
     ]
     [AddComponentMenu("BansheeGz/BGCurve/Components/BGCcMath")]
     public class BGCcMath : BGCc, BGCurveMathI

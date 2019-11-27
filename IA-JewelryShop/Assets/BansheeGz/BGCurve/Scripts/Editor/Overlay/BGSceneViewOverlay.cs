@@ -8,36 +8,15 @@ namespace BansheeGz.BGSpline.Editor
     public sealed class BGSceneViewOverlay
     {
         private static readonly string HeaderColor = BGEditorUtility.ToHex(new Color32(255, 255, 255, 255));
-
 //        private static readonly string ErrorColor = ToHex(new Color32(122, 0, 0, 255));
         private static readonly string ErrorColor = BGEditorUtility.ToHex(new Color32(250, 207, 207, 255));
-
 //        private static readonly string OkColor = ToHex(new Color32(0, 122, 0, 255));
         private static readonly string OkColor = BGEditorUtility.ToHex(new Color32(207, 250, 209, 255));
-
 //        private static readonly string ActionColor = ToHex(new Color32(46, 143, 168, 255));
         private static readonly string ActionColor = BGEditorUtility.ToHex(Color.white);
 
         internal readonly BGCurveEditorPoints Editor;
-
-        private GUIStyle Style
-        {
-            get
-            {
-                return new GUIStyle("Label")
-                {
-                    padding = new RectOffset(4, 4, 4, 4),
-                    border = new RectOffset(4, 4, 4, 4),
-                    fontStyle = FontStyle.Bold,
-                    richText = true,
-                    normal = new GUIStyleState
-                    {
-                        textColor = Color.white,
-                        background = BGBinaryResources.BGBoxWithBorder123
-                    }
-                };
-            }
-        }
+        private GUIStyle style;
 
         private readonly SceneAction[] actions;
 
@@ -75,7 +54,7 @@ namespace BansheeGz.BGSpline.Editor
                                         + BGEditorUtility.ColorIt("] ", HeaderColor)
                                         + (error ? ToError("Error") : ToOk("Ok"))
                                         + "</b></size>\r\n"
-                                        + message, Style);
+                                        + message, style);
             });
         }
 
@@ -92,7 +71,21 @@ namespace BansheeGz.BGSpline.Editor
 
             if (currentEvent.shift && !currentEvent.control) return;
 
-            if (!BGEditorUtility.IsMouseInsideSceneView()) return;
+            if(!BGEditorUtility.IsMouseInsideSceneView()) return;
+
+            BGEditorUtility.Assign(ref style, () => new GUIStyle("Label")
+            {
+                padding = new RectOffset(4, 4, 4, 4),
+                border = new RectOffset(4, 4, 4, 4),
+                fontStyle = FontStyle.Bold,
+                richText = true,
+                normal = new GUIStyleState
+                {
+                    textColor = Color.white,
+                    background = BGEditorUtility.LoadTexture2D(BGEditorUtility.Image.BGBoxWithBorder123)
+                }
+            });
+
 
             foreach (var action in actions)
             {
@@ -138,7 +131,7 @@ namespace BansheeGz.BGSpline.Editor
         {
             pointIndicatorTransition.Tick();
 
-            var shift = pointIndicatorTransition.Value * .5f;
+            var shift = pointIndicatorTransition.Value*.5f;
 
             BGEditorUtility.HandlesGui(() =>
             {

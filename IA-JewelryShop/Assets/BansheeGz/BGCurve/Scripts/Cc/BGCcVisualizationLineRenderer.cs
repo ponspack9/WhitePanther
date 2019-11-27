@@ -14,7 +14,7 @@ namespace BansheeGz.BGSpline.Components
         CcDescriptor(
             Description = "Visualize curve with standard LineRenderer Unity component.",
             Name = "Cc Line Renderer",
-            Icon = "BGCcVisualizationLineRenderer123")
+            Image = "Assets/BansheeGz/BGCurve/Icons/Components/BGCcVisualizationLineRenderer123.png")
     ]
     [AddComponentMenu("BansheeGz/BGCurve/Components/BGCcLineRenderer")]
     public class BGCcVisualizationLineRenderer : BGCcSplitterPolyline

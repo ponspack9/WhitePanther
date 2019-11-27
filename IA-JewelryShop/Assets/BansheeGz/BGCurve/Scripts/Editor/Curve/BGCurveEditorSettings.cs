@@ -15,12 +15,9 @@ namespace BansheeGz.BGSpline.Editor
         private readonly BGEditorUtility.BoolAnimatedProperty showCurveProp;
         private SerializedProperty settings;
 
-        public override Texture2D Header2D
-        {
-            get { return BGBinaryResources.BGSettings123; }
-        }
 
-        public BGCurveEditorSettings(BGCurveEditor editor, SerializedObject serializedObject) : base(editor, serializedObject)
+        public BGCurveEditorSettings(BGCurveEditor editor, SerializedObject serializedObject)
+            : base(editor, serializedObject, BGEditorUtility.LoadTexture2D(BGEditorUtility.Image.BGSettings123))
         {
             //anim props
             showCurveProp = new BGEditorUtility.BoolAnimatedProperty(editor, serializedObject.FindProperty("settings"), "showCurve");

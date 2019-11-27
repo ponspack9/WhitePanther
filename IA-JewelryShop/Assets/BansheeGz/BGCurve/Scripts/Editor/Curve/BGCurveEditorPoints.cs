@@ -17,6 +17,9 @@ namespace BansheeGz.BGSpline.Editor
         private static readonly GUIContent[] YZLabels = {new GUIContent("Y"), new GUIContent("Z")};
 
         // ====================================== Fields
+        private readonly Texture2D convertAll2D;
+        private readonly Texture2D addPointIcon;
+
         private readonly SerializedProperty closedProperty;
         private readonly SerializedProperty pointsModeProperty;
         private readonly SerializedProperty controlTypeProperty;
@@ -42,15 +45,16 @@ namespace BansheeGz.BGSpline.Editor
 
         private GUIContent syncContent;
 
-        public override Texture2D Header2D
-        {
-            get { return BGBinaryResources.BGPoints123; }
-        }
 
-        public BGCurveEditorPoints(BGCurveEditor editor, SerializedObject serializedObject, BGCurveEditorPointsSelection editorSelection) : base(editor, serializedObject)
+        public BGCurveEditorPoints(BGCurveEditor editor, SerializedObject serializedObject, BGCurveEditorPointsSelection editorSelection)
+            : base(editor, serializedObject, BGEditorUtility.LoadTexture2D(BGEditorUtility.Image.BGPoints123))
         {
             this.serializedObject = serializedObject;
             this.editorSelection = editorSelection;
+
+            //textures
+            convertAll2D = BGEditorUtility.LoadTexture2D(BGEditorUtility.Image.BGConvertAll123);
+            addPointIcon = BGEditorUtility.LoadTexture2D(BGEditorUtility.Image.BGAdd123);
 
             //point
             editorPoint = new BGCurveEditorPoint(() => Editor.Math, editorSelection);
@@ -143,7 +147,7 @@ namespace BansheeGz.BGSpline.Editor
                 {
                     EditorGUILayout.LabelField("No points!");
 
-                    if (BGEditorUtility.ButtonWithIcon(BGBinaryResources.BGAdd123, "Add new point at (0,0,0) local coordinates"))
+                    if (BGEditorUtility.ButtonWithIcon(addPointIcon, "Add new point at (0,0,0) local coordinates"))
                         BGCurveEditor.AddPoint(Curve, new BGCurvePoint(Curve, Vector3.zero, settings.ControlType, Vector3.right, Vector3.left), 0);
                 });
             }
@@ -262,7 +266,7 @@ namespace BansheeGz.BGSpline.Editor
                     {
                         EditorGUILayout.PropertyField(controlTypeProperty);
 
-                        if (!BGEditorUtility.ButtonWithIcon(BGBinaryResources.BGConvertAll123, "Convert control types for all existing points ", 44)) return;
+                        if (!BGEditorUtility.ButtonWithIcon(convertAll2D, "Convert control types for all existing points ", 44)) return;
 
                         var settings = Settings;
 

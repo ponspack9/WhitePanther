@@ -16,55 +16,11 @@ namespace BansheeGz.BGSpline.Editor
 
         private static BGCcTreeView tree;
 
-        private static GUIStyle NameStyle
-        {
-            get
-            {
-                return new GUIStyle("Label")
-                {
-                    alignment = TextAnchor.MiddleCenter,
-                    clipping = TextClipping.Clip,
-                    wordWrap = true,
-                    fontStyle = FontStyle.Bold,
-                    normal =
-                    {
-                        textColor = Color.black,
-                        background = BGBinaryResources.BGBoxWithBorder123
-                    }
-                };
-            }
-        }
-
-        private static GUIStyle DisabledStyle
-        {
-            get
-            {
-                return new GUIStyle("Label")
-                {
-                    alignment = TextAnchor.MiddleCenter,
-                    normal =
-                    {
-                        textColor = Color.red,
-                        background = BGBinaryResources.BGBoxWithBorder123
-                    }
-                };
-            }
-        }
-
-        private static GUIStyle FilterStyle
-        {
-            get
-            {
-                return new GUIStyle("Label")
-                {
-                    fontStyle = FontStyle.Bold,
-                    normal =
-                    {
-                        textColor = Color.red
-                    }
-                };
-            }
-        }
+        private static Texture2D headerImage;
+        private static Texture2D boxWithBorderImage;
+        private static GUIStyle nameStyle;
+        private static GUIStyle disabledStyle;
+        private static GUIStyle filterStyle;
 
         private static BGCcAddWindow instance;
 
@@ -84,6 +40,10 @@ namespace BansheeGz.BGSpline.Editor
 
         private void OnGUI()
         {
+            //styles
+            AssighStyles();
+
+
             //draw header
             DrawHeader();
 
@@ -99,6 +59,7 @@ namespace BansheeGz.BGSpline.Editor
                     scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
                     tree.OnInspectorGui();
                     EditorGUILayout.EndScrollView();
+                    
                 });
             }
         }
@@ -115,15 +76,48 @@ namespace BansheeGz.BGSpline.Editor
         private static void DrawHeader()
         {
             BGEditorUtility.HorizontalBox(() => { GUILayout.Label("   "); });
-            GUI.DrawTexture(GUILayoutUtility.GetLastRect(), BGBinaryResources.BGBoxWithBorder123);
+            GUI.DrawTexture(GUILayoutUtility.GetLastRect(), boxWithBorderImage);
 
-            var headerImage = BGBinaryResources.BGCurveComponents123;
-            var rect = new Rect(new Vector2(40, 10), new Vector2(headerImage.Texture.width * HeaderHeight / (float) headerImage.Texture.height, HeaderHeight));
+            var rect = new Rect(new Vector2(40, 10), new Vector2(headerImage.width*HeaderHeight/(float) headerImage.height, HeaderHeight));
             GUI.DrawTexture(rect, headerImage);
 
             if (tree.DependsOnType != null)
-                GUI.Label(new Rect(rect) {x = rect.xMax + 10, height = 16, width = 400, y = rect.y - 2}, "Filter: Dependent on [" + tree.DependsOnType.Name + "]", FilterStyle);
+                GUI.Label(new Rect(rect) {x = rect.xMax + 10, height = 16, width = 400, y = rect.y - 2}, "Filter: Dependent on [" + tree.DependsOnType.Name + "]", filterStyle);
         }
-    
+
+        private static void AssighStyles()
+        {
+            BGEditorUtility.Assign(ref nameStyle, () => new GUIStyle("Label")
+            {
+                alignment = TextAnchor.MiddleCenter,
+                clipping = TextClipping.Clip,
+                wordWrap = true,
+                fontStyle = FontStyle.Bold,
+                normal =
+                {
+                    textColor = Color.black,
+                    background = BGEditorUtility.LoadTexture2D(BGEditorUtility.Image.BGBoxWithBorder123)
+                }
+            });
+            BGEditorUtility.Assign(ref disabledStyle, () => new GUIStyle("Label")
+            {
+                alignment = TextAnchor.MiddleCenter,
+                normal =
+                {
+                    textColor = Color.red,
+                    background = BGEditorUtility.LoadTexture2D(BGEditorUtility.Image.BGBoxWithBorder123)
+                }
+            });
+            BGEditorUtility.Assign(ref filterStyle, () => new GUIStyle("Label")
+            {
+                fontStyle = FontStyle.Bold,
+                normal =
+                {
+                    textColor = Color.red
+                }
+            });
+            BGEditorUtility.Assign(ref headerImage, () => BGEditorUtility.LoadTexture2D(BGEditorUtility.Image.BGCurveComponents123));
+            BGEditorUtility.Assign(ref boxWithBorderImage, () => BGEditorUtility.LoadTexture2D(BGEditorUtility.Image.BGBoxWithBorder123));
+        }
     }
 }
