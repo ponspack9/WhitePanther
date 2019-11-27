@@ -866,7 +866,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &50260071
 Transform:
   m_ObjectHideFlags: 0
@@ -8196,7 +8196,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 671878250}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.07, y: 0, z: 5.23}
+  m_LocalPosition: {x: 14.07, y: -4.25, z: 5.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2134321688}
@@ -14186,6 +14186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11d0c90d57360f741a36290458c26fda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parent: {fileID: 1535470368}
 --- !u!4 &1211619359 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400066, guid: 24e1d4352595c86418932a9a904f80b6,
@@ -14216,7 +14217,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211619357}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed9adcb016752cd41acd02ff0c6d3bc5, type: 3}
   m_Name: 
@@ -14225,6 +14226,7 @@ MonoBehaviour:
   min_distance: 0.1
   slow_distance: 5
   time_to_target: 0.1
+  arrived: 0
 --- !u!114 &1211619362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14238,14 +14240,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   priority: 0
-  target: {fileID: 1719714745}
+  target: {fileID: 1430576070}
   self: {fileID: 1211619357}
   max_mov_speed: 5
-  max_mov_acceleration: 0.1
-  max_rot_speed: 10
-  max_rot_acceleration: 0.1
+  max_mov_acceleration: 0.22
+  max_rot_speed: 69.6
+  max_rot_acceleration: 12.95
   current_velocity: {x: 0, y: 0, z: 0}
   current_rotation_speed: 0
+--- !u!114 &1211619364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211619357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9c82200dae7a684a8b3c91a8fdc083a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  priority: 0
 --- !u!4 &1216828612 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 476272, guid: c2b06be20bcb87148bd455c90eaf0c94,
@@ -17420,6 +17435,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 900cfc3afed080947b0f35fe956bcdd1, type: 3}
+--- !u!1 &1430576070
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1430576071}
+  m_Layer: 0
+  m_Name: CostumerTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1430576071
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430576070}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1538275542}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1437870441
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18351,6 +18396,7 @@ MonoBehaviour:
   min_distance: 0.1
   slow_distance: 5
   time_to_target: 0.1
+  arrived: 0
 --- !u!195 &1516313469
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -18793,6 +18839,7 @@ Transform:
   m_Children:
   - {fileID: 1211619359}
   - {fileID: 1535470368}
+  - {fileID: 1430576071}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21145,7 +21192,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1699398427}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.61, y: 0, z: 6.7}
+  m_LocalPosition: {x: 6.61, y: -4.6, z: 6.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2134321688}
@@ -24669,6 +24716,7 @@ MonoBehaviour:
   min_distance: 0.1
   slow_distance: 5
   time_to_target: 0.1
+  arrived: 0
 --- !u!114 &1971252573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24700,7 +24748,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   priority: 0
   target: {fileID: 1900542288}
-  self: {fileID: 0}
+  self: {fileID: 1971252569}
   max_mov_speed: 5
   max_mov_acceleration: 0.1
   max_rot_speed: 30
@@ -24884,7 +24932,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1987765437
 Transform:
   m_ObjectHideFlags: 0
