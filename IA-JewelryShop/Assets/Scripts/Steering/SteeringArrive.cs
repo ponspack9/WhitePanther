@@ -7,6 +7,8 @@ public class SteeringArrive : SteeringPriority {
 	public float slow_distance = 5.0f;
 	public float time_to_target = 0.1f;
 
+    public bool arrived = false;
+
     private RuntimeAnimatorController animator;
 
 	Move move;
@@ -34,8 +36,10 @@ public class SteeringArrive : SteeringPriority {
 		if(diff.magnitude < min_distance)
         {
             move.SetMovementVelocity(Vector3.zero);
+            arrived = true;
             return true;
         }
+        arrived = false;
 
         // Decide which would be our ideal velocity
         if (diff.magnitude < slow_distance)
