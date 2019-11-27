@@ -3,6 +3,7 @@
 public class CostumerBehaviour : MonoBehaviour
 {
     private Move move;
+    private SteeringArrive steer;
 
     public Transform parent;
     private Transform[] points;
@@ -13,6 +14,8 @@ public class CostumerBehaviour : MonoBehaviour
     void Start()
     {
         move = GetComponent<Move>();
+        steer = GetComponent<SteeringArrive>();
+
         max = parent.childCount;
 
         points = new Transform[max];
@@ -25,7 +28,7 @@ public class CostumerBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (move.current_velocity == Vector3.zero)
+        if (steer.arrived)
         {
             move.target.transform.position = points[Random.Range(0,max)].position;
         }
