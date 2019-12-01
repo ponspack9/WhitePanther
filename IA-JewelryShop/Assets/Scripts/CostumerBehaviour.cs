@@ -12,7 +12,6 @@ public class CostumerBehaviour : MonoBehaviour
     private Transform[] points;
     private Transform current_point;
 
-
     private float time_rate = 0.5f;
     public float time_between_moves = 5.0f;
 
@@ -53,6 +52,7 @@ public class CostumerBehaviour : MonoBehaviour
         {
             time += time_rate * Time.deltaTime;
             agent.isStopped = true;
+            animator.Play("walk", 0, 0.78f);
             animator.speed = 0.0f;
             //Quaternion.Lerp(transform.rotation, current_point.rotation, 1.0f);
             transform.rotation = current_point.rotation;
