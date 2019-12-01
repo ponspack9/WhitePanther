@@ -25,9 +25,8 @@ public class GameController : MonoBehaviour
     public List<GameObject> shop_keepers;
     public List<GameObject> guards;
     public List<GameObject> costumers;
-    //public int number_shopkeepers = 1;
-    //public int number_guards = 1;
-    //public int number_costumers = 0;
+
+    public float cosutmer_buying_prob = 10f;
 
     [Header("Prefabs --------------------------------------------------------")]
     public GameObject costumer_prefab;
@@ -143,7 +142,7 @@ public class GameController : MonoBehaviour
             }
         }
         // Updating canvas
-        day_text.text    = (day < 10) ? "Day " + day.ToString() : day.ToString();
+        day_text.text    = (night) ? "Night " : "Day " + day.ToString();
         hour_text.text   = (hour < 10) ? "0" + hour.ToString() : hour.ToString();
         minute_text.text = (minute < 10) ? "0" + minute.ToString() : minute.ToString();
     }
