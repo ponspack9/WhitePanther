@@ -70,7 +70,7 @@ public class CostumerBehaviour : MonoBehaviour
         
         if (leave)
         {
-            agent.SetDestination(new Vector3(14,0,44));
+            agent.SetDestination(new Vector3(14,0,50));
             agent.isStopped = false;
             animator.speed = 1.0f;
         }

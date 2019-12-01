@@ -96,8 +96,9 @@ public class GameController : MonoBehaviour
 
             costumers[i].GetComponent<CostumerBehaviour>().leave = night;
             
-            if (costumers[i].GetComponent<CostumerBehaviour>().leave &&
-                costumers[i].GetComponent<CostumerBehaviour>().arrived)
+            if ((costumers[i].GetComponent<CostumerBehaviour>().leave &&
+                costumers[i].GetComponent<CostumerBehaviour>().arrived) || 
+                costumers[i].transform.position.z > 45)
             {
                 Destroy(costumers[i]);
                 costumers.RemoveAt(i);
@@ -107,6 +108,7 @@ public class GameController : MonoBehaviour
         shop_keepers[0].GetComponent<ShopKeeperBehaviour>().go_cashier = force_to_cashier;
         //shop_keepers[1].GetComponent<ShopKeeperBehaviour>().go_cashier = !night;
 
+        guards[0].GetComponent<GuardBehaviour>().quiet = night;
 
         time_rate = timer_rate_slider.value;
 
