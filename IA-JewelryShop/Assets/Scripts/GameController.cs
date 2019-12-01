@@ -27,7 +27,6 @@ public class GameController : MonoBehaviour
     public GameObject shopkeeper_prefab;
 
     [Header("Canvas --------------------------------------------------------")]
-    public Canvas canvas;
     public Text day_text;
     public Text hour_text;
     public Text minute_text;
