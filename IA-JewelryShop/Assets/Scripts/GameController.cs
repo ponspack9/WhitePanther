@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
     public int day = 0;
     public int hour = 0;
     public int minute = 0;
-    public float time_rate = 3.0f;
+    private float time_rate = 6.5f;
     private float time = 0.0f;
 
     [Header("Fame --------------------------------------------------------")]
@@ -70,7 +70,7 @@ public class GameController : MonoBehaviour
         {
             minute = 0;
             hour++;
-            if (hour >= 60)
+            if (hour >= 24)
             {
                 hour = 0;
                 day++;
