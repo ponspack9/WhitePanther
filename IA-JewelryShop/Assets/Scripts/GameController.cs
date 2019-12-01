@@ -7,7 +7,7 @@ using System;
 public class GameController : MonoBehaviour
 {
     [Header("Time --------------------------------------------------------")]
-    public int day = 0;
+    public int day = 1;
     public int hour = 0;
     public int minute = 0;
     private float time_rate = 6.5f;
@@ -60,8 +60,10 @@ public class GameController : MonoBehaviour
         AddShopKeeper();
         AddCostumer();
 
-        minute = System.DateTime.Now.Minute;
-        hour = System.DateTime.Now.Hour;
+        //minute = System.DateTime.Now.Minute;
+        //hour = System.DateTime.Now.Hour;
+        minute = 0;
+        hour = 20;
 
         reclaim_shop_keeper.onClick.AddListener(ReclaimShopKeeper);
 
@@ -91,6 +93,9 @@ public class GameController : MonoBehaviour
 
         for (int i=0;i<costumers.Count;i++)
         {
+
+            costumers[i].GetComponent<CostumerBehaviour>().leave = night;
+            
             if (costumers[i].GetComponent<CostumerBehaviour>().leave &&
                 costumers[i].GetComponent<CostumerBehaviour>().arrived)
             {
@@ -142,7 +147,7 @@ public class GameController : MonoBehaviour
             }
         }
         // Updating canvas
-        day_text.text    = (night) ? "Night " : "Day " + day.ToString();
+        day_text.text    = (night) ? "Night " + day.ToString() : "Day " + day.ToString();
         hour_text.text   = (hour < 10) ? "0" + hour.ToString() : hour.ToString();
         minute_text.text = (minute < 10) ? "0" + minute.ToString() : minute.ToString();
     }

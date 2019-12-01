@@ -57,6 +57,7 @@ public class CostumerBehaviour : MonoBehaviour
     void Update()
     {
         arrived = (transform.position - agent.destination).magnitude <= min_distance;
+       
         max_timer += Time.deltaTime;
 
         if ((int)max_timer % 20 == 0)
