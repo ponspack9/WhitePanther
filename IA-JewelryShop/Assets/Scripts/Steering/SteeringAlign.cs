@@ -18,13 +18,13 @@ public class SteeringAlign : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-        if (cb.arrived)
-        {
-            //float angle = Mathf.Atan2(move.current_velocity.x, move.current_velocity.z);
-            float angle = Mathf.Atan2(cb.agent.velocity.x, cb.agent.velocity.z);
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(Mathf.Rad2Deg * angle, Vector3.up), Time.deltaTime * rot_speed);
+        //if (cb.arrived)
+        //{
+        //    //float angle = Mathf.Atan2(move.current_velocity.x, move.current_velocity.z);
+        //    float angle = Mathf.Atan2(cb.agent.destination.z, cb.agent.velocity.x);
+        //    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(Mathf.Rad2Deg * angle, Vector3.up), Time.deltaTime * rot_speed);
 
-        }
+        //}
         //else
         //{
         //    // Orientation we are trying to match
