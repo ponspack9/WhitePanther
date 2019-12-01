@@ -101,12 +101,13 @@ public class CostumerBehaviour : MonoBehaviour
                     agent.isStopped = false;
                     animator.speed = 1.0f;
                     buying = false;
-                    time_buying = -1.0f;
+                    arrived = false;
+                    leave = true;
                 }
             }
             else
             {
-                if (time_buying < 0) leave = true;
+                //if (time_buying < 0) leave = true;
                 time += time_rate * Time.deltaTime;
                 agent.isStopped = true;
                 

@@ -7,7 +7,7 @@ using System;
 public class GameController : MonoBehaviour
 {
     [Header("Time --------------------------------------------------------")]
-    public int day = 1;
+    private int day = 1;
     public int hour = 0;
     public int minute = 0;
     private float time_rate = 6.5f;
@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
 
     [Header("Fame --------------------------------------------------------")]
     private float time_between_client = 3.0f;
-    private float clients_rate = 0.2f;
+    private float clients_rate = 0.25f;
 
     [Header("Shop --------------------------------------------------------")]
     public List<GameObject> shop_keepers;
@@ -27,6 +27,11 @@ public class GameController : MonoBehaviour
     public List<GameObject> costumers;
 
     public float cosutmer_buying_prob = 10f;
+
+    private bool someone_cashier1 = false;
+    private bool someone_cashier2 = false;
+
+    public bool force_to_cashier = false;
 
     [Header("Prefabs --------------------------------------------------------")]
     public GameObject costumer_prefab;
@@ -63,7 +68,7 @@ public class GameController : MonoBehaviour
         //minute = System.DateTime.Now.Minute;
         //hour = System.DateTime.Now.Hour;
         minute = 0;
-        hour = 20;
+        hour = 8;
 
         reclaim_shop_keeper.onClick.AddListener(ReclaimShopKeeper);
 
@@ -75,7 +80,7 @@ public class GameController : MonoBehaviour
     {
         clients_time += clients_rate * Time.deltaTime;
 
-        if (clients_time >= time_between_client)
+        if (!night && clients_time >= time_between_client)
         {
             clients_time = 0.0f;
             AddCostumer();
@@ -85,11 +90,6 @@ public class GameController : MonoBehaviour
         AdvanceTime();
 
         night = hour >= 21 || hour <= 7;
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            AddCostumer();
-        }
 
         for (int i=0;i<costumers.Count;i++)
         {
@@ -103,16 +103,25 @@ public class GameController : MonoBehaviour
                 costumers.RemoveAt(i);
             }
         }
+
+        shop_keepers[0].GetComponent<ShopKeeperBehaviour>().go_cashier = force_to_cashier;
+        //shop_keepers[1].GetComponent<ShopKeeperBehaviour>().go_cashier = !night;
+
+
         time_rate = timer_rate_slider.value;
 
         costumers_text.text = "Costumers: " + costumers.Count.ToString();
         shop_keepers_text.text = "Shop keepers: " + shop_keepers.Count.ToString();
         guards_text.text = "Guards: " + guards.Count.ToString();
+        reclaim_shop_keeper.GetComponentInChildren<Text>().text = (force_to_cashier) ? "Shop keeper at cashier" : "Shop keeper restocking";
 
     }
     private void ReclaimShopKeeper()
     {
-        shop_keepers[0].GetComponent<ShopKeeperBehaviour>().go_cashier = true;
+        if (!night)
+            force_to_cashier = !force_to_cashier;
+        else
+            force_to_cashier = false;
     }
 
     private void AddCostumer()

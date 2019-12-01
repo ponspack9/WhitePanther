@@ -33,34 +33,29 @@ public class ShopKeeperBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //move = GetComponent<Move>();
-        //steer = GetComponent<SteeringArrive>();
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 
         max_stock_points = stock_points.childCount;
         max_client_points = client_points.childCount;
-        //stock_points = new Transform[max];
-        //for (int i = 0; i < max; i++)
-        //{
-        //    stock_points[i] = stock_pointsParent.GetChild(i).transform;
-        //}
 
-        //current_point = stock_points[Random.Range(0, max)];
         current_point = stock_points.GetChild(Random.Range(0, max_stock_points));
         agent.SetDestination(current_point.position);
         time_between_moves = Random.Range(0.5f, 1.5f);
-        //move.target.transform.position = points[Random.Range(0, max)].position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //arrived = time >= time_between_moves;
-        arrived = (transform.position - agent.destination).magnitude <= min_distance;
 
+        arrived = (transform.position - agent.destination).magnitude <= min_distance;
+        if (go_cashier)
+        {
+            current_point = cashier1;
+            agent.SetDestination(current_point.position);
+            agent.isStopped = false;
+        }
         if (arrived)
-        //if (steer.arrived)
         {
             time += time_rate * Time.deltaTime;
             agent.isStopped = true;
@@ -70,27 +65,19 @@ public class ShopKeeperBehaviour : MonoBehaviour
             transform.rotation = current_point.rotation;
             transform.position = current_point.position;
 
-            if (time >= time_between_moves)
+            if (!game_controller.force_to_cashier && time >= time_between_moves)
             {
-                if (game_controller.night && !restock)
+                if (!restock)
                 {
                     current_point = client_points.GetChild(Random.Range(0,max_client_points));
                     agent.SetDestination(current_point.position);
                     restock = true;
-                    go_cashier = false;
-                }
-                else if (go_cashier)
-                {
-                    current_point = cashier1;
-                    agent.SetDestination(current_point.position);
-                    //go_cashier = false;
                 }
                 else
                 {
                     //current_point = stock_points[Random.Range(0, max)];
                     current_point = stock_points.GetChild(Random.Range(0, max_stock_points));
                     agent.SetDestination(current_point.position);
-                    go_cashier = true;
                     restock = false;
                 }
                 time_between_moves = Random.Range(0.5f, 1.5f);
