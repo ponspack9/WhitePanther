@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5485926414310504556
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5485926414310504557}
+  - component: {fileID: 5485926414310504466}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5485926414310504557
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5485926414310504556}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5485926414310504466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5485926414310504556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 430def5953407744a899e6b9b1bc294f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  day: 0
+  hour: 0
+  minute: 0
+  night: 0
+  time_between_client: 1
+  clients_rate: 0.5
+  shop_keepers: []
+  guards: []
+  costumers: []
+  costumer_prefab: {fileID: 2843980159701849738, guid: 1eb59b3c05637264abfd28b8ce51e203,
+    type: 3}
+  guard_prefab: {fileID: 3763928863503763076, guid: 1846ea60229470149aba6c6dd13ac32c,
+    type: 3}
+  shopkeeper_prefab: {fileID: 4882345440021642913, guid: aa148c054b9649b4fa2dd97249996f7f,
+    type: 3}
+  day_text: {fileID: 2078125434294788509, guid: 9a06dfe69a356fc45afa359468da219c,
+    type: 3}
+  hour_text: {fileID: 5348330730141215352, guid: 9bc5545cee0ec074f86ef97209f34988,
+    type: 3}
+  minute_text: {fileID: 5479827986161881447, guid: 23f763033843dab43b151550c2bd892f,
+    type: 3}
+  timer_rate_slider: {fileID: 4428480747441298422, guid: dfa7731015f834a418d983b55b943130,
+    type: 3}
+  shop_keepers_text: {fileID: 1601242832372103336, guid: 3a6f4effb02ee66449a07852382cf448,
+    type: 3}
+  guards_text: {fileID: 9052490294616006838, guid: 23e4241c1faf4cc478b1accc261e54e9,
+    type: 3}
+  costumers_text: {fileID: 3272522611354069349, guid: 0be9fc0ee2edb694ba671519be37655c,
+    type: 3}
+  reclaim_shop_keeper: {fileID: 6034060516927283338, guid: 608c5889af0773244ae4da7f691f0bfb,
+    type: 3}

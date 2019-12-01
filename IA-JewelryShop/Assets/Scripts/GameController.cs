@@ -13,16 +13,21 @@ public class GameController : MonoBehaviour
     private float time_rate = 6.5f;
     private float time = 0.0f;
 
+    private float clients_time = 0.0f;
+
     public bool night = false;
 
     [Header("Fame --------------------------------------------------------")]
-    public float fame = 1.0f;
+    public float time_between_client = 1.0f;
     public float clients_rate = 0.25f;
 
     [Header("Shop --------------------------------------------------------")]
-    public int number_shopkeepers = 1;
-    public int number_guards = 1;
-    public int number_costumers = 0;
+    public List<GameObject> shop_keepers;
+    public List<GameObject> guards;
+    public List<GameObject> costumers;
+    //public int number_shopkeepers = 1;
+    //public int number_guards = 1;
+    //public int number_costumers = 0;
 
     [Header("Prefabs --------------------------------------------------------")]
     public GameObject costumer_prefab;
@@ -35,13 +40,29 @@ public class GameController : MonoBehaviour
     public Text minute_text;
     public Slider timer_rate_slider;
 
+    public Text shop_keepers_text;
+    public Text guards_text;
+    public Text costumers_text;
+
+    public Button reclaim_shop_keeper;
+
     private Vector3 costumer_start_pos = new Vector3(14, 0, 44);
+    private Vector3 shop_keeper_start_pos = new Vector3(8, 0, 10);
 
     // Start is called before the first frame update
     void Start()
     {
+        shop_keepers = new List<GameObject>();
+        guards       = new List<GameObject>();
+        costumers    = new List<GameObject>();
+        costumers_text.text = "Costumers: " + costumers.Count.ToString();
+        guards_text.text = "Guards: " + guards.Count.ToString();
+        shop_keepers_text.text = "Shop keepers: " + shop_keepers.Count.ToString();
+
         minute = System.DateTime.Now.Minute;
         hour = System.DateTime.Now.Hour;
+
+        reclaim_shop_keeper.onClick.AddListener(ReclaimShopKeeper);
 
         timer_rate_slider.value = time_rate;
     }
@@ -49,6 +70,15 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        clients_time += clients_rate * Time.deltaTime;
+
+        if (clients_time >= time_between_client)
+        {
+            clients_time = 0.0f;
+            AddCostumer();
+        }
+
+
         AdvanceTime();
 
         night = hour >= 21 || hour <= 7;
@@ -60,10 +90,15 @@ public class GameController : MonoBehaviour
 
         time_rate = timer_rate_slider.value;
     }
+    private void ReclaimShopKeeper()
+    {
+        shop_keepers[0].GetComponent<ShopKeeperBehaviour>().go_cashier = true;
+    }
+
     private void AddCostumer()
     {
-        Instantiate(costumer_prefab, costumer_start_pos, Quaternion.identity);
-        number_costumers++;
+        costumers.Add(Instantiate(costumer_prefab, costumer_start_pos, Quaternion.identity));
+        costumers_text.text = "Costumers: " + costumers.Count.ToString();
     }
     private void AdvanceTime()
     {

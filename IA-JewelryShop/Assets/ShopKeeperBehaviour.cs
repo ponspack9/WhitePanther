@@ -27,7 +27,7 @@ public class ShopKeeperBehaviour : MonoBehaviour
     private int max_stock_points = 0;
     private int max_client_points = 0;
 
-    private bool go_cashier = true;
+    public bool go_cashier = true;
     public bool restock = false;
 
     // Start is called before the first frame update
@@ -83,7 +83,7 @@ public class ShopKeeperBehaviour : MonoBehaviour
                 {
                     current_point = cashier1;
                     agent.SetDestination(current_point.position);
-                    go_cashier = false;
+                    //go_cashier = false;
                 }
                 else
                 {
