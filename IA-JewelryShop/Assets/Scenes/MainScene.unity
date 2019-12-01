@@ -26676,6 +26676,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3384068187463033357, guid: 6ce3e75541739cf42a4facc52e43b185,
+        type: 3}
+      propertyPath: m_Text
+      value: 'Probability of a sale: 20%'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ce3e75541739cf42a4facc52e43b185, type: 3}
 --- !u!1001 &6034060519012893530
@@ -26748,12 +26753,12 @@ PrefabInstance:
     - target: {fileID: 6034060516927283349, guid: 608c5889af0773244ae4da7f691f0bfb,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -483
+      value: -501
       objectReference: {fileID: 0}
     - target: {fileID: 6034060516927283349, guid: 608c5889af0773244ae4da7f691f0bfb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -219
+      value: -226
       objectReference: {fileID: 0}
     - target: {fileID: 6034060516927283349, guid: 608c5889af0773244ae4da7f691f0bfb,
         type: 3}
@@ -26788,12 +26793,12 @@ PrefabInstance:
     - target: {fileID: 6034060516927283349, guid: 608c5889af0773244ae4da7f691f0bfb,
         type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6034060516927283349, guid: 608c5889af0773244ae4da7f691f0bfb,
         type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 608c5889af0773244ae4da7f691f0bfb, type: 3}

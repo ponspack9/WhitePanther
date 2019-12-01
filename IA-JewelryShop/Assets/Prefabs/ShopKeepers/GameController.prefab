@@ -50,7 +50,7 @@ MonoBehaviour:
   shop_keepers: []
   guards: []
   costumers: []
-  cosutmer_buying_prob: 10
+  cosutmer_buying_prob: 25
   force_to_cashier: 0
   costumer_prefab: {fileID: 2843980159701849738, guid: 1eb59b3c05637264abfd28b8ce51e203,
     type: 3}

@@ -28,6 +28,8 @@ public class CostumerBehaviour : MonoBehaviour
     private float max_timer = 0.0f;
     private float max_time = 0;
 
+    public float sale_prob = 20.0f;
+
     public bool leave = false;
     public bool buying = false;
     
@@ -39,7 +41,7 @@ public class CostumerBehaviour : MonoBehaviour
 
         max_time = Random.Range(40.0f, 80.0f);
 
-        buying = Random.Range(0, 100.0f) <= game_controller.cosutmer_buying_prob;
+        buying = Random.Range(0, 100.0f) <= sale_prob;
 
         max = pointsParent.childCount;
         points = new Transform[max];
@@ -62,7 +64,7 @@ public class CostumerBehaviour : MonoBehaviour
 
         if ((int)max_timer % 20 == 0)
         {
-            buying = Random.Range(0, 100.0f) <= game_controller.cosutmer_buying_prob;
+            buying = Random.Range(0, 100.0f) <= sale_prob;
             max_timer += 1;
         }
         if (!leave)

@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour
     public List<GameObject> guards;
     public List<GameObject> costumers;
 
-    public float cosutmer_buying_prob = 25.0f;
+    private float cosutmer_buying_prob = 20.0f;
 
     private bool someone_cashier1 = false;
     private bool someone_cashier2 = false;
@@ -100,7 +100,7 @@ public class GameController : MonoBehaviour
             {
                 someone_cashier1 = true;
             }
-
+            costumers[i].GetComponent<CostumerBehaviour>().sale_prob = cosutmer_buying_prob;
             costumers[i].GetComponent<CostumerBehaviour>().leave = night;
             
             if ((costumers[i].GetComponent<CostumerBehaviour>().leave &&
