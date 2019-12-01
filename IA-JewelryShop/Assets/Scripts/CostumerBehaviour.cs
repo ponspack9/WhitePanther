@@ -56,6 +56,7 @@ public class CostumerBehaviour : MonoBehaviour
             animator.speed = 0.0f;
             transform.rotation = current_point.rotation;
             transform.position = current_point.position;
+
             if (time >= time_between_moves)
             {
                 time = 0.0f;

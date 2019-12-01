@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class GameController : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class GameController : MonoBehaviour
     public int day = 0;
     public int hour = 0;
     public int minute = 0;
-    public float time_rate = 0.5f;
+    public float time_rate = 3.0f;
     private float time = 0.0f;
 
     [Header("Fame --------------------------------------------------------")]
@@ -36,6 +37,9 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        minute = System.DateTime.Now.Minute;
+        hour = System.DateTime.Now.Hour;
+
     }
 
     // Update is called once per frame
@@ -73,7 +77,7 @@ public class GameController : MonoBehaviour
             }
         }
         // Updating canvas
-        day_text.text    = (day < 10) ? "0" + day.ToString() : day.ToString();
+        day_text.text    = (day < 10) ? "Day " + day.ToString() : day.ToString();
         hour_text.text   = (hour < 10) ? "0" + hour.ToString() : hour.ToString();
         minute_text.text = (minute < 10) ? "0" + minute.ToString() : minute.ToString();
     }
