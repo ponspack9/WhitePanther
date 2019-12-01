@@ -6,6 +6,8 @@ public class ShopKeeperBehaviour : MonoBehaviour
     private Animator animator;
     private NavMeshAgent agent;
 
+    public GameController game_controller;
+
     public Transform stock_points;
     public Transform client_points;
     //private Transform[] client_points;
@@ -26,7 +28,6 @@ public class ShopKeeperBehaviour : MonoBehaviour
     private int max_client_points = 0;
 
     private bool go_cashier = true;
-    public bool night = false;
     public bool restock = false;
 
     // Start is called before the first frame update
@@ -71,7 +72,7 @@ public class ShopKeeperBehaviour : MonoBehaviour
 
             if (time >= time_between_moves)
             {
-                if (night && !restock)
+                if (game_controller.night && !restock)
                 {
                     current_point = client_points.GetChild(Random.Range(0,max_client_points));
                     agent.SetDestination(current_point.position);

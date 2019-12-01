@@ -13,9 +13,11 @@ public class GameController : MonoBehaviour
     private float time_rate = 6.5f;
     private float time = 0.0f;
 
+    public bool night = false;
+
     [Header("Fame --------------------------------------------------------")]
     public float fame = 1.0f;
-    public float clients_rate = 0.5f;
+    public float clients_rate = 0.25f;
 
     [Header("Shop --------------------------------------------------------")]
     public int number_shopkeepers = 1;
@@ -31,6 +33,7 @@ public class GameController : MonoBehaviour
     public Text day_text;
     public Text hour_text;
     public Text minute_text;
+    public Slider timer_rate_slider;
 
     private Vector3 costumer_start_pos = new Vector3(14, 0, 44);
 
@@ -40,17 +43,22 @@ public class GameController : MonoBehaviour
         minute = System.DateTime.Now.Minute;
         hour = System.DateTime.Now.Hour;
 
+        timer_rate_slider.value = time_rate;
     }
 
     // Update is called once per frame
     void Update()
     {
         AdvanceTime();
-        
+
+        night = hour >= 21 || hour <= 7;
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             AddCostumer();
         }
+
+        time_rate = timer_rate_slider.value;
     }
     private void AddCostumer()
     {

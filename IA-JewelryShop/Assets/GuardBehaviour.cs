@@ -6,8 +6,7 @@ public class GuardBehaviour : MonoBehaviour
     private Animator animator;
     private NavMeshAgent agent;
 
-    public Transform pointsParent;
-    private Transform[] points;
+    public Transform points;
     private Transform current_point;
     private int iterator = 0;
 
@@ -27,14 +26,14 @@ public class GuardBehaviour : MonoBehaviour
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 
-        max = pointsParent.childCount;
-        points = new Transform[max];
-        for (int i = 0; i < max; i++)
-        {
-            points[i] = pointsParent.GetChild(i).transform;
-        }
+        max = points.childCount;
+        //points = new Transform[max];
+        //for (int i = 0; i < max; i++)
+        //{
+        //    points[i] = pointsParent.GetChild(i).transform;
+        //}
 
-        current_point = points[iterator++];
+        current_point = points.GetChild(iterator++);
         agent.SetDestination(current_point.position);
         time_between_moves = Random.Range(1.5f, 2.5f);
         //move.target.transform.position = points[Random.Range(0, max)].position;
@@ -60,7 +59,7 @@ public class GuardBehaviour : MonoBehaviour
             if (time >= time_between_moves)
             {
                 time = 0.0f;
-                current_point = points[iterator++];
+                current_point = points.GetChild(iterator++);
                 if (iterator >= max) iterator = 0;
                 agent.SetDestination(current_point.position);
                 time_between_moves = Random.Range(1.5f, 2.5f);
