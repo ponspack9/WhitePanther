@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour
     public List<GameObject> guards;
     public List<GameObject> costumers;
 
-    public float cosutmer_buying_prob = 10f;
+    public float cosutmer_buying_prob = 25.0f;
 
     private bool someone_cashier1 = false;
     private bool someone_cashier2 = false;
@@ -47,6 +47,8 @@ public class GameController : MonoBehaviour
     public Text shop_keepers_text;
     public Text guards_text;
     public Text costumers_text;
+
+    public Text probability_text;
 
     public Button reclaim_shop_keeper;
 
@@ -90,9 +92,14 @@ public class GameController : MonoBehaviour
         AdvanceTime();
 
         night = hour >= 21 || hour <= 7;
+        someone_cashier1 = false;
 
         for (int i=0;i<costumers.Count;i++)
         {
+            if (costumers[i].transform.position == costumers[i].GetComponent<CostumerBehaviour>().cashier1.position)
+            {
+                someone_cashier1 = true;
+            }
 
             costumers[i].GetComponent<CostumerBehaviour>().leave = night;
             
@@ -112,10 +119,17 @@ public class GameController : MonoBehaviour
 
         time_rate = timer_rate_slider.value;
 
+        probability_text.text = "Probability of a sale: " + cosutmer_buying_prob.ToString() + "%";
         costumers_text.text = "Costumers: " + costumers.Count.ToString();
         shop_keepers_text.text = "Shop keepers: " + shop_keepers.Count.ToString();
         guards_text.text = "Guards: " + guards.Count.ToString();
         reclaim_shop_keeper.GetComponentInChildren<Text>().text = (force_to_cashier) ? "Shop keeper at cashier" : "Shop keeper restocking";
+
+
+        if(someone_cashier1 && force_to_cashier && shop_keepers[0].GetComponent<ShopKeeperBehaviour>().arrived)
+        {
+            cosutmer_buying_prob += 0.025f * Time.deltaTime;
+        }
 
     }
     private void ReclaimShopKeeper()

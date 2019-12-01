@@ -76,7 +76,7 @@ public class CostumerBehaviour : MonoBehaviour
         }
         else if (buying && !arrived)
         {
-            GetComponent<SpriteRenderer>().enabled = true;
+            GetComponentInChildren<SpriteRenderer>().enabled = true;
             current_point = cashier1;
             agent.SetDestination(current_point.position);
             agent.isStopped = false;
@@ -93,6 +93,8 @@ public class CostumerBehaviour : MonoBehaviour
 
             if (buying)
             {
+                GetComponentInChildren<SpriteRenderer>().enabled = false;
+
                 time_buying += Time.deltaTime;
 
                 if (time_buying >= 6.0f)

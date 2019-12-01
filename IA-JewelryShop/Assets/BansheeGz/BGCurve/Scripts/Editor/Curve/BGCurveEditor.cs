@@ -52,7 +52,7 @@ namespace BansheeGz.BGSpline.Editor
 
         protected void OnEnable()
         {
-            Curve = (BGCurve) target;
+            //Curve = (BGCurve) target;
 
             //wth
             if (Curve == null) return;
