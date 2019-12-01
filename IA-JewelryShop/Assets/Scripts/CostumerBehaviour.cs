@@ -93,6 +93,8 @@ public class CostumerBehaviour : MonoBehaviour
 
             if (buying)
             {
+                game_controller.someone_cashier1 = true;
+
                 time_buying += Time.deltaTime;
 
                 if (time_buying >= 6.0f)
@@ -110,7 +112,7 @@ public class CostumerBehaviour : MonoBehaviour
                 //if (time_buying < 0) leave = true;
                 time += time_rate * Time.deltaTime;
                 agent.isStopped = true;
-                
+                game_controller.someone_cashier1 = false;
 
 
                 if (time >= time_between_moves && !buying)
