@@ -13,13 +13,13 @@ public class GameController : MonoBehaviour
     private float time_rate = 6.5f;
     private float time = 0.0f;
 
-    private float clients_time = 0.0f;
+    public float clients_time = 0.0f;
 
     public bool night = false;
 
     [Header("Fame --------------------------------------------------------")]
-    public float time_between_client = 1.0f;
-    public float clients_rate = 0.25f;
+    private float time_between_client = 3.0f;
+    private float clients_rate = 0.2f;
 
     [Header("Shop --------------------------------------------------------")]
     public List<GameObject> shop_keepers;
@@ -46,8 +46,9 @@ public class GameController : MonoBehaviour
 
     public Button reclaim_shop_keeper;
 
-    private Vector3 costumer_start_pos = new Vector3(14, 0, 44);
-    private Vector3 shop_keeper_start_pos = new Vector3(8, 0, 10);
+    public Vector3 costumer_start_pos = new Vector3(14, 0, 44);
+    public Vector3 guard_start_pos = new Vector3(14, 0, 44);
+    public Vector3 shop_keeper_start_pos = new Vector3(8, 0, 10);
 
     // Start is called before the first frame update
     void Start()
@@ -55,9 +56,10 @@ public class GameController : MonoBehaviour
         shop_keepers = new List<GameObject>();
         guards       = new List<GameObject>();
         costumers    = new List<GameObject>();
-        costumers_text.text = "Costumers: " + costumers.Count.ToString();
-        guards_text.text = "Guards: " + guards.Count.ToString();
-        shop_keepers_text.text = "Shop keepers: " + shop_keepers.Count.ToString();
+
+        AddGuard();
+        AddShopKeeper();
+        AddCostumer();
 
         minute = System.DateTime.Now.Minute;
         hour = System.DateTime.Now.Hour;
@@ -88,6 +90,15 @@ public class GameController : MonoBehaviour
             AddCostumer();
         }
 
+        for (int i=0;i<costumers.Count;i++)
+        {
+            if (costumers[i].GetComponent<CostumerBehaviour>().leave &&
+                costumers[i].GetComponent<CostumerBehaviour>().arrived)
+            {
+                Destroy(costumers[i]);
+                costumers.RemoveAt(i);
+            }
+        }
         time_rate = timer_rate_slider.value;
     }
     private void ReclaimShopKeeper()
@@ -99,6 +110,16 @@ public class GameController : MonoBehaviour
     {
         costumers.Add(Instantiate(costumer_prefab, costumer_start_pos, Quaternion.identity));
         costumers_text.text = "Costumers: " + costumers.Count.ToString();
+    }
+    private void AddShopKeeper()
+    {
+        shop_keepers.Add(Instantiate(shopkeeper_prefab, shop_keeper_start_pos, Quaternion.identity));
+        shop_keepers_text.text = "Shop keepers: " + shop_keepers.Count.ToString();
+    }
+    private void AddGuard()
+    {
+        guards.Add(Instantiate(guard_prefab, guard_start_pos, Quaternion.identity));
+        guards_text.text = "Guards: " + guards.Count.ToString();
     }
     private void AdvanceTime()
     {

@@ -8,6 +8,8 @@ public class CostumerBehaviour : MonoBehaviour
     private Animator animator;
     private NavMeshAgent agent;
 
+    public GameController game_controller;
+
     public Transform pointsParent;
     private Transform[] points;
     private Transform current_point;
@@ -16,9 +18,15 @@ public class CostumerBehaviour : MonoBehaviour
     public float time_between_moves = 5.0f;
 
     public float time = 0.0f;
-    private bool arrived = false;
+    public bool arrived = false;
     private float min_distance = 0.25f;
     private int max = 0;
+
+    private float max_timer = 0.0f;
+    private float max_time = 0;
+
+    public bool leave = false;
+    public bool buying = false;
     
     // Start is called before the first frame update
     void Start()
@@ -27,6 +35,8 @@ public class CostumerBehaviour : MonoBehaviour
         //steer = GetComponent<SteeringArrive>();
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+
+        max_time = Random.Range(10.0f, 20.0f);
 
         max = pointsParent.childCount;
         points = new Transform[max];
@@ -46,8 +56,17 @@ public class CostumerBehaviour : MonoBehaviour
     {
         //arrived = time >= time_between_moves;
         arrived = (transform.position - agent.destination).magnitude <= min_distance;
+        max_timer += Time.deltaTime;
+        if (!leave)
+            leave = !buying && max_timer >= max_time;
 
-        if (arrived)
+        if (leave)
+        {
+            agent.SetDestination(new Vector3(14,0,44));
+            agent.isStopped = false;
+            animator.speed = 1.0f;
+        }
+        else if (arrived)
         //if (steer.arrived)
         {
             time += time_rate * Time.deltaTime;
