@@ -31,12 +31,10 @@ public class CostumerBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //move = GetComponent<Move>();
-        //steer = GetComponent<SteeringArrive>();
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 
-        max_time = Random.Range(10.0f, 20.0f);
+        max_time = Random.Range(40.0f, 80.0f);
 
         max = pointsParent.childCount;
         points = new Transform[max];
@@ -48,13 +46,11 @@ public class CostumerBehaviour : MonoBehaviour
         current_point = points[Random.Range(0, max)];
         agent.SetDestination(current_point.position);
         time_between_moves = Random.Range(1.5f, 4.5f);
-        //move.target.transform.position = points[Random.Range(0, max)].position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //arrived = time >= time_between_moves;
         arrived = (transform.position - agent.destination).magnitude <= min_distance;
         max_timer += Time.deltaTime;
         if (!leave)
@@ -67,7 +63,6 @@ public class CostumerBehaviour : MonoBehaviour
             animator.speed = 1.0f;
         }
         else if (arrived)
-        //if (steer.arrived)
         {
             time += time_rate * Time.deltaTime;
             agent.isStopped = true;

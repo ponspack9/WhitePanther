@@ -1317,9 +1317,10 @@ MonoBehaviour:
     type: 3}
   client_points: {fileID: 6829131357973340081, guid: 5b0583ba4a184714ab61f394484d88d3,
     type: 3}
-  cashier1: {fileID: 2531493956900356281, guid: d6107a90f759e6f4bb7c4c266f7c2c09,
+  cashier1: {fileID: 3885180673608773865, guid: d6107a90f759e6f4bb7c4c266f7c2c09,
     type: 3}
-  cashier2: {fileID: 354656326455410280, guid: 30b06633e74c36f47b9025825611d7b9, type: 3}
+  cashier2: {fileID: 7187059376431506036, guid: 30b06633e74c36f47b9025825611d7b9,
+    type: 3}
   time_between_moves: 2
   time: 0
   go_cashier: 1

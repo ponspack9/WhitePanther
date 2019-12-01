@@ -100,6 +100,11 @@ public class GameController : MonoBehaviour
             }
         }
         time_rate = timer_rate_slider.value;
+
+        costumers_text.text = "Costumers: " + costumers.Count.ToString();
+        shop_keepers_text.text = "Shop keepers: " + shop_keepers.Count.ToString();
+        guards_text.text = "Guards: " + guards.Count.ToString();
+
     }
     private void ReclaimShopKeeper()
     {
@@ -109,17 +114,14 @@ public class GameController : MonoBehaviour
     private void AddCostumer()
     {
         costumers.Add(Instantiate(costumer_prefab, costumer_start_pos, Quaternion.identity));
-        costumers_text.text = "Costumers: " + costumers.Count.ToString();
     }
     private void AddShopKeeper()
     {
         shop_keepers.Add(Instantiate(shopkeeper_prefab, shop_keeper_start_pos, Quaternion.identity));
-        shop_keepers_text.text = "Shop keepers: " + shop_keepers.Count.ToString();
     }
     private void AddGuard()
     {
         guards.Add(Instantiate(guard_prefab, guard_start_pos, Quaternion.identity));
-        guards_text.text = "Guards: " + guards.Count.ToString();
     }
     private void AdvanceTime()
     {
