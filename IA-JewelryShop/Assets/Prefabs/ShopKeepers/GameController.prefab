@@ -43,15 +43,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 430def5953407744a899e6b9b1bc294f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  day: 0
   hour: 0
   minute: 0
-  clients_time: 0
   night: 0
+  time_between_client: 1
+  clients_rate: 0.5
   shop_keepers: []
   guards: []
   costumers: []
-  cosutmer_buying_prob: 15
-  force_to_cashier: 0
   costumer_prefab: {fileID: 2843980159701849738, guid: 1eb59b3c05637264abfd28b8ce51e203,
     type: 3}
   guard_prefab: {fileID: 3763928863503763076, guid: 1846ea60229470149aba6c6dd13ac32c,
@@ -71,8 +71,6 @@ MonoBehaviour:
   guards_text: {fileID: 9052490294616006838, guid: 23e4241c1faf4cc478b1accc261e54e9,
     type: 3}
   costumers_text: {fileID: 3272522611354069349, guid: 0be9fc0ee2edb694ba671519be37655c,
-    type: 3}
-  clients_probability: {fileID: 1618500990889823612, guid: 3b3029fdc545de74298564cbbf35d7e2,
     type: 3}
   reclaim_shop_keeper: {fileID: 6034060516927283338, guid: 608c5889af0773244ae4da7f691f0bfb,
     type: 3}

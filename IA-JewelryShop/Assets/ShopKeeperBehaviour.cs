@@ -22,7 +22,7 @@ public class ShopKeeperBehaviour : MonoBehaviour
     public float time_between_moves = 1.0f;
 
     public float time = 0.0f;
-    public bool arrived = false;
+    private bool arrived = false;
     private float min_distance = 0.25f;
     private int max_stock_points = 0;
     private int max_client_points = 0;

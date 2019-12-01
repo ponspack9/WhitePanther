@@ -26,10 +26,10 @@ public class GameController : MonoBehaviour
     public List<GameObject> guards;
     public List<GameObject> costumers;
 
-    public float cosutmer_buying_prob = 25;
+    public float cosutmer_buying_prob = 10f;
 
-    public bool someone_cashier1 = false;
-    public bool someone_cashier2 = false;
+    private bool someone_cashier1 = false;
+    private bool someone_cashier2 = false;
 
     public bool force_to_cashier = false;
 
@@ -48,13 +48,11 @@ public class GameController : MonoBehaviour
     public Text guards_text;
     public Text costumers_text;
 
-    public Text clients_probability;
-
     public Button reclaim_shop_keeper;
 
-    private Vector3 costumer_start_pos = new Vector3(14, 0, 44);
-    private Vector3 guard_start_pos = new Vector3(14, 0, 44);
-    private Vector3 shop_keeper_start_pos = new Vector3(8, 0, 10);
+    public Vector3 costumer_start_pos = new Vector3(14, 0, 44);
+    public Vector3 guard_start_pos = new Vector3(14, 0, 44);
+    public Vector3 shop_keeper_start_pos = new Vector3(8, 0, 10);
 
     // Start is called before the first frame update
     void Start()
@@ -114,15 +112,9 @@ public class GameController : MonoBehaviour
 
         time_rate = timer_rate_slider.value;
 
-        clients_probability.text = "Probability of sale: " + cosutmer_buying_prob.ToString() + "%";
         costumers_text.text = "Costumers: " + costumers.Count.ToString();
         shop_keepers_text.text = "Shop keepers: " + shop_keepers.Count.ToString();
         guards_text.text = "Guards: " + guards.Count.ToString();
-
-        if (someone_cashier1 && force_to_cashier && shop_keepers[0].GetComponent<ShopKeeperBehaviour>().arrived)
-        {
-            cosutmer_buying_prob += 0.01f * Time.deltaTime;
-        }
         reclaim_shop_keeper.GetComponentInChildren<Text>().text = (force_to_cashier) ? "Shop keeper at cashier" : "Shop keeper restocking";
 
     }
