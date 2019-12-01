@@ -58,6 +58,12 @@ public class CostumerBehaviour : MonoBehaviour
     {
         arrived = (transform.position - agent.destination).magnitude <= min_distance;
         max_timer += Time.deltaTime;
+
+        if ((int)max_timer % 20 == 0)
+        {
+            buying = Random.Range(0, 100.0f) <= game_controller.cosutmer_buying_prob;
+            max_timer += 1;
+        }
         if (!leave)
             leave = !buying && max_timer >= max_time;
         
@@ -78,11 +84,17 @@ public class CostumerBehaviour : MonoBehaviour
         }
         else if (arrived)
         {
+            animator.Play("walk", 0, 0.78f);
+            animator.speed = 0.0f;
+            //Quaternion.Lerp(transform.rotation, current_point.rotation, 1.0f);
+            transform.rotation = current_point.rotation;
+            transform.position = current_point.position;
+
             if (buying)
             {
                 time_buying += Time.deltaTime;
 
-                if (time_buying >= 5.0f)
+                if (time_buying >= 6.0f)
                 {
                     agent.SetDestination(new Vector3(14, 0, 44));
                     agent.isStopped = false;
@@ -93,14 +105,10 @@ public class CostumerBehaviour : MonoBehaviour
             }
             else
             {
-                if (time_buying <= 0) leave = true;
+                if (time_buying < 0) leave = true;
                 time += time_rate * Time.deltaTime;
                 agent.isStopped = true;
-                animator.Play("walk", 0, 0.78f);
-                animator.speed = 0.0f;
-                //Quaternion.Lerp(transform.rotation, current_point.rotation, 1.0f);
-                transform.rotation = current_point.rotation;
-                transform.position = current_point.position;
+                
 
 
                 if (time >= time_between_moves && !buying)
