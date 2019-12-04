@@ -8,54 +8,19 @@ using System;
 
 public class GameController : MonoBehaviour
 {
-
     public bool is_day = true;
 
-    //public ChooseCashier1 choose1;
-    //public ChooseCashier2 choose2;
-    //public ChooseCashier3 choose3;
-
-    //public Dictionary<String, bool> client_cashiers_free;
-    // public Dictionary<String, bool> sk_cashiers_free;
-
-    // 0.0f = true, 1.0f = false
-    // Vector4 agreement: { x_pos, occupied_by_shopkeeper, z_pos, occupied_by_client}
-    public Dictionary<String, Vector4> cashiers;
-   // public Dictionary<String, Vector4> check_outs;
+    public float chance_to_buy = 0.40f;
+    public float chance_to_leave = 0.15f;
+    public float chance_to_keep = 0.45f;
 
     private void Start()
     {
-        //client_cashiers_free = new Dictionary<string, bool>();
-        //client_cashiers_free.Add("cashier_1", false);
-        //client_cashiers_free.Add("cashier_2", false);
-        //client_cashiers_free.Add("cashier_3", false);
-
-        //sk_cashiers_free = new Dictionary<string, bool>();
-        //sk_cashiers_free.Add("cashier_1", false);
-        //sk_cashiers_free.Add("cashier_2", false);
-        //sk_cashiers_free.Add("cashier_3", false);
-
-        cashiers = new Dictionary<string, Vector4>();
-
-        cashiers.Add("cashier_1", new Vector4(11.0f,0.0f,14.0f,0.0f));
-        cashiers.Add("cashier_2", new Vector4(4.0f,0.0f,14.0f,0.0f));
-        cashiers.Add("cashier_3", new Vector4(0.0f, 0.0f, 12.0f, 0.0f));
 
     }
 
     private void Update()
     {
-        //if (choose1.chosen)
-        //{
-        //    cashiers.Remove("cashier_1");
-        //    cashiers.Add("cashier_1", new Vector4(11.0f, 1.0f, 14.0f, 0.0f));
-
-        //}
-    }
-
-    public void foo()
-    {
-        int a = 1;
     }
 
 
