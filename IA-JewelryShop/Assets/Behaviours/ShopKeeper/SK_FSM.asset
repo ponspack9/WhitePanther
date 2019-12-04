@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f945e777233a59f4aba40aeca29093a6, type: 3}
   m_Name: SK_FSM
   m_EditorClassIdentifier: 
-  _serializedGraph: '{"version":2.85,"type":"NodeCanvas.StateMachines.FSM","nodes":[],"connections":[],"localBlackboard":{"_name":"Local
+  _serializedGraph: '{"version":2.85,"type":"NodeCanvas.StateMachines.FSM","translation":{"x":-5075.0,"y":-4854.0},"nodes":[{"_actionList":{"executionMode":"ActionsRunInParallel","actions":[]},"_position":{"x":5453.0,"y":4933.0},"_name":"Main","$type":"NodeCanvas.StateMachines.ActionState","$id":"2"},{"_nestedBT":{"_value":1},"executionMode":"Once","_position":{"x":5756.0,"y":5032.0},"$type":"NodeCanvas.StateMachines.NestedBTState","$id":"5"},{"_nestedBT":{"_value":2},"executionMode":"Once","_position":{"x":5585.0,"y":5175.0},"$type":"NodeCanvas.StateMachines.NestedBTState","$id":"7"},{"_actionList":{"executionMode":"ActionsRunInParallel","actions":[]},"_position":{"x":5216.0,"y":5189.0},"$type":"NodeCanvas.StateMachines.ActionState"}],"connections":[{"_condition":{"valueA":{"_name":"GlobalBlackboard/is_day","_targetVariableID":"f4a084ab-3111-463e-a285-dfc04a0b8506"},"valueB":{},"$type":"NodeCanvas.Tasks.Conditions.CheckBoolean"},"_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"5"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"5"},"_targetNode":{"$ref":"7"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"7"},"_targetNode":{"$ref":"2"},"$type":"NodeCanvas.StateMachines.FSMConnection"}],"primeNode":{"$ref":"2"},"localBlackboard":{"_name":"Local
     Blackboard","_variables":{}}}'
-  _objectReferences: []
+  _objectReferences:
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 8cc118e0ac2f5454e8062aee8d76ad60, type: 2}
+  - {fileID: 11400000, guid: 13f2054fed3381b42896ece45014d2b6, type: 2}
   _deserializationFailed: 0

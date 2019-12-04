@@ -857,6 +857,7 @@ GameObject:
   - component: {fileID: 1516313469}
   - component: {fileID: 1516313471}
   - component: {fileID: 16519981}
+  - component: {fileID: 16519980}
   m_Layer: 0
   m_Name: ShopKeeper
   m_TagString: Untagged
@@ -864,6 +865,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &16519980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16519979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b98a6db0b653f764eac834f85857a9dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _serializedBlackboard: '{"_variables":{}}'
+  _objectReferences: []
 --- !u!114 &16519981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -873,15 +888,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 16519979}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aad115aca74ce3c4891b3f6de0b4aae8, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a7dbb6bbdf4ffb46ab7dd87ba8191e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   boundGraphSerialization: 
   boundGraphObjectReferences: []
   enableAction: 0
   disableAction: 0
-  _graph: {fileID: 11400000, guid: 8cc118e0ac2f5454e8062aee8d76ad60, type: 2}
-  _blackboard: {fileID: 0}
+  _graph: {fileID: 11400000, guid: c28d0cb82de7034429d139975e0f5ac8, type: 2}
+  _blackboard: {fileID: 16519980}
 --- !u!1 &16520033
 GameObject:
   m_ObjectHideFlags: 0
@@ -9646,6 +9661,7 @@ MonoBehaviour:
     UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"C_points":{"_value":[8,9,10,11,12,13,14],"_name":"C_points","_id":"d2aef1b0-d9ef-4302-9ec3-8c05c80d22ce","$type":"NodeCanvas.Framework.Variable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
     UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"is_day":{"_value":true,"_name":"is_day","_id":"f4a084ab-3111-463e-a285-dfc04a0b8506","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}}}'
   _objectReferences:
   - {fileID: 0}
