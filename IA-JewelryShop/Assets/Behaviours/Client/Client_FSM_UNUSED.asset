@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f945e777233a59f4aba40aeca29093a6, type: 3}
-  m_Name: Client_FSM
+  m_Name: Client_FSM_UNUSED
   m_EditorClassIdentifier: 
   _serializedGraph: '{"version":2.85,"type":"NodeCanvas.StateMachines.FSM","translation":{"x":-5116.0,"y":-5721.0},"nodes":[{"_nestedBT":{},"_position":{"x":5487.0,"y":6198.0},"_name":"START","$type":"NodeCanvas.StateMachines.NestedBTState","$id":"2"},{"_nestedBT":{"_value":1},"executionMode":"Once","_position":{"x":5307.0,"y":5830.0},"_name":"Look
     around shop","$type":"NodeCanvas.StateMachines.NestedBTState","$id":"4"},{"_actionList":{"actions":[{"parameter":{"_value":"is_idle"},"parameterHashID":{},"setTo":{},"$type":"NodeCanvas.Tasks.Actions.MecanimSetBool"},{"targetPosition":{"_value":{"x":14.0,"z":44.0}},"speed":{"_value":4.0},"keepDistance":{"_value":0.1},"$type":"NodeCanvas.Tasks.Actions.MoveToPosition"},{"immediately":true,"$type":"NodeCanvas.Tasks.Actions.DestroyGameObject"}]},"_position":{"x":5080.0,"y":6102.0},"_name":"Leave

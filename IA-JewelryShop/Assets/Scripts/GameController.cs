@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour
     public float chance_to_buy = 0.80f;
     public float chance_to_leave = 0.10f;
     public float chance_to_keep = 0.10f;
-
+    
     private void Start()
     {
 
