@@ -10,9 +10,9 @@ public class GameController : MonoBehaviour
 {
     public bool is_day = true;
 
-    public float chance_to_buy = 0.40f;
-    public float chance_to_leave = 0.15f;
-    public float chance_to_keep = 0.45f;
+    public float chance_to_buy = 0.80f;
+    public float chance_to_leave = 0.10f;
+    public float chance_to_keep = 0.10f;
 
     private void Start()
     {
