@@ -28,7 +28,7 @@ public class ClientPickCashier : ActionTask
             client.is_leaving = true;
         }
 
-        return;
+        EndAction();
     }
 }
 

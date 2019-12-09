@@ -1859,6 +1859,9 @@ MonoBehaviour:
   i: 0
   j: 0
   target_cashier: {x: 0, y: 0, z: 0}
+  current_index: 0
+  current_point: {fileID: 0}
+  client_points: {fileID: 1535470368}
 --- !u!1 &45235775
 GameObject:
   m_ObjectHideFlags: 0
@@ -1894,6 +1897,7 @@ MonoBehaviour:
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"is_actually_buying":{"_propertyPath":"Client.is_actually_buying","_name":"is_actually_buying","_id":"f512a638-8848-4b92-a495-e51e7369619f","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"target_cashier":{"_propertyPath":"Client.target_cashier","_name":"target_cashier","_id":"f886ae08-74d4-455e-9531-93af44c5d76b","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.Vector3,
     UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"position":{"_propertyPath":"UnityEngine.Transform.position","_name":"position","_id":"4d5b5c6d-44dc-4a09-a091-f6398351a1ce","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.Vector3,
+    UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"current_point":{"_propertyPath":"Client.current_point","_name":"current_point","_id":"28a4a142-853e-4851-9889-a02a28980475","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.Transform,
     UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}}}'
   _objectReferences: []
 --- !u!114 &45235777
