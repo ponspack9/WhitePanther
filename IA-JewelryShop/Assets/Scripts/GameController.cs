@@ -10,13 +10,22 @@ public class GameController : MonoBehaviour
 {
     public bool is_day = true;
 
-    public float chance_to_buy = 0.80f;
-    public float chance_to_leave = 0.10f;
-    public float chance_to_keep = 0.10f;
-    
+    public float chance_to_buy = 0.25f;
+    public float chance_to_leave = 0.25f;
+    public float chance_to_keep = 0.50f;
+
+    [Header("Shop Keeper --------------------------------------------------------")]
+    public GameObject       SK_object;
+    public Dropdown         SK_dropdown;
+    public Button           SK_add;
+    public List<GameObject> SK;
+
     private void Start()
     {
-
+        SK = new List<GameObject>();
+        SK_add.onClick.AddListener(SKAdd);
+        //SK_reclaim.onValueChanged.AddListener(delegate {
+        //    SK_reclaim.onValueChanged.SK_reclaim; }) ;
     }
 
     private void Update()
@@ -24,9 +33,20 @@ public class GameController : MonoBehaviour
     }
 
 
+    public void SKChangeState()
+    {
+        SK[0].GetComponent<ShopKeeper>().is_reclamed = SK_dropdown.value == 0;
+        //if (is_day)
 
+        //    force_to_cashier = !force_to_cashier;
+        //else
+        //    force_to_cashier = false;
+    }
 
-
+    public void SKAdd()
+    {
+        SK.Add(Instantiate(SK_object));
+    }
 
 
 
@@ -80,7 +100,7 @@ public class GameController : MonoBehaviour
 
     //public Text probability_text;
 
-    //public Button reclaim_shop_keeper;
+    //
 
     //public Vector3 costumer_start_pos = new Vector3(14, 0, 44);
     //public Vector3 guard_start_pos = new Vector3(14, 0, 44);
