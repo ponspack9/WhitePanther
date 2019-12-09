@@ -13,40 +13,68 @@ public class GameController : MonoBehaviour
     public float chance_to_buy = 0.25f;
     public float chance_to_leave = 0.25f;
     public float chance_to_keep = 0.50f;
-
+    
     [Header("Shop Keeper --------------------------------------------------------")]
-    public GameObject       SK_object;
-    public Dropdown         SK_dropdown;
-    public Button           SK_add;
+    public GameObject SK_object;
+    public Dropdown SK_dropdown0;
+    public Dropdown SK_dropdown1;
+    public Dropdown SK_dropdown2;
+    public Dropdown SK_dropdown3;
+    public Button SK_add;
     public List<GameObject> SK;
+    private int SK_count = 0;
 
     private void Start()
     {
         SK = new List<GameObject>();
         SK_add.onClick.AddListener(SKAdd);
-        //SK_reclaim.onValueChanged.AddListener(delegate {
-        //    SK_reclaim.onValueChanged.SK_reclaim; }) ;
     }
 
     private void Update()
     {
     }
 
-
-    public void SKChangeState()
-    {
-        SK[0].GetComponent<ShopKeeper>().is_reclamed = SK_dropdown.value == 0;
-        //if (is_day)
-
-        //    force_to_cashier = !force_to_cashier;
-        //else
-        //    force_to_cashier = false;
-    }
-
     public void SKAdd()
     {
-        SK.Add(Instantiate(SK_object));
+        if (SK_count <= 3)
+        {
+            SK.Add(Instantiate(SK_object));
+            switch (SK_count)
+            {
+                case 0:
+                    SK_dropdown0.enabled = true;
+                    break;
+                case 1:
+                    SK_dropdown1.enabled = true;
+                    break;
+                case 2:
+                    SK_dropdown2.enabled = true;
+                    break;
+                case 3:
+                    SK_dropdown3.enabled = true;
+                    break;
+            }
+            SK_count++;
+        }
+
     }
+    public void SKChangeState0()
+    {
+        SK[0].GetComponent<ShopKeeper>().is_reclamed = SK_dropdown0.value == 0;
+    }
+    public void SKChangeState1()
+    {
+        SK[1].GetComponent<ShopKeeper>().is_reclamed = SK_dropdown1.value == 0;
+    }
+    public void SKChangeState2()
+    {
+        SK[2].GetComponent<ShopKeeper>().is_reclamed = SK_dropdown2.value == 0;
+    }
+    public void SKChangeState3()
+    {
+        SK[3].GetComponent<ShopKeeper>().is_reclamed = SK_dropdown3.value == 0;
+    }
+
 
 
 
