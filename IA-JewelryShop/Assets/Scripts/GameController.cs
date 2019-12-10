@@ -53,6 +53,8 @@ public class GameController : MonoBehaviour
                 case 3:
                     SK_dropdown3.enabled = true;
                     break;
+                default:
+                    break;
             }
             SK_count++;
         }

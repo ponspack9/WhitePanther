@@ -42,6 +42,27 @@ public class ClientLeaveCashier : ActionTask
     }
 }
 
+public class SKPickCashier : ActionTask
+{
+    protected override void OnExecute()
+    {
+        int c = -1;
+        Vector3 where = Cashier.PickAvailableForSK(out c);
+        ShopKeeper sk = agent.GetComponent<ShopKeeper>();
+
+        if (c >= 0)
+        {
+            sk.target_cashier = where;
+            sk.cashier = c;
+        }
+        else
+        {
+            sk.is_reclamed = false;
+        }
+
+        EndAction();
+    }
+}
 
 public class Cashier : MonoBehaviour
 {
@@ -106,17 +127,28 @@ public class Cashier : MonoBehaviour
         return Vector3.zero;
     }
 
-    public static Vector3 PickAvailableForSK()
+    public static Vector3 PickAvailableForSK(out int cashier)
     {
         for (int i = 0; i < num_cashiers; i++)
         {
             if (cashiers[i, 0] == false)
             {
                 cashiers[i, 0] = true;
-                return Vector3.up;
+                cashier = i;
+                switch (i)
+                {
+                    case 0:
+                        return cashier_1;
+                    case 1:
+                        return cashier_2;
+                    case 2:
+                        return cashier_3;
+                    default:
+                        return Vector3.zero;
+                }
             }
         }
-
+        cashier = -1;
         return Vector3.zero;
     }
 
