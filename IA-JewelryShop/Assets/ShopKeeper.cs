@@ -5,8 +5,8 @@ using UnityEngine;
 public class ShopKeeper : MonoBehaviour
 {
 
-    public bool is_reclamed = false;
-    public bool is_at_cashier = false;
+    public bool is_reclamed = true;
+
     public int cashier = -2;
     public Vector3 target_cashier = Vector3.zero;
 

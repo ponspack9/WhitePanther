@@ -64,6 +64,16 @@ public class SKPickCashier : ActionTask
     }
 }
 
+public class SKLeaveCashier : ActionTask
+{
+    protected override void OnExecute()
+    {
+        Cashier.LeaveCashierSK(agent.GetComponent<ShopKeeper>().cashier);
+
+        EndAction();
+    }
+}
+
 public class Cashier : MonoBehaviour
 {
     //public Vector2 my_pos = new Vector2(-1, -1);
@@ -126,6 +136,10 @@ public class Cashier : MonoBehaviour
         jndex = 0;
         return Vector3.zero;
     }
+    public static void LeaveCashierClient(int cashier,int row)
+    {
+        cashiers[cashier, row] = false;
+    }
 
     public static Vector3 PickAvailableForSK(out int cashier)
     {
@@ -150,6 +164,12 @@ public class Cashier : MonoBehaviour
         }
         cashier = -1;
         return Vector3.zero;
+    }
+
+    public static void LeaveCashierSK(int cashier)
+    {
+        if (cashier >= 0)
+            cashiers[cashier, 0] = false;
     }
 
     // Update is called once per frame
