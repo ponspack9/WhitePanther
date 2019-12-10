@@ -13,7 +13,12 @@ public class GameController : MonoBehaviour
     public float chance_to_buy = 0.25f;
     public float chance_to_leave = 0.25f;
     public float chance_to_keep = 0.50f;
-    
+
+    [Header("Client --------------------------------------------------------")]
+    public GameObject C_object;
+    public List<GameObject> C;
+
+
     [Header("Shop Keeper --------------------------------------------------------")]
     public GameObject SK_object;
     public Button SK_button0;
@@ -25,18 +30,69 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+
+        // Client ----------------------------
+        C = new List<GameObject>();
+        for (int i = 0; i < 9; i++)
+        {
+            C.Add(Instantiate(C_object));
+        }
+        // END Client ----------------------------
+
+        // Shop Keeper ----------------------------
         SK = new List<GameObject>();
         SK_add.onClick.AddListener(SKAdd);
         SK_button0.onClick.AddListener(SKChangeState0);
         SK_button1.onClick.AddListener(SKChangeState1);
         SK_button2.onClick.AddListener(SKChangeState2);
         SK_button3.onClick.AddListener(SKChangeState3);
+        // END Shop Keeper ----------------------------
     }
 
     private void Update()
     {
+        for (int i = 0; i < C.Count; i++)
+        {
+            Client client = C[i].GetComponent<Client>();
+            if (client.is_buying)
+                ManageClients(client);
+        }
     }
 
+
+    private void ManageClients(Client client)
+    {
+        // Client can't find a place in the queue, leaves angry
+        if (client.queue == -2)
+        {
+            client.is_buying = false;
+            return;
+        }
+        // First iteration of buying, pick a queue to stay
+        else if (client.queue == -1)
+        {
+            Cashier.PickAvailableForClient(0, out client.queue, out client.queue_pos);
+        }
+        // Client already has a queue and need to go closer
+        else
+        {
+            // It's first, so is paying the item and then leaving
+            if (client.queue_pos == 1)
+            {
+                client.is_leaving = true;
+            }
+            else
+            {
+                client.queue_pos = Cashier.AdvanceQueue(client.queue, client.queue_pos);
+            }
+        }
+
+        //queue_spot.z += (client.queue_pos == 1) ? 3.0f : 2.0f * client.queue_pos;
+        client.target_cashier = Cashier.GetVectorQueue(client.queue, client.queue_pos);
+    }
+
+
+    // Shop Keeper ----------------------------
     public void SKAdd()
     {
         switch (SK.Count)
@@ -97,32 +153,8 @@ public class GameController : MonoBehaviour
 
         SK_button3.GetComponentInChildren<Text>().text = (!reclaimed) ? "Serving clients" : "Filling stock";
     }
-    //public void SKChangeState1()
-    //{
-    //    if (!Cashier.IsThereFreeCashier()) return;
 
-    //    SK[1].GetComponent<ShopKeeper>().is_reclamed = !SK[1].GetComponent<ShopKeeper>().is_reclamed;
-
-    //    SK_button1.GetComponentInChildren<Text>().text = (SK[1].GetComponent<ShopKeeper>().is_reclamed) ? "Serving clients" : "Filling stock";
-    //}
-    //public void SKChangeState2()
-    //{
-    //    if (!Cashier.IsThereFreeCashier()) return;
-
-    //    SK[2].GetComponent<ShopKeeper>().is_reclamed = !SK[2].GetComponent<ShopKeeper>().is_reclamed;
-
-    //    SK_button2.GetComponentInChildren<Text>().text = (SK[2].GetComponent<ShopKeeper>().is_reclamed) ? "Serving clients" : "Filling stock";
-    //}
-    //public void SKChangeState3()
-    //{
-    //    if (!Cashier.IsThereFreeCashier()) return;
-
-    //    SK[3].GetComponent<ShopKeeper>().is_reclamed = !SK[3].GetComponent<ShopKeeper>().is_reclamed;
-
-    //    SK_button3.GetComponentInChildren<Text>().text = (SK[3].GetComponent<ShopKeeper>().is_reclamed) ? "Serving clients" : "Filling stock";
-    //}
-
-
+    // END Shop Keeper ----------------------------
 
 
 
