@@ -16,18 +16,21 @@ public class GameController : MonoBehaviour
     
     [Header("Shop Keeper --------------------------------------------------------")]
     public GameObject SK_object;
-    public Dropdown SK_dropdown0;
-    public Dropdown SK_dropdown1;
-    public Dropdown SK_dropdown2;
-    public Dropdown SK_dropdown3;
+    public Button SK_button0;
+    public Button SK_button1;
+    public Button SK_button2;
+    public Button SK_button3;
     public Button SK_add;
     public List<GameObject> SK;
-    private int SK_count = 0;
 
     private void Start()
     {
         SK = new List<GameObject>();
         SK_add.onClick.AddListener(SKAdd);
+        SK_button0.onClick.AddListener(SKChangeState0);
+        SK_button1.onClick.AddListener(SKChangeState1);
+        SK_button2.onClick.AddListener(SKChangeState2);
+        SK_button3.onClick.AddListener(SKChangeState3);
     }
 
     private void Update()
@@ -36,49 +39,88 @@ public class GameController : MonoBehaviour
 
     public void SKAdd()
     {
-        if (SK_count <= 3)
+        switch (SK.Count)
         {
-            SK.Add(Instantiate(SK_object));
-            switch (SK_count)
-            {
-                case 0:
-                    SK_dropdown0.enabled = true;
-                    break;
-                case 1:
-                    SK_dropdown1.enabled = true;
-                    break;
-                case 2:
-                    SK_dropdown2.enabled = true;
-                    break;
-                case 3:
-                    SK_dropdown3.enabled = true;
-                    break;
-                default:
-                    break;
-            }
-            SK_count++;
+            case 0:
+                SK_button0.gameObject.SetActive(true);
+                break;
+            case 1:
+                SK_button1.gameObject.SetActive(true);
+                break;
+            case 2:
+                SK_button2.gameObject.SetActive(true);
+                break;
+            case 3:
+                SK_button3.gameObject.SetActive(true);
+                break;
+            default:
+                break;
         }
+        SK.Add(Instantiate(SK_object));
+
+        if (SK.Count > 3) SK_add.gameObject.SetActive(false);
 
     }
     public void SKChangeState0()
     {
-        SK[0].GetComponent<ShopKeeper>().is_reclamed = SK_dropdown0.value == 0;
+        bool reclaimed = SK[0].GetComponent<ShopKeeper>().is_reclamed;
+        if (!reclaimed && !Cashier.IsThereFreeCashier()) return;
+
+        SK[0].GetComponent<ShopKeeper>().is_reclamed = !reclaimed;
+
+        SK_button0.GetComponentInChildren<Text>().text = (!reclaimed) ? "Serving clients" : "Filling stock";
     }
     public void SKChangeState1()
     {
-        SK[1].GetComponent<ShopKeeper>().is_reclamed = SK_dropdown1.value == 0;
+        bool reclaimed = SK[1].GetComponent<ShopKeeper>().is_reclamed;
+        if (!reclaimed && !Cashier.IsThereFreeCashier()) return;
+
+        SK[1].GetComponent<ShopKeeper>().is_reclamed = !reclaimed;
+
+        SK_button1.GetComponentInChildren<Text>().text = (!reclaimed) ? "Serving clients" : "Filling stock";
     }
     public void SKChangeState2()
     {
-        SK[2].GetComponent<ShopKeeper>().is_reclamed = SK_dropdown2.value == 0;
+        bool reclaimed = SK[2].GetComponent<ShopKeeper>().is_reclamed;
+        if (!reclaimed && !Cashier.IsThereFreeCashier()) return;
+
+        SK[2].GetComponent<ShopKeeper>().is_reclamed = !reclaimed;
+
+        SK_button2.GetComponentInChildren<Text>().text = (!reclaimed) ? "Serving clients" : "Filling stock";
     }
     public void SKChangeState3()
     {
-        SK[3].GetComponent<ShopKeeper>().is_reclamed = SK_dropdown3.value == 0;
+        bool reclaimed = SK[3].GetComponent<ShopKeeper>().is_reclamed;
+        if (!reclaimed && !Cashier.IsThereFreeCashier()) return;
+
+        SK[3].GetComponent<ShopKeeper>().is_reclamed = !reclaimed;
+
+        SK_button3.GetComponentInChildren<Text>().text = (!reclaimed) ? "Serving clients" : "Filling stock";
     }
+    //public void SKChangeState1()
+    //{
+    //    if (!Cashier.IsThereFreeCashier()) return;
 
+    //    SK[1].GetComponent<ShopKeeper>().is_reclamed = !SK[1].GetComponent<ShopKeeper>().is_reclamed;
 
+    //    SK_button1.GetComponentInChildren<Text>().text = (SK[1].GetComponent<ShopKeeper>().is_reclamed) ? "Serving clients" : "Filling stock";
+    //}
+    //public void SKChangeState2()
+    //{
+    //    if (!Cashier.IsThereFreeCashier()) return;
 
+    //    SK[2].GetComponent<ShopKeeper>().is_reclamed = !SK[2].GetComponent<ShopKeeper>().is_reclamed;
+
+    //    SK_button2.GetComponentInChildren<Text>().text = (SK[2].GetComponent<ShopKeeper>().is_reclamed) ? "Serving clients" : "Filling stock";
+    //}
+    //public void SKChangeState3()
+    //{
+    //    if (!Cashier.IsThereFreeCashier()) return;
+
+    //    SK[3].GetComponent<ShopKeeper>().is_reclamed = !SK[3].GetComponent<ShopKeeper>().is_reclamed;
+
+    //    SK_button3.GetComponentInChildren<Text>().text = (SK[3].GetComponent<ShopKeeper>().is_reclamed) ? "Serving clients" : "Filling stock";
+    //}
 
 
 

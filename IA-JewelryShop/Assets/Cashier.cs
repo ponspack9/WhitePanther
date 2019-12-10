@@ -106,6 +106,14 @@ public class Cashier : MonoBehaviour
 
     }
 
+    public static bool IsThereFreeCashier()
+    {
+        for (int i = 0; i < num_cashiers; i++)
+            if (cashiers[i, 0] == false)
+                return true;
+        return false;
+    }
+
     public static Vector3 PickAvailableForClient(int queue, out int index, out int jndex)
     {
 
