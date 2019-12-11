@@ -126,10 +126,10 @@ public class Cashier : MonoBehaviour
         return false;
     }
 
-    public static Vector3 PickAvailableForClient(int current_queue, out int queue, out int queue_row)
+    public static Vector3 PickAvailableForClient(out int queue, out int queue_row)
     {
 
-        for (int i = current_queue; i < num_cashiers; i++)
+        for (int i = 0; i < num_cashiers; i++)
         {
             for (int j = 1; j < num_rows; j++)
             {
@@ -158,10 +158,13 @@ public class Cashier : MonoBehaviour
     }
     public static Vector3 GetVectorQueue(int queue, int queue_pos)
     {
-        Vector3 ret = cashier_1;
+        Vector3 ret = Vector3.zero;
 
         switch (queue)
         {
+            case 0:
+                ret = cashier_1;
+                break;
             case 1:
                 ret = cashier_2;
                 break;
@@ -173,7 +176,7 @@ public class Cashier : MonoBehaviour
                 break;
         }
 
-        ret.z += (queue_pos == 1) ? 3.0f : 2.0f * queue_pos;
+        ret.z += (queue_pos == 1) ? 3.0f : 2.5f * queue_pos;
 
         return ret;
     }

@@ -53,9 +53,18 @@ public class GameController : MonoBehaviour
     {
         for (int i = 0; i < C.Count; i++)
         {
-            Client client = C[i].GetComponent<Client>();
-            if (client.is_buying)
-                ManageClients(client);
+            if (C[i].transform.position.z >= 45)
+            {
+                Destroy(C[i]);
+                C.Remove(C[i]);
+            }
+            else
+            {
+                Client client = C[i].GetComponent<Client>();
+                if (client.is_buying)
+                    ManageClients(client);
+            }
+            
         }
     }
 
@@ -71,7 +80,7 @@ public class GameController : MonoBehaviour
         // First iteration of buying, pick a queue to stay
         else if (client.queue == -1)
         {
-            Cashier.PickAvailableForClient(0, out client.queue, out client.queue_pos);
+            Cashier.PickAvailableForClient(out client.queue, out client.queue_pos);
         }
         // Client already has a queue and need to go closer
         else
@@ -87,7 +96,6 @@ public class GameController : MonoBehaviour
             }
         }
 
-        //queue_spot.z += (client.queue_pos == 1) ? 3.0f : 2.0f * client.queue_pos;
         client.target_cashier = Cashier.GetVectorQueue(client.queue, client.queue_pos);
     }
 
