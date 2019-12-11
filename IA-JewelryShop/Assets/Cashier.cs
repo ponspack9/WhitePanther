@@ -46,11 +46,11 @@ public class ClientPickCashier : ActionTask
 
 public class ClientLeaveCashier : ActionTask
 {
-    Cashier cashier;
-
     protected override void OnExecute()
     {
-        
+        Cashier.LeaveCashierClient(agent.GetComponent<Client>().queue, agent.GetComponent<Client>().queue_pos);
+
+        EndAction();
     }
 }
 
@@ -131,7 +131,7 @@ public class Cashier : MonoBehaviour
 
         for (int i = 0; i < num_cashiers; i++)
         {
-            for (int j = 1; j < num_rows; j++)
+            for (int j = num_rows-1; j > 0; j--)
             {
                 if (cashiers[i, j] == false)
                 {
@@ -182,12 +182,18 @@ public class Cashier : MonoBehaviour
     }
     public static int AdvanceQueue(int queue, int queue_row)
     {
+        //int row = (queue_row >= 2) ? queue_row - 1 : 1;
+        //if (cashiers[queue, row] == false)
+        //{
+        //    return row;
+        //}
 
         for (int j = queue_row; j > 0; j--)
         {
             if (cashiers[queue, j] == false)
             {
                 cashiers[queue, j] = true;
+                if (j != queue_row) cashiers[queue, queue_row] = false;
                 return j;
             }
         }

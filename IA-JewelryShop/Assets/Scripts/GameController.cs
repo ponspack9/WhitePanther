@@ -27,13 +27,14 @@ public class GameController : MonoBehaviour
     public Button SK_button3;
     public Button SK_add;
     public List<GameObject> SK;
+    public float SK_cashier_time = 7.0f;
 
     private void Start()
     {
 
         // Client ----------------------------
         C = new List<GameObject>();
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < 6; i++)
         {
             C.Add(Instantiate(C_object));
         }
@@ -85,17 +86,26 @@ public class GameController : MonoBehaviour
         // Client already has a queue and need to go closer
         else
         {
-            // It's first, so is paying the item and then leaving
             if (client.queue_pos == 1)
             {
                 client.is_leaving = true;
+                //Cashier.LeaveCashierClient(client.queue, client.queue_pos);
+
             }
             else
             {
                 client.queue_pos = Cashier.AdvanceQueue(client.queue, client.queue_pos);
-            }
-        }
 
+            }
+            //int pos = client.queue_pos;
+            // It's first, so is paying the item and then leaving
+                //if (client.queue_pos != pos)
+                //{
+                //    Cashier.LeaveCashierClient(client.queue, client.queue_pos);
+                //}
+            
+        }
+        client.gameObject.name = "Client [" + client.queue + "," + client.queue_pos + "]";
         client.target_cashier = Cashier.GetVectorQueue(client.queue, client.queue_pos);
     }
 

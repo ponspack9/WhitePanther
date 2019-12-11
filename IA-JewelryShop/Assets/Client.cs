@@ -20,6 +20,7 @@ public class Client : MonoBehaviour
 {
     public bool is_buying = false;
     public bool is_first = false;
+    public bool is_queue_step = false;
 
     public bool is_leaving = false;
     public bool is_in_queue = false;
