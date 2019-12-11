@@ -110,6 +110,7 @@ public class GameController : MonoBehaviour
         }
         client.gameObject.name = "Client [" + client.queue + "," + client.queue_pos + "]";
         client.target_cashier = Cashier.GetVectorQueue(client.queue, client.queue_pos);
+        if (client.queue_pos > 0) client.is_anyone_attending = Cashier.cashiers[client.queue, 0];
     }
 
 
