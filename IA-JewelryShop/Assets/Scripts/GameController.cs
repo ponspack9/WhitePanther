@@ -34,7 +34,7 @@ public class GameController : MonoBehaviour
 
         // Client ----------------------------
         C = new List<GameObject>();
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 25; i++)
         {
             C.Add(Instantiate(C_object));
         }
