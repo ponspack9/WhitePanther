@@ -48,7 +48,11 @@ public class ClientLeaveCashier : ActionTask
 {
     protected override void OnExecute()
     {
-        Cashier.LeaveCashierClient(agent.GetComponent<Client>().queue, agent.GetComponent<Client>().queue_pos);
+        Client client = agent.GetComponent<Client>();
+        if (client.queue_pos == 1)
+            client.sprite.sprite = Resources.Load<Sprite>("happyface");
+
+        Cashier.LeaveCashierClient(client.queue, client.queue_pos);
 
         EndAction();
     }

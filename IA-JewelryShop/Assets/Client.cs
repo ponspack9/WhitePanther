@@ -3,13 +3,13 @@ using NodeCanvas.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomLook : ActionTask
+public class LeaveAngry : ActionTask
 {
     protected override void OnExecute()
     {
 
-        agent.GetComponent<Client>().current_index = Random.Range(0, 55);
-        agent.GetComponent<Client>().current_point = agent.GetComponent<Client>().client_points.GetChild(Random.Range(0, agent.GetComponent<Client>().client_points.childCount - 1));
+        agent.GetComponent<Client>().sprite.sprite = Resources.Load<Sprite>("angryface");
+        //agent.GetComponent<Client>().current_point = agent.GetComponent<Client>().client_points.GetChild(Random.Range(0, agent.GetComponent<Client>().client_points.childCount - 1));
 
         EndAction();
     }
@@ -31,7 +31,7 @@ public class Client : MonoBehaviour
 
     public Vector3 target_cashier = Vector3.zero;
 
-    private SpriteRenderer sprite;
+    public SpriteRenderer sprite;
 
     public int current_index = 5;
     public Transform current_point;

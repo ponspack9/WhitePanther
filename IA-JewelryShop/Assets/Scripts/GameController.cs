@@ -34,7 +34,7 @@ public class GameController : MonoBehaviour
 
         // Client ----------------------------
         C = new List<GameObject>();
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < 40; i++)
         {
             C.Add(Instantiate(C_object));
         }
@@ -76,6 +76,9 @@ public class GameController : MonoBehaviour
         if (client.queue == -2)
         {
             client.is_buying = false;
+            client.is_leaving = true;
+            //client.sprite.sprite = Resources.Load<Sprite>("angryface");
+
             return;
         }
         // First iteration of buying, pick a queue to stay
