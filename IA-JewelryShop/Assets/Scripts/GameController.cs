@@ -1,15 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using NodeCanvas.Framework;
-using System;
-
 
 public class GameController : MonoBehaviour
 {
     public bool is_day = true;
 
+    [Header("Time --------------------------------------------------------")]
+    private int day = 1;
+    public int hour = 0;
+    public int minute = 0;
+    private float time_rate = 6.5f;
+    private float time = 0.0f;
+
+    [Header("Shop status --------------------------------------------------------")]
+    public float fame = 1.0f;
+    public float money = 1000.0f;
+    public float fame_per_sale = 0.5f;
+    public float money_per_sale = 150.0f;
+    
+    [Header("Read only")]
     public float chance_to_buy = 0.25f;
     public float chance_to_leave = 0.25f;
     public float chance_to_keep = 0.50f;
@@ -17,7 +27,6 @@ public class GameController : MonoBehaviour
     [Header("Client --------------------------------------------------------")]
     public GameObject C_object;
     public List<GameObject> C;
-
 
     [Header("Shop Keeper --------------------------------------------------------")]
     public GameObject SK_object;
@@ -28,13 +37,23 @@ public class GameController : MonoBehaviour
     public Button SK_add;
     public List<GameObject> SK;
     public float SK_cashier_time = 7.0f;
+    public float SK_money = 4000.0f;
+
+
+    [Header("Canvas --------------------------------------------------------")]
+    public Text text_fame;
+    public Text text_money;
 
     private void Start()
     {
 
+        // Canvas ----------------------------
+
+        // END Canvas ----------------------------
+
         // Client ----------------------------
         C = new List<GameObject>();
-        for (int i = 0; i < 40; i++)
+        for (int i = 0; i < 20; i++)
         {
             C.Add(Instantiate(C_object));
         }
@@ -52,6 +71,16 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
+
+        // Fame and chances ----------------------------
+        chance_to_buy = Mathf.Log10(fame) + Mathf.Sqrt(fame)/2;
+        chance_to_leave = (10.0f - chance_to_buy) * 0.25f;
+        chance_to_keep = (10.0f - chance_to_buy) * 0.75f;
+
+        text_fame.text = "Fame: " + fame;
+        text_money.text = "Money: " + money;
+
+        // Client ----------------------------
         for (int i = 0; i < C.Count; i++)
         {
             if (C[i].transform.position.z >= 45)
@@ -92,21 +121,11 @@ public class GameController : MonoBehaviour
             if (client.queue_pos == 1)
             {
                 client.is_leaving = true;
-                //Cashier.LeaveCashierClient(client.queue, client.queue_pos);
-
             }
             else
             {
                 client.queue_pos = Cashier.AdvanceQueue(client.queue, client.queue_pos);
-
             }
-            //int pos = client.queue_pos;
-            // It's first, so is paying the item and then leaving
-                //if (client.queue_pos != pos)
-                //{
-                //    Cashier.LeaveCashierClient(client.queue, client.queue_pos);
-                //}
-            
         }
         client.gameObject.name = "Client [" + client.queue + "," + client.queue_pos + "]";
         client.target_cashier = Cashier.GetVectorQueue(client.queue, client.queue_pos);
@@ -117,6 +136,8 @@ public class GameController : MonoBehaviour
     // Shop Keeper ----------------------------
     public void SKAdd()
     {
+        if (money < SK_money) return;
+
         switch (SK.Count)
         {
             case 0:
@@ -135,8 +156,10 @@ public class GameController : MonoBehaviour
                 break;
         }
         SK.Add(Instantiate(SK_object));
+        money -= SK_money;
 
         if (SK.Count > 3) SK_add.gameObject.SetActive(false);
+        else SK_money += 100 * SK.Count;
 
     }
     public void SKChangeState0()
@@ -182,12 +205,7 @@ public class GameController : MonoBehaviour
 
 
 
-    //[Header("Time --------------------------------------------------------")]
-    //private int day = 1;
-    //public int hour = 0; 
-    //public int minute = 0;
-    //private float time_rate = 6.5f;
-    //private float time = 0.0f;
+    
 
     //public float clients_time = 0.0f;
 

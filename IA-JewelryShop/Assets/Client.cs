@@ -7,9 +7,7 @@ public class LeaveAngry : ActionTask
 {
     protected override void OnExecute()
     {
-
         agent.GetComponent<Client>().sprite.sprite = Resources.Load<Sprite>("angryface");
-        //agent.GetComponent<Client>().current_point = agent.GetComponent<Client>().client_points.GetChild(Random.Range(0, agent.GetComponent<Client>().client_points.childCount - 1));
 
         EndAction();
     }
@@ -38,7 +36,6 @@ public class Client : MonoBehaviour
     public Transform current_point;
     public Transform client_points;
 
-    //public float random_chance_buy = 0.0f;
 
     // Start is called before the first frame update
     void Start()

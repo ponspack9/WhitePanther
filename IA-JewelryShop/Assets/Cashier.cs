@@ -95,8 +95,8 @@ public class Cashier : MonoBehaviour
     //public Vector2 my_pos = new Vector2(-1, -1);
 
     public static bool[,] cashiers;
-    public static int num_cashiers = 3;
-    public static int num_rows = 6;
+    public static int num_cashiers = 3; // FIXED
+    public static int num_rows = 7;
     public static bool initialized = false;
 
     private static Vector3 cashier_1 = new Vector3(14, 0, 11);
