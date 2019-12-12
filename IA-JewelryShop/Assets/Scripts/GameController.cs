@@ -32,6 +32,8 @@ public class GameController : MonoBehaviour
     [Header("Client --------------------------------------------------------")]
     public GameObject C_object;
     public List<GameObject> C;
+    public GameObject C_points_parent;
+    public List<GameObject> C_points;
 
     [Header("Shop Keeper --------------------------------------------------------")]
     public GameObject SK_object;
@@ -43,6 +45,12 @@ public class GameController : MonoBehaviour
     public List<GameObject> SK;
     public float SK_cashier_time = 7.0f;
     public float SK_money = 4000.0f;
+
+    [Header("Shop Extension --------------------------------------------------------")]
+    public GameObject extra_showers_parent;
+    public GameObject extra_points_parent;
+
+
 
 
     [Header("Canvas --------------------------------------------------------")]
@@ -65,6 +73,7 @@ public class GameController : MonoBehaviour
         // time
         slider_time_flow.value = time_flow;
         // END Canvas ----------------------------
+        
 
         // Client ----------------------------
         C = new List<GameObject>();
