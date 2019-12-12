@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     public bool is_day = true;
+    private int initial_clients = 15;
 
     [Header("Time --------------------------------------------------------")]
     private int day = 1;
@@ -13,9 +14,11 @@ public class GameController : MonoBehaviour
     private float time_rate = 6.5f;
     private float time = 0.0f;
 
+    //[SerializeField]
+    private float fame = 1.0f;
+    //[SerializeField]
+    private float money = 1000.0f;
     [Header("Shop status --------------------------------------------------------")]
-    public float fame = 1.0f;
-    public float money = 1000.0f;
     public float fame_per_sale = 0.5f;
     public float money_per_sale = 150.0f;
     
@@ -43,6 +46,9 @@ public class GameController : MonoBehaviour
     [Header("Canvas --------------------------------------------------------")]
     public Text text_fame;
     public Text text_money;
+    public Text text_chance_to_buy;
+    public Text text_chance_to_leave;
+    public Text text_chance_to_keep;
 
     private void Start()
     {
@@ -53,7 +59,7 @@ public class GameController : MonoBehaviour
 
         // Client ----------------------------
         C = new List<GameObject>();
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < initial_clients; i++)
         {
             C.Add(Instantiate(C_object));
         }
@@ -73,14 +79,22 @@ public class GameController : MonoBehaviour
     {
 
         // Fame and chances ----------------------------
-        chance_to_buy = Mathf.Log10(fame) + Mathf.Sqrt(fame)/2;
+        chance_to_buy = Mathf.Log10(fame) + Mathf.Sqrt(fame) / 2;
         chance_to_leave = (10.0f - chance_to_buy) * 0.25f;
         chance_to_keep = (10.0f - chance_to_buy) * 0.75f;
 
-        text_fame.text = "Fame: " + fame;
-        text_money.text = "Money: " + money;
+        text_chance_to_buy.text = "Sale rate: " + chance_to_buy.ToString("F2") + "%";
+        text_chance_to_leave.text = "Leave rate: " + chance_to_leave.ToString("F2") + "%";
+        text_chance_to_keep.text = "Curiosity rate: " + chance_to_keep.ToString("F2") + "%";
+        text_fame.text = "Fame: " + Mathf.Round(fame * 100f) / 100f; ;
+        text_money.text = "Money: " + Mathf.Round(money * 100f) / 100f; ;
 
         // Client ----------------------------
+        ManageClients();
+    }
+
+    private void ManageClients()
+    {
         for (int i = 0; i < C.Count; i++)
         {
             if (C[i].transform.position.z >= 45)
@@ -92,14 +106,13 @@ public class GameController : MonoBehaviour
             {
                 Client client = C[i].GetComponent<Client>();
                 if (client.is_buying)
-                    ManageClients(client);
+                    ManageClient(client);
             }
-            
+
         }
     }
 
-
-    private void ManageClients(Client client)
+    private void ManageClient(Client client)
     {
         // Client can't find a place in the queue, leaves angry
         if (client.queue == -2)
