@@ -9307,7 +9307,7 @@ MonoBehaviour:
   SK_add: {fileID: 1124911549}
   SK: []
   SK_cashier_time: 4
-  SK_money: 100
+  SK_money: 1000
   text_fame: {fileID: 1678789885}
   text_money: {fileID: 989894135}
   text_chance_to_buy: {fileID: 1697554920}
@@ -10727,7 +10727,7 @@ MonoBehaviour:
   SK_add: {fileID: 0}
   SK: []
   SK_cashier_time: 4
-  SK_money: 100
+  SK_money: 1000
   text_fame: {fileID: 0}
   text_money: {fileID: 0}
   text_chance_to_buy: {fileID: 0}

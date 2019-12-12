@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
     private float time = 0.0f;
 
     //[SerializeField]
-    private float fame = 1.0f;
+    private float fame = 20.0f;
     //[SerializeField]
     private float money = 1000.0f;
     [Header("Shop status --------------------------------------------------------")]
