@@ -17,9 +17,10 @@ public class GameController : MonoBehaviour
     //[SerializeField]
     private float fame = 20.0f;
     //[SerializeField]
-    private float money = 1000.0f;
+    private float money = 4000.0f;
     [Header("Shop status --------------------------------------------------------")]
-    public float fame_per_sale = 0.5f;
+    public float fame_per_sale = 1.5f;
+    public float fame_per_angry = 0.5f;
     public float money_per_sale = 150.0f;
     
     [Header("Read only")]
@@ -79,13 +80,14 @@ public class GameController : MonoBehaviour
     {
 
         // Fame and chances ----------------------------
+        // It is in per 10 ( not per cent %)
         chance_to_buy = Mathf.Log10(fame) + Mathf.Sqrt(fame) / 2;
         chance_to_leave = (10.0f - chance_to_buy) * 0.25f;
         chance_to_keep = (10.0f - chance_to_buy) * 0.75f;
 
-        text_chance_to_buy.text = "Sale rate: " + chance_to_buy.ToString("F2") + "%";
-        text_chance_to_leave.text = "Leave rate: " + chance_to_leave.ToString("F2") + "%";
-        text_chance_to_keep.text = "Curiosity rate: " + chance_to_keep.ToString("F2") + "%";
+        text_chance_to_buy.text = "Sale rate: " + (chance_to_buy*10.0f).ToString("F2") + "%";
+        text_chance_to_leave.text = "Leave rate: " + (chance_to_leave*10.0f).ToString("F2") + "%";
+        text_chance_to_keep.text = "Curiosity rate: " + (chance_to_keep*10.0f).ToString("F2") + "%";
         text_fame.text = "Fame: " + Mathf.Round(fame * 100f) / 100f; ;
         text_money.text = "Money: " + Mathf.Round(money * 100f) / 100f; ;
 
