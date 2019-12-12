@@ -11,8 +11,9 @@ public class GameController : MonoBehaviour
     private int day = 1;
     public int hour = 0;
     public int minute = 0;
-    private float time_rate = 6.5f;
+    private float time_flow = 6.5f;
     private float time = 0.0f;
+
 
     //[SerializeField]
     private float fame = 20.0f;
@@ -51,11 +52,18 @@ public class GameController : MonoBehaviour
     public Text text_chance_to_leave;
     public Text text_chance_to_keep;
 
+    public Text text_day;
+    public Text text_hour;
+    public Text text_minute;
+    public Slider slider_time_flow;
+
+
     private void Start()
     {
 
         // Canvas ----------------------------
-
+        // time
+        slider_time_flow.value = time_flow;
         // END Canvas ----------------------------
 
         // Client ----------------------------
@@ -78,21 +86,54 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
+        AdvanceTime();
 
         // Fame and chances ----------------------------
+        UpdateChances();
+
+        // Client ----------------------------
+        ManageClients();
+    }
+
+    private void AdvanceTime()
+    {
+        time_flow = slider_time_flow.value;
+
+        time += Time.deltaTime * time_flow;
+
+        if (time >= 1)
+        {
+            time = 0.0f;
+            minute++;
+        }
+        if (minute >= 60)
+        {
+            minute = 0;
+            hour++;
+            if (hour >= 24)
+            {
+                hour = 0;
+                day++;
+            }
+        }
+        // Updating canvas
+        text_day.text = (!is_day) ? "Night " + day.ToString() : "Day " + day.ToString();
+        text_hour.text = (hour < 10) ? "0" + hour.ToString() : hour.ToString();
+        text_minute.text = (minute < 10) ? "0" + minute.ToString() : minute.ToString();
+    }
+
+    private void UpdateChances()
+    {
         // It is in per 10 ( not per cent %)
         chance_to_buy = Mathf.Log10(fame) + Mathf.Sqrt(fame) / 2;
         chance_to_leave = (10.0f - chance_to_buy) * 0.25f;
         chance_to_keep = (10.0f - chance_to_buy) * 0.75f;
 
-        text_chance_to_buy.text = "Sale rate: " + (chance_to_buy*10.0f).ToString("F2") + "%";
-        text_chance_to_leave.text = "Leave rate: " + (chance_to_leave*10.0f).ToString("F2") + "%";
-        text_chance_to_keep.text = "Curiosity rate: " + (chance_to_keep*10.0f).ToString("F2") + "%";
+        text_chance_to_buy.text = "Sale rate: " + (chance_to_buy * 10.0f).ToString("F2") + "%";
+        text_chance_to_leave.text = "Leave rate: " + (chance_to_leave * 10.0f).ToString("F2") + "%";
+        text_chance_to_keep.text = "Curiosity rate: " + (chance_to_keep * 10.0f).ToString("F2") + "%";
         text_fame.text = "Fame: " + Mathf.Round(fame * 100f) / 100f; ;
-        text_money.text = "Money: " + Mathf.Round(money * 100f) / 100f; ;
-
-        // Client ----------------------------
-        ManageClients();
+        text_money.text = "Money: " + Mathf.Round(money * 100f) / 100f;
     }
 
     private void ManageClients()
