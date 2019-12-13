@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
 
     [Header("Time --------------------------------------------------------")]
     private int day = 1;
-    private int hour = 9;
+    private int hour = 20;
     private int minute = 0;
     private float time_flow = 6.5f;
     private float time = 0.0f;
@@ -142,6 +142,21 @@ public class GameController : MonoBehaviour
     }
     private void Update()
     {
+        Restock();
+
+        ShowUpgrades();
+
+        AdvanceTime();
+
+        // Fame and chances ----------------------------
+        UpdateChances();
+
+        // Client ----------------------------
+        ManageClients();
+    }
+
+    private void Restock()
+    {
         // Destroying previous icons
         for (int i = 0; i < SK_needs_restock_icon.Count; i++)
         {
@@ -171,17 +186,8 @@ public class GameController : MonoBehaviour
             else
                 C_points.Add(C_points_all[i]);
         }
-
-        ShowExtensions();
-
-        AdvanceTime();
-
-        // Fame and chances ----------------------------
-        UpdateChances();
-
-        // Client ----------------------------
-        ManageClients();
     }
+
     private void ToggleUpgrade()
     {
         upgrading = !upgrading;
@@ -206,7 +212,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void ShowExtensions()
+    private void ShowUpgrades()
     {
         if (!upgrading) return;
 
@@ -311,6 +317,8 @@ public class GameController : MonoBehaviour
                 day++;
             }
         }
+
+        is_day = hour <= 21 && hour >= 8;
         // Updating canvas
         text_day.text = (!is_day) ? "Night " + day.ToString() : "Day " + day.ToString();
         text_hour.text = (hour < 10) ? "0" + hour.ToString() : hour.ToString();
