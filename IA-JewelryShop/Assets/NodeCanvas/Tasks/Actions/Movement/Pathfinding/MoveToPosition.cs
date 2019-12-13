@@ -46,7 +46,7 @@ namespace NodeCanvas.Tasks.Actions{
 		}
 
 		protected override void OnStop(){
-			if (lastRequest != null && agent != null && agent.gameObject.activeSelf){
+			if (lastRequest != null && agent != null && agent.gameObject.activeSelf && agent.isActiveAndEnabled){
 				agent.ResetPath();
 			}
 			lastRequest = null;

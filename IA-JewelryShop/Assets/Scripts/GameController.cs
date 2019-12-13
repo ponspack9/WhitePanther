@@ -111,6 +111,32 @@ public class GameController : MonoBehaviour
     private void Update()
     {
 
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray,out hit,100.0f,LayerMask.GetMask("extra")))
+        {
+            Debug.Log("Hit to " + hit.transform.name);
+            
+            //Transform parent = extra_showers_parent.transform.GetChild(i);
+            Transform parent = hit.transform.parent;
+
+            for (int i = 0; i < parent.childCount; i++)
+            {
+                Transform child = parent.GetChild(i);
+                //for (int j = 0; j< child.childCount; j++)
+                //{
+                    //if (child.gameObject.name.Equals( hit.transform.gameObject.name))
+                    //{
+                        Debug.Log("FOUND EXTRA");
+                        child.GetComponent<MeshRenderer>().material = material_shop_interiors;
+                    //}
+                //}
+                //parent.GetChild(i).GetComponent<MeshRenderer>().material = material_shop_interiors;
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.X))
         {
             extra_showers_parent.transform.GetChild(extra_level).gameObject.SetActive(
@@ -120,6 +146,7 @@ public class GameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C) && extra_level <= 11)
         {
             Transform parent = extra_showers_parent.transform.GetChild(extra_level);
+            
             for (int i = 0; i < parent.childCount; i++)
             {
                 parent.GetChild(i).GetComponent<MeshRenderer>().material = material_shop_interiors;
@@ -210,7 +237,6 @@ public class GameController : MonoBehaviour
         {
             client.is_buying = false;
             client.is_leaving = true;
-            //client.sprite.sprite = Resources.Load<Sprite>("angryface");
 
             return;
         }
