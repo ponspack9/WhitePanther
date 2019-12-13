@@ -180,7 +180,7 @@ public class Cashier : MonoBehaviour
                 break;
         }
 
-        ret.z += (queue_pos == 1) ? 3.0f : 2.5f * queue_pos;
+        ret.z += (queue_pos == 1) ? 3.5f : 2.75f * queue_pos;
 
         return ret;
     }

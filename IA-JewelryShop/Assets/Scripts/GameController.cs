@@ -9,8 +9,8 @@ public class GameController : MonoBehaviour
 
     [Header("Time --------------------------------------------------------")]
     private int day = 1;
-    public int hour = 0;
-    public int minute = 0;
+    private int hour = 9;
+    private int minute = 0;
     private float time_flow = 6.5f;
     private float time = 0.0f;
 
@@ -31,25 +31,28 @@ public class GameController : MonoBehaviour
 
     [Header("Client --------------------------------------------------------")]
     public GameObject C_object;
-    public List<GameObject> C;
     public GameObject C_points_parent;
+    public List<GameObject> C;
     public List<GameObject> C_points;
 
     [Header("Shop Keeper --------------------------------------------------------")]
     public GameObject SK_object;
+    public GameObject SK_points_parent;
     public Button SK_button0;
     public Button SK_button1;
     public Button SK_button2;
     public Button SK_button3;
     public Button SK_add;
     public List<GameObject> SK;
+    public List<GameObject> SK_points;
     public float SK_cashier_time = 7.0f;
-    public float SK_money = 4000.0f;
+    public float SK_money = 1000.0f;
 
     [Header("Shop Extension --------------------------------------------------------")]
     public GameObject extra_showers_parent;
     public GameObject extra_points_parent;
-
+    private int extra_level = 0;
+    public Material material_shop_interiors;
 
 
 
@@ -81,6 +84,12 @@ public class GameController : MonoBehaviour
         {
             C.Add(Instantiate(C_object));
         }
+
+        C_points = new List<GameObject>();
+        for (int i = 0; i < C_points_parent.transform.childCount; i++)
+        {
+            C_points.Add(C_points_parent.transform.GetChild(i).gameObject);
+        }
         // END Client ----------------------------
 
         // Shop Keeper ----------------------------
@@ -90,11 +99,41 @@ public class GameController : MonoBehaviour
         SK_button1.onClick.AddListener(SKChangeState1);
         SK_button2.onClick.AddListener(SKChangeState2);
         SK_button3.onClick.AddListener(SKChangeState3);
+
+        SK_points = new List<GameObject>();
+        for (int i = 0; i < SK_points_parent.transform.childCount; i++)
+        {
+            SK_points.Add(SK_points_parent.transform.GetChild(i).gameObject);
+        }
         // END Shop Keeper ----------------------------
     }
 
     private void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            extra_showers_parent.transform.GetChild(extra_level).gameObject.SetActive(
+                !extra_showers_parent.transform.GetChild(extra_level).gameObject.activeSelf);
+
+        }
+        if (Input.GetKeyDown(KeyCode.C) && extra_level <= 11)
+        {
+            Transform parent = extra_showers_parent.transform.GetChild(extra_level);
+            for (int i = 0; i < parent.childCount; i++)
+            {
+                parent.GetChild(i).GetComponent<MeshRenderer>().material = material_shop_interiors;
+            }
+
+            parent = extra_points_parent.transform.GetChild(extra_level++);
+            for (int i=0;i< parent.childCount;i++)
+            {
+                C_points.Add(parent.GetChild(i).gameObject);
+                SK_points.Add(parent.GetChild(i).gameObject);
+            }
+        }
+
+
         AdvanceTime();
 
         // Fame and chances ----------------------------
@@ -224,7 +263,7 @@ public class GameController : MonoBehaviour
         money -= SK_money;
 
         if (SK.Count > 3) SK_add.gameObject.SetActive(false);
-        else SK_money += 100 * SK.Count;
+        else SK_money += 1000 * SK.Count;
 
     }
     public void SKChangeState0()

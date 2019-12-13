@@ -239,7 +239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   is_reclamed: 1
-  cashier: -1
+  queue: -2
   target_cashier: {x: 0, y: 0, z: 0}
 --- !u!114 &7584578926415916802
 MonoBehaviour:
