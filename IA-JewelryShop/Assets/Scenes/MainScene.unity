@@ -11373,6 +11373,7 @@ MonoBehaviour:
   extra_points_parent: {fileID: 1649302761}
   material_shop_interiors: {fileID: 2100000, guid: b243f1f84ea457945900d7c80e573112,
     type: 2}
+  green: {fileID: 2100000, guid: d2a3c08a150b51a4a8930f715596f3a8, type: 2}
   text_fame: {fileID: 1678789885}
   text_money: {fileID: 989894135}
   text_chance_to_buy: {fileID: 1697554920}
@@ -13187,6 +13188,7 @@ MonoBehaviour:
   extra_showers_parent: {fileID: 0}
   extra_points_parent: {fileID: 0}
   material_shop_interiors: {fileID: 0}
+  green: {fileID: 0}
   text_fame: {fileID: 0}
   text_money: {fileID: 0}
   text_chance_to_buy: {fileID: 0}
@@ -16152,7 +16154,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1085598294}
   m_Layer: 0
-  m_Name: shower
+  m_Name: shower (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

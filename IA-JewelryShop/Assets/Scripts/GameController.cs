@@ -53,7 +53,8 @@ public class GameController : MonoBehaviour
     public GameObject extra_points_parent;
     private int extra_level = 0;
     public Material material_shop_interiors;
-
+    public Material green;
+    private float fade_timer = 1.0f;
 
 
     [Header("Canvas --------------------------------------------------------")]
@@ -68,7 +69,7 @@ public class GameController : MonoBehaviour
     public Text text_minute;
     public Slider slider_time_flow;
 
-
+    
     private void Start()
     {
 
@@ -110,30 +111,36 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
+        for (int j = 0; j < extra_showers_parent.transform.childCount; j++)
+        {
+            Transform parent = extra_showers_parent.transform.GetChild(j);
 
+            for (int i = 0; i < parent.childCount; i++)
+            {
+                parent.GetChild(i).GetComponent<MeshRenderer>().material = green;
+            }
+        }
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hit;
 
         if (Physics.Raycast(ray,out hit,100.0f,LayerMask.GetMask("extra")))
         {
-            Debug.Log("Hit to " + hit.transform.name);
             
             //Transform parent = extra_showers_parent.transform.GetChild(i);
             Transform parent = hit.transform.parent;
 
+            Debug.Log("Hit to " + parent.name);
             for (int i = 0; i < parent.childCount; i++)
             {
                 Transform child = parent.GetChild(i);
-                //for (int j = 0; j< child.childCount; j++)
-                //{
-                    //if (child.gameObject.name.Equals( hit.transform.gameObject.name))
-                    //{
-                        Debug.Log("FOUND EXTRA");
-                        child.GetComponent<MeshRenderer>().material = material_shop_interiors;
-                    //}
-                //}
-                //parent.GetChild(i).GetComponent<MeshRenderer>().material = material_shop_interiors;
+                Color tmp = child.GetComponent<MeshRenderer>().material.color;
+                
+                //tmp.r += Mathf.Sin(fade_timer += Time.deltaTime * 0.1f);
+                tmp.g += Mathf.Sin(fade_timer += Time.deltaTime * 2.5f);
+                //tmp.b += Mathf.Sin(fade_timer += Time.deltaTime * 0.1f);
+
+                child.GetComponent<MeshRenderer>().material.color = tmp;
             }
         }
 
