@@ -8,6 +8,28 @@ public class PlaceStock : ActionTask
     {
         //GameController.C_points.Remove(client.current_point.gameObject);
         GameController.SK_needs_restock.Remove(agent.GetComponent<ShopKeeper>().current_place_point.gameObject);
+        ShopKeeper sk = agent.GetComponent<ShopKeeper>();
+
+        sk.stock_item_objs.transform.GetChild(sk.item_being_placed).gameObject.SetActive(false);
+
+        EndAction();
+    }
+}
+
+public class PickStock : ActionTask
+{
+    protected override void OnExecute()
+    {
+        ShopKeeper sk = agent.GetComponent<ShopKeeper>();
+
+        sk.item_being_placed = Random.Range(0, 10);
+
+        //for (int i =0;i<sk.stock_item_objs.transform.childCount;i++)
+        //{
+        //    sk.transform.GetChild(i).gameObject.SetActive(false);
+        //}
+
+        sk.stock_item_objs.transform.GetChild(sk.item_being_placed).gameObject.SetActive(true);
 
         EndAction();
     }
@@ -20,6 +42,9 @@ public class ShopKeeper : MonoBehaviour
     public int queue = -2;
     public Vector3 target_cashier = Vector3.zero;
     public Transform current_place_point;
+    public GameObject stock_item_objs;
+    public Transform hand;
+    public int item_being_placed = 0;
 
     void Start()
     {
@@ -28,6 +53,6 @@ public class ShopKeeper : MonoBehaviour
 
     void Update()
     {
-        
+        stock_item_objs.transform.position = hand.position;
     }
 }
