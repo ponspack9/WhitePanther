@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+
     public bool is_day = true;
     private int initial_clients = 15;
+
 
     [Header("Time --------------------------------------------------------")]
     private int day = 1;
@@ -80,9 +82,10 @@ public class GameController : MonoBehaviour
     public List<int> upgraded;
     public List<float> upgrade_cost;
     
+    private string currentToolTipText = "";
+
     private void Start()
     {
-
         // Canvas ----------------------------
         // time
         slider_time_flow.value = time_flow;
@@ -113,7 +116,7 @@ public class GameController : MonoBehaviour
         {
             C.Add(Instantiate(C_object));
         }
-
+        
         C_points = new List<GameObject>();
         C_points_all = new List<GameObject>();
         for (int i = 0; i < C_points_parent.transform.childCount; i++)
@@ -140,8 +143,14 @@ public class GameController : MonoBehaviour
         }
         // END Shop Keeper ----------------------------
     }
+
+    
+        
+    
     private void Update()
     {
+        currentToolTipText = "";
+
         Restock();
 
         ShowUpgrades();
@@ -153,8 +162,19 @@ public class GameController : MonoBehaviour
 
         // Client ----------------------------
         ManageClients();
+
+        
     }
 
+    private void OnGUI()
+    {
+        if (currentToolTipText != "")
+        {
+            float x = Input.mousePosition.x;
+            float y = Input.mousePosition.y;
+            GUI.Box(new Rect(x, Screen.height - y, 100, 25), currentToolTipText);
+        }
+    }
     private void Restock()
     {
         // Destroying previous icons
@@ -234,7 +254,7 @@ public class GameController : MonoBehaviour
 
             if (!upgraded.Contains(index))
             {
-
+                currentToolTipText = "Cost: " + upgrade_cost[index];
                 for (int i = 0; i < parent.childCount; i++)
                 {
                     Transform child = parent.GetChild(i);
@@ -271,29 +291,6 @@ public class GameController : MonoBehaviour
                 }
             }
         }
-
-        //if (Input.GetKeyDown(KeyCode.X))
-        //{
-        //    extra_showers_parent.transform.GetChild(extra_level).gameObject.SetActive(
-        //        !extra_showers_parent.transform.GetChild(extra_level).gameObject.activeSelf);
-
-        //}
-        //if (Input.GetKeyDown(KeyCode.C) && extra_level <= 11)
-        //{
-        //    Transform parent = extra_showers_parent.transform.GetChild(extra_level);
-
-        //    for (int i = 0; i < parent.childCount; i++)
-        //    {
-        //        parent.GetChild(i).GetComponent<MeshRenderer>().material = material_shop_interiors;
-        //    }
-
-        //    parent = extra_points_parent.transform.GetChild(extra_level++);
-        //    for (int i = 0; i < parent.childCount; i++)
-        //    {
-        //        C_points.Add(parent.GetChild(i).gameObject);
-        //        SK_points.Add(parent.GetChild(i).gameObject);
-        //    }
-        //}
     }
 
     private void AdvanceTime()
