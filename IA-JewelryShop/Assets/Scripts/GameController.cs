@@ -50,6 +50,7 @@ public class GameController : MonoBehaviour
     public List<GameObject> SK_points;
     static public List<GameObject> SK_needs_restock;
     static public List<GameObject> SK_needs_restock_icon;
+    public List<GameObject> SK_restock;
     public float SK_cashier_time = 6.0f;
     public float SK_money = 1000.0f;
 
@@ -126,6 +127,7 @@ public class GameController : MonoBehaviour
         SK_points = new List<GameObject>();
         SK_needs_restock = new List<GameObject>();
         SK_needs_restock_icon = new List<GameObject>();
+        SK_restock = new List<GameObject>();
         SK_add.onClick.AddListener(SKAdd);
         SK_button0.onClick.AddListener(SKChangeState0);
         SK_button1.onClick.AddListener(SKChangeState1);
@@ -159,10 +161,15 @@ public class GameController : MonoBehaviour
         }
 
         C_points.Clear();
+        SK_restock.Clear();
         for (int i = 0; i < C_points_all.Count; i++)
         {
-            if (SK_needs_restock.Contains(C_points_all[i])) continue;
-            C_points.Add(C_points_all[i]);
+            if (SK_needs_restock.Contains(C_points_all[i]))
+            {
+                SK_restock.Add(C_points_all[i]);
+            }
+            else
+                C_points.Add(C_points_all[i]);
         }
 
         ShowExtensions();

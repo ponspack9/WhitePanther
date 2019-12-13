@@ -947,6 +947,7 @@ MonoBehaviour:
   is_reclamed: 0
   queue: -2
   target_cashier: {x: 0, y: 0, z: 0}
+  current_place_point: {fileID: 0}
 --- !u!114 &16519983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11786,6 +11787,8 @@ MonoBehaviour:
     UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"Client_points":{"_propertyPath":"GameController.C_points","_name":"Client_points","_id":"01bdb08f-e00d-48f7-a264-7f057599343b","$type":"NodeCanvas.Framework.Variable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
     UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"SK_restock":{"_propertyPath":"GameController.SK_restock","_name":"SK_restock","$type":"NodeCanvas.Framework.Variable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
+    UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}}}'
   _objectReferences:
   - {fileID: 0}
@@ -11858,6 +11861,7 @@ MonoBehaviour:
   SK_add: {fileID: 1124911549}
   SK: []
   SK_points: []
+  SK_restock: []
   SK_cashier_time: 4
   SK_money: 1000
   extra_showers_parent: {fileID: 1713827171}
@@ -13727,6 +13731,7 @@ MonoBehaviour:
   SK_add: {fileID: 0}
   SK: []
   SK_points: []
+  SK_restock: []
   SK_cashier_time: 4
   SK_money: 1000
   extra_showers_parent: {fileID: 0}
