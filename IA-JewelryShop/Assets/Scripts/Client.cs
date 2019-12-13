@@ -13,6 +13,19 @@ public class LeaveAngry : ActionTask
     }
 }
 
+public class PickObject : ActionTask
+{
+    protected override void OnExecute()
+    {
+        Client client = agent.GetComponent<Client>();
+
+        //GameController.C_points.Remove(client.current_point.gameObject);
+        GameController.SK_needs_restock.Add(client.current_point.gameObject);
+
+        EndAction();
+    }
+}
+
 
 public class Client : MonoBehaviour
 {
@@ -48,10 +61,10 @@ public class Client : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        sprite.gameObject.transform.LookAt(Camera.main.transform);
         if (is_buying)
         {
             sprite.enabled = true;
-            sprite.gameObject.transform.LookAt(Camera.main.transform);
         }
     }
 }

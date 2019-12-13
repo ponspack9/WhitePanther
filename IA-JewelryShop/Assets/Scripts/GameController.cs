@@ -35,10 +35,12 @@ public class GameController : MonoBehaviour
     public GameObject C_points_parent;
     public List<GameObject> C;
     public List<GameObject> C_points;
+    public List<GameObject> C_points_all;
 
     [Header("Shop Keeper --------------------------------------------------------")]
     public GameObject SK_object;
     public GameObject SK_points_parent;
+    public GameObject SK_restock_icon;
     public Button SK_button0;
     public Button SK_button1;
     public Button SK_button2;
@@ -46,13 +48,15 @@ public class GameController : MonoBehaviour
     public Button SK_add;
     public List<GameObject> SK;
     public List<GameObject> SK_points;
-    public float SK_cashier_time = 7.0f;
+    static public List<GameObject> SK_needs_restock;
+    static public List<GameObject> SK_needs_restock_icon;
+    public float SK_cashier_time = 6.0f;
     public float SK_money = 1000.0f;
+
 
     [Header("Shop Extension --------------------------------------------------------")]
     public GameObject extra_showers_parent;
     public GameObject extra_points_parent;
-    private int extra_level = 0;
     public Material material_shop_interiors;
     public Material green;
     private float fade_timer = 1.0f;
@@ -110,21 +114,24 @@ public class GameController : MonoBehaviour
         }
 
         C_points = new List<GameObject>();
+        C_points_all = new List<GameObject>();
         for (int i = 0; i < C_points_parent.transform.childCount; i++)
         {
-            C_points.Add(C_points_parent.transform.GetChild(i).gameObject);
+            C_points_all.Add(C_points_parent.transform.GetChild(i).gameObject);
         }
         // END Client ----------------------------
 
         // Shop Keeper ----------------------------
         SK = new List<GameObject>();
+        SK_points = new List<GameObject>();
+        SK_needs_restock = new List<GameObject>();
+        SK_needs_restock_icon = new List<GameObject>();
         SK_add.onClick.AddListener(SKAdd);
         SK_button0.onClick.AddListener(SKChangeState0);
         SK_button1.onClick.AddListener(SKChangeState1);
         SK_button2.onClick.AddListener(SKChangeState2);
         SK_button3.onClick.AddListener(SKChangeState3);
 
-        SK_points = new List<GameObject>();
         for (int i = 0; i < SK_points_parent.transform.childCount; i++)
         {
             SK_points.Add(SK_points_parent.transform.GetChild(i).gameObject);
@@ -133,7 +140,30 @@ public class GameController : MonoBehaviour
     }
     private void Update()
     {
+        // Destroying previous icons
+        for (int i = 0; i < SK_needs_restock_icon.Count; i++)
+        {
+            Destroy(SK_needs_restock_icon[i]);
+        }
+        SK_needs_restock_icon.Clear();
 
+        // Creating current icons
+        for (int i = 0; i < SK_needs_restock.Count; i++)
+        {
+            Transform t = SK_needs_restock[i].transform;
+
+
+            GameObject obj = Instantiate(SK_restock_icon, t);
+            obj.transform.LookAt(Camera.main.transform);
+            SK_needs_restock_icon.Add(obj);
+        }
+
+        C_points.Clear();
+        for (int i = 0; i < C_points_all.Count; i++)
+        {
+            if (SK_needs_restock.Contains(C_points_all[i])) continue;
+            C_points.Add(C_points_all[i]);
+        }
 
         ShowExtensions();
 
@@ -218,7 +248,7 @@ public class GameController : MonoBehaviour
                         parent = extra_points_parent.transform.GetChild(index);
                         for (int i = 0; i < parent.childCount; i++)
                         {
-                            C_points.Add(parent.GetChild(i).gameObject);
+                            C_points_all.Add(parent.GetChild(i).gameObject);
                             SK_points.Add(parent.GetChild(i).gameObject);
                         }
 

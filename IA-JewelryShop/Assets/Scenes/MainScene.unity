@@ -11772,16 +11772,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _serializedBlackboard: '{"_name":"GlobalBlackboard","_variables":{"is_day":{"_value":true,"_propertyPath":"GameController.is_day","_name":"is_day","_id":"f4a084ab-3111-463e-a285-dfc04a0b8506","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"money":{"_propertyPath":"GameController.money","_name":"money","_id":"8475adbb-1c2b-4d8e-8116-021afd3212a3","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"money_per_sale":{"_propertyPath":"GameController.money_per_sale","_name":"money_per_sale","_id":"db98971f-19d3-4915-bc84-9e10c594e43b","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"fame":{"_propertyPath":"GameController.fame","_name":"fame","_id":"1cba9ab1-256d-4d4c-a92c-26b54a3f7652","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"fame_per_sale":{"_propertyPath":"GameController.fame_per_sale","_name":"fame_per_sale","_id":"f2f698d1-6667-4918-84db-b0d2f63dac8f","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"chance_to_buy":{"_propertyPath":"GameController.chance_to_buy","_name":"chance_to_buy","_id":"2e1d8789-6e13-47e3-8fae-178489215082","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"chance_to_leave":{"_propertyPath":"GameController.chance_to_leave","_name":"chance_to_leave","_id":"06fa1ce7-8687-4d2f-871f-099bd808c145","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"chance_to_keep":{"_propertyPath":"GameController.chance_to_keep","_name":"chance_to_keep","_id":"11902ae7-bb3f-4e09-bb9b-794c97ead9d9","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"SK_cashier_time":{"_propertyPath":"GameController.SK_cashier_time","_name":"SK_cashier_time","_id":"964c263e-7f8f-41cb-b420-5fe6717558d5","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"SK_stock_points":{"_value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],"_propertyPath":"GameController.SK_points","_name":"SK_stock_points","_id":"aeb07470-3d7b-488c-8c87-283e007a9578","$type":"NodeCanvas.Framework.Variable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
     UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"fame":{"_propertyPath":"GameController.fame","_name":"fame","_id":"1cba9ab1-256d-4d4c-a92c-26b54a3f7652","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"money":{"_propertyPath":"GameController.money","_name":"money","_id":"8475adbb-1c2b-4d8e-8116-021afd3212a3","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"fame_per_sale":{"_propertyPath":"GameController.fame_per_sale","_name":"fame_per_sale","_id":"f2f698d1-6667-4918-84db-b0d2f63dac8f","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"money_per_sale":{"_propertyPath":"GameController.money_per_sale","_name":"money_per_sale","_id":"db98971f-19d3-4915-bc84-9e10c594e43b","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"SK_needs_restock":{"_propertyPath":"GameController.SK_needs_restock","_name":"SK_needs_restock","_id":"70925e49-fc5b-4ba3-854b-1c0a5bdb92a3","$type":"NodeCanvas.Framework.Variable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
+    UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"Client_points":{"_propertyPath":"GameController.C_points","_name":"Client_points","_id":"01bdb08f-e00d-48f7-a264-7f057599343b","$type":"NodeCanvas.Framework.Variable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
     UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}}}'
@@ -11843,9 +11845,12 @@ MonoBehaviour:
   C_points_parent: {fileID: 1535470367}
   C: []
   C_points: []
+  C_points_all: []
   SK_object: {fileID: 7584578926415916806, guid: ee397d3194394424fa83bb8cb61c6a1b,
     type: 3}
   SK_points_parent: {fileID: 317145245}
+  SK_restock_icon: {fileID: 2332814530184239743, guid: fb3f0c1c6dd94c34bbb065fb15b2f43b,
+    type: 3}
   SK_button0: {fileID: 1350345658}
   SK_button1: {fileID: 946419681}
   SK_button2: {fileID: 1410369229}
@@ -11871,6 +11876,7 @@ MonoBehaviour:
   slider_time_flow: {fileID: 616397873}
   button_upgrade: {fileID: 453320559}
   upgraded: 
+  upgrade_cost: []
 --- !u!1001 &758725139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13710,8 +13716,10 @@ MonoBehaviour:
   C_points_parent: {fileID: 0}
   C: []
   C_points: []
+  C_points_all: []
   SK_object: {fileID: 0}
   SK_points_parent: {fileID: 0}
+  SK_restock_icon: {fileID: 0}
   SK_button0: {fileID: 0}
   SK_button1: {fileID: 0}
   SK_button2: {fileID: 0}
@@ -13736,6 +13744,7 @@ MonoBehaviour:
   slider_time_flow: {fileID: 0}
   button_upgrade: {fileID: 0}
   upgraded: 
+  upgrade_cost: []
 --- !u!4 &912000590 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 437118, guid: 70c9024fb06785b488ac7fc8a5b7a04b,
@@ -33974,6 +33983,75 @@ Transform:
   m_Father: {fileID: 2134321688}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2332814530813835173
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2332814530184239743, guid: fb3f0c1c6dd94c34bbb065fb15b2f43b,
+        type: 3}
+      propertyPath: m_Name
+      value: NeedsRestockIcon
+      objectReference: {fileID: 0}
+    - target: {fileID: 2332814530184239737, guid: fb3f0c1c6dd94c34bbb065fb15b2f43b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2332814530184239737, guid: fb3f0c1c6dd94c34bbb065fb15b2f43b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2332814530184239737, guid: fb3f0c1c6dd94c34bbb065fb15b2f43b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2332814530184239737, guid: fb3f0c1c6dd94c34bbb065fb15b2f43b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2332814530184239737, guid: fb3f0c1c6dd94c34bbb065fb15b2f43b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2332814530184239737, guid: fb3f0c1c6dd94c34bbb065fb15b2f43b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2332814530184239737, guid: fb3f0c1c6dd94c34bbb065fb15b2f43b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2332814530184239737, guid: fb3f0c1c6dd94c34bbb065fb15b2f43b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2332814530184239737, guid: fb3f0c1c6dd94c34bbb065fb15b2f43b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2332814530184239737, guid: fb3f0c1c6dd94c34bbb065fb15b2f43b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2332814530184239737, guid: fb3f0c1c6dd94c34bbb065fb15b2f43b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fb3f0c1c6dd94c34bbb065fb15b2f43b, type: 3}
 --- !u!1 &4262285593709795881
 GameObject:
   m_ObjectHideFlags: 0
