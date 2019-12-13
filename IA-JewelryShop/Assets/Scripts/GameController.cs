@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -16,7 +17,7 @@ public class GameController : MonoBehaviour
 
 
     //[SerializeField]
-    private float fame = 20.0f;
+    private float fame = 10.0f;
     //[SerializeField]
     private float money = 4000.0f;
     [Header("Shop status --------------------------------------------------------")]
@@ -191,6 +192,7 @@ public class GameController : MonoBehaviour
                         Transform child = parent.GetChild(i);
                         child.GetComponent<MeshRenderer>().material = material_shop_interiors;
                         child.GetComponent<MeshRenderer>().material.color = Color.white;
+                        child.GetComponent<NavMeshObstacle>().enabled = true;
                     }
 
                     //Adding the points of the new shower
@@ -261,8 +263,8 @@ public class GameController : MonoBehaviour
     {
         // It is in per 10 ( not per cent %)
         chance_to_buy = Mathf.Log10(fame) + Mathf.Sqrt(fame) / 2;
-        chance_to_leave = (10.0f - chance_to_buy) * 0.25f;
-        chance_to_keep = (10.0f - chance_to_buy) * 0.75f;
+        chance_to_leave = (10.0f - chance_to_buy) * 0.1f;
+        chance_to_keep = (10.0f - chance_to_buy) * 0.9f;
 
         text_chance_to_buy.text = "Sale rate: " + (chance_to_buy * 10.0f).ToString("F2") + "%";
         text_chance_to_leave.text = "Leave rate: " + (chance_to_leave * 10.0f).ToString("F2") + "%";
