@@ -69,6 +69,9 @@ public class GameController : MonoBehaviour
     public Text text_minute;
     public Slider slider_time_flow;
 
+    public Button button_upgrade;
+    private bool upgrading = false;
+    public List<int> upgraded;
     
     private void Start()
     {
@@ -76,8 +79,10 @@ public class GameController : MonoBehaviour
         // Canvas ----------------------------
         // time
         slider_time_flow.value = time_flow;
+        button_upgrade.onClick.AddListener(ToggleUpgrade);
+        upgraded = new List<int>();
         // END Canvas ----------------------------
-        
+
 
         // Client ----------------------------
         C = new List<GameObject>();
@@ -108,65 +113,11 @@ public class GameController : MonoBehaviour
         }
         // END Shop Keeper ----------------------------
     }
-
     private void Update()
     {
-        for (int j = 0; j < extra_showers_parent.transform.childCount; j++)
-        {
-            Transform parent = extra_showers_parent.transform.GetChild(j);
 
-            for (int i = 0; i < parent.childCount; i++)
-            {
-                parent.GetChild(i).GetComponent<MeshRenderer>().material = green;
-            }
-        }
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray,out hit,100.0f,LayerMask.GetMask("extra")))
-        {
-            
-            //Transform parent = extra_showers_parent.transform.GetChild(i);
-            Transform parent = hit.transform.parent;
-
-            Debug.Log("Hit to " + parent.name);
-            for (int i = 0; i < parent.childCount; i++)
-            {
-                Transform child = parent.GetChild(i);
-                Color tmp = child.GetComponent<MeshRenderer>().material.color;
-                
-                //tmp.r += Mathf.Sin(fade_timer += Time.deltaTime * 0.1f);
-                tmp.g += Mathf.Sin(fade_timer += Time.deltaTime * 2.5f);
-                //tmp.b += Mathf.Sin(fade_timer += Time.deltaTime * 0.1f);
-
-                child.GetComponent<MeshRenderer>().material.color = tmp;
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            extra_showers_parent.transform.GetChild(extra_level).gameObject.SetActive(
-                !extra_showers_parent.transform.GetChild(extra_level).gameObject.activeSelf);
-
-        }
-        if (Input.GetKeyDown(KeyCode.C) && extra_level <= 11)
-        {
-            Transform parent = extra_showers_parent.transform.GetChild(extra_level);
-            
-            for (int i = 0; i < parent.childCount; i++)
-            {
-                parent.GetChild(i).GetComponent<MeshRenderer>().material = material_shop_interiors;
-            }
-
-            parent = extra_points_parent.transform.GetChild(extra_level++);
-            for (int i=0;i< parent.childCount;i++)
-            {
-                C_points.Add(parent.GetChild(i).gameObject);
-                SK_points.Add(parent.GetChild(i).gameObject);
-            }
-        }
-
+        ShowExtensions();
 
         AdvanceTime();
 
@@ -175,6 +126,108 @@ public class GameController : MonoBehaviour
 
         // Client ----------------------------
         ManageClients();
+    }
+    private void ToggleUpgrade()
+    {
+        upgrading = !upgrading;
+        SK_add.gameObject.SetActive(upgrading);
+        ResetUpgradingColor();
+    }
+
+    private void ResetUpgradingColor()
+    {
+        for (int j = 0; j < extra_showers_parent.transform.childCount; j++)
+        {
+            if (upgraded.Contains(j)) continue;
+
+            Transform parent = extra_showers_parent.transform.GetChild(j);
+
+            parent.gameObject.SetActive(upgrading);
+
+            for (int i = 0; i < parent.childCount; i++)
+            {
+                parent.GetChild(i).GetComponent<MeshRenderer>().material = green;
+            }
+        }
+    }
+
+    private void ShowExtensions()
+    {
+        if (!upgrading) return;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        RaycastHit hit;
+
+        ResetUpgradingColor();
+        
+
+        if (Physics.Raycast(ray, out hit, 100.0f, LayerMask.GetMask("extra")))
+        {
+
+            Transform parent = hit.transform.parent;
+
+            int s = parent.name.IndexOf('(')+1;
+            int e = parent.name.Length - 1;
+            int index = int.Parse(parent.name.Substring(s, e-s));
+
+            if (!upgraded.Contains(index))
+            {
+
+                for (int i = 0; i < parent.childCount; i++)
+                {
+                    Transform child = parent.GetChild(i);
+                    // Fading to show hovered
+                    Color tmp = child.GetComponent<MeshRenderer>().material.color;
+                    tmp.g += Mathf.Sin(fade_timer += Time.deltaTime * 5.0f);
+                    child.GetComponent<MeshRenderer>().material.color = tmp;
+                }
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    parent.gameObject.SetActive(true);
+                    for (int i = 0; i < parent.childCount; i++)
+                    {
+                        Transform child = parent.GetChild(i);
+                        child.GetComponent<MeshRenderer>().material = material_shop_interiors;
+                        child.GetComponent<MeshRenderer>().material.color = Color.white;
+                    }
+
+                    //Adding the points of the new shower
+                    parent = extra_points_parent.transform.GetChild(index);
+                    for (int i = 0; i < parent.childCount; i++)
+                    {
+                        C_points.Add(parent.GetChild(i).gameObject);
+                        SK_points.Add(parent.GetChild(i).gameObject);
+                    }
+
+                    upgraded.Add(index);
+                }
+            }
+        }
+
+        //if (Input.GetKeyDown(KeyCode.X))
+        //{
+        //    extra_showers_parent.transform.GetChild(extra_level).gameObject.SetActive(
+        //        !extra_showers_parent.transform.GetChild(extra_level).gameObject.activeSelf);
+
+        //}
+        //if (Input.GetKeyDown(KeyCode.C) && extra_level <= 11)
+        //{
+        //    Transform parent = extra_showers_parent.transform.GetChild(extra_level);
+
+        //    for (int i = 0; i < parent.childCount; i++)
+        //    {
+        //        parent.GetChild(i).GetComponent<MeshRenderer>().material = material_shop_interiors;
+        //    }
+
+        //    parent = extra_points_parent.transform.GetChild(extra_level++);
+        //    for (int i = 0; i < parent.childCount; i++)
+        //    {
+        //        C_points.Add(parent.GetChild(i).gameObject);
+        //        SK_points.Add(parent.GetChild(i).gameObject);
+        //    }
+        //}
     }
 
     private void AdvanceTime()
