@@ -51,6 +51,7 @@ public class Client : MonoBehaviour
         if (is_buying)
         {
             sprite.enabled = true;
+            sprite.gameObject.transform.LookAt(Camera.main.transform);
         }
     }
 }

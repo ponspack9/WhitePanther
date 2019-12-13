@@ -73,6 +73,7 @@ public class GameController : MonoBehaviour
     public Button button_upgrade;
     private bool upgrading = false;
     public List<int> upgraded;
+    public List<float> upgrade_cost;
     
     private void Start()
     {
@@ -80,10 +81,26 @@ public class GameController : MonoBehaviour
         // Canvas ----------------------------
         // time
         slider_time_flow.value = time_flow;
-        button_upgrade.onClick.AddListener(ToggleUpgrade);
-        upgraded = new List<int>();
         // END Canvas ----------------------------
 
+        // Upgrades ----------------------------
+        button_upgrade.onClick.AddListener(ToggleUpgrade);
+        upgraded = new List<int>();
+        upgrade_cost = new List<float>();
+        upgrade_cost.Add(1500.0f);
+        upgrade_cost.Add(1000.0f);
+        upgrade_cost.Add(750.0f);
+        upgrade_cost.Add(1000.0f);
+        upgrade_cost.Add(750.0f);
+        upgrade_cost.Add(1500.0f);
+        upgrade_cost.Add(1250.0f);
+        upgrade_cost.Add(1250.0f);
+        upgrade_cost.Add(1000.0f);
+        upgrade_cost.Add(1250.0f);
+        upgrade_cost.Add(1500.0f);
+        upgrade_cost.Add(1000.0f);
+
+        // END Upgrades ----------------------------
 
         // Client ----------------------------
         C = new List<GameObject>();
@@ -186,24 +203,28 @@ public class GameController : MonoBehaviour
 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    parent.gameObject.SetActive(true);
-                    for (int i = 0; i < parent.childCount; i++)
+                    if (money >= upgrade_cost[index])
                     {
-                        Transform child = parent.GetChild(i);
-                        child.GetComponent<MeshRenderer>().material = material_shop_interiors;
-                        child.GetComponent<MeshRenderer>().material.color = Color.white;
-                        child.GetComponent<NavMeshObstacle>().enabled = true;
-                    }
+                        parent.gameObject.SetActive(true);
+                        for (int i = 0; i < parent.childCount; i++)
+                        {
+                            Transform child = parent.GetChild(i);
+                            child.GetComponent<MeshRenderer>().material = material_shop_interiors;
+                            child.GetComponent<MeshRenderer>().material.color = Color.white;
+                            child.GetComponent<NavMeshObstacle>().enabled = true;
+                        }
 
-                    //Adding the points of the new shower
-                    parent = extra_points_parent.transform.GetChild(index);
-                    for (int i = 0; i < parent.childCount; i++)
-                    {
-                        C_points.Add(parent.GetChild(i).gameObject);
-                        SK_points.Add(parent.GetChild(i).gameObject);
-                    }
+                        //Adding the points of the new shower
+                        parent = extra_points_parent.transform.GetChild(index);
+                        for (int i = 0; i < parent.childCount; i++)
+                        {
+                            C_points.Add(parent.GetChild(i).gameObject);
+                            SK_points.Add(parent.GetChild(i).gameObject);
+                        }
 
-                    upgraded.Add(index);
+                        money -= upgrade_cost[index];
+                        upgraded.Add(index);
+                    }
                 }
             }
         }
