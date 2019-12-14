@@ -56,6 +56,7 @@ public class GameController : MonoBehaviour
     static public List<GameObject> SK_needs_restock_icon;
     public List<GameObject> SK_restock;
     public float SK_cashier_time = 6.0f;
+    public float SK_cost = 1000.0f;
     public float SK_money = 1000.0f;
 
 
@@ -98,6 +99,7 @@ public class GameController : MonoBehaviour
     public Text text_stats;
     
     private string currentToolTipText = "";
+    private bool SK_hover = false;
 
     private void Start()
     {
@@ -149,6 +151,7 @@ public class GameController : MonoBehaviour
         SK_needs_restock_icon = new List<GameObject>();
         SK_restock = new List<GameObject>();
         SK_add.onClick.AddListener(SKAdd);
+        //SK_add.GetComponentInChildren<Text>().text = "Hire shop keeper : " + SK_cost;
         SK_button0.onClick.AddListener(SKChangeState0);
         SK_button1.onClick.AddListener(SKChangeState1);
         SK_button2.onClick.AddListener(SKChangeState2);
@@ -158,11 +161,14 @@ public class GameController : MonoBehaviour
         {
             SK_points.Add(SK_points_parent.transform.GetChild(i).gameObject);
         }
+
+        //SK_add.OnPointerEnter(new PointerEventData(new EventSystem()));
         // END Shop Keeper ----------------------------
     }
 
     private void Update()
     {
+
         currentToolTipText = "";
         SpawnClients();
 
@@ -208,7 +214,13 @@ public class GameController : MonoBehaviour
 
     private void OnGUI()
     {
-        if (currentToolTipText != "")
+        if (SK_hover)
+        {
+            float x = Input.mousePosition.x;
+            float y = Input.mousePosition.y;
+            GUI.Box(new Rect(x, Screen.height - y, 200, 25), "Hire shop keeper : " + SK_cost);
+        }
+        else if (currentToolTipText != "")
         {
             float x = Input.mousePosition.x;
             float y = Input.mousePosition.y;
@@ -220,6 +232,15 @@ public class GameController : MonoBehaviour
     {
         panel_restock.SetActive(!panel_restock.activeSelf);
         
+    }
+
+    public void OnPointerEnterSK_add()
+    {
+        SK_hover = true;
+    }
+    public void OnPointerExitSK_add()
+    {
+        SK_hover = false;
     }
     private void Restock()
     {
@@ -290,11 +311,7 @@ public class GameController : MonoBehaviour
 
         ResetUpgradingColor();
         
-        if (Physics.Raycast(ray, out hit, 100.0f, LayerMask.GetMask("addsk")))
-        {
-            currentToolTipText = "Cost of hiring: " + SK_money;
-        }
-
+     
         if (Physics.Raycast(ray, out hit, 100.0f, LayerMask.GetMask("extra")))
         {
 
@@ -445,7 +462,7 @@ public class GameController : MonoBehaviour
     // Shop Keeper ----------------------------
     public void SKAdd()
     {
-        if (money < SK_money) return;
+        if (money < SK_cost) return;
 
         switch (SK.Count)
         {
@@ -465,10 +482,17 @@ public class GameController : MonoBehaviour
                 break;
         }
         SK.Add(Instantiate(SK_object));
-        money -= SK_money;
+        money -= SK_cost;
 
-        if (SK.Count > 3) SK_add.gameObject.SetActive(false);
-        else SK_money += 1000 * SK.Count;
+        if (SK.Count > 3)
+        {
+            SK_add.gameObject.SetActive(false);
+            SK_hover = false;
+        }
+        else
+        {
+            SK_cost += 1000 * SK.Count;
+        }
 
     }
     public void SKChangeState0()
@@ -514,7 +538,7 @@ public class GameController : MonoBehaviour
 
 
 
-    
+
 
     //public float clients_time = 0.0f;
 
