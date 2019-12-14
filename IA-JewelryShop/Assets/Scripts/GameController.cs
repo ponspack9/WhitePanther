@@ -7,15 +7,17 @@ public class GameController : MonoBehaviour
 {
 
     public bool is_day = true;
-    private int initial_clients = 15;
+    private int initial_clients = 0;
 
 
     [Header("Time --------------------------------------------------------")]
     private int day = 1;
-    private int hour = 20;
+    private int hour = 8;
     private int minute = 0;
     private float time_flow = 6.5f;
     private float time = 0.0f;
+    public float time_between_client = 7.0f;
+    private float time_clients = 0.0f;
 
 
     //[SerializeField]
@@ -65,6 +67,15 @@ public class GameController : MonoBehaviour
     private float fade_timer = 1.0f;
 
 
+    [Header("Stats --------------------------------------------------------")]
+    public int sales_total = 0;
+    public int sales_day = 0;
+    public int sales_best = 0;
+    public float fame_best = 0;
+    public float money_best = 0;
+    public float money_invested = 0;
+    public float money_salaries = 0;
+
     [Header("Canvas --------------------------------------------------------")]
     public Text text_fame;
     public Text text_money;
@@ -78,9 +89,13 @@ public class GameController : MonoBehaviour
     public Slider slider_time_flow;
 
     public Button button_upgrade;
+    public Button button_stock;
     private bool upgrading = false;
     public List<int> upgraded;
     public List<float> upgrade_cost;
+
+    public GameObject panel_restock;
+    public Text text_stats;
     
     private string currentToolTipText = "";
 
@@ -107,6 +122,8 @@ public class GameController : MonoBehaviour
         upgrade_cost.Add(1250.0f);
         upgrade_cost.Add(1500.0f);
         upgrade_cost.Add(1000.0f);
+
+        button_stock.onClick.AddListener(ToggleStock);
 
         // END Upgrades ----------------------------
 
@@ -144,12 +161,10 @@ public class GameController : MonoBehaviour
         // END Shop Keeper ----------------------------
     }
 
-    
-        
-    
     private void Update()
     {
         currentToolTipText = "";
+        SpawnClients();
 
         Restock();
 
@@ -157,13 +172,38 @@ public class GameController : MonoBehaviour
 
         AdvanceTime();
 
-        // Fame and chances ----------------------------
         UpdateChances();
 
-        // Client ----------------------------
         ManageClients();
 
-        
+        UpdateStats();
+
+
+    }
+
+    private void SpawnClients()
+    {
+        time_clients += time_flow * Time.deltaTime;
+
+        if (time_clients >= time_between_client + time_flow)
+        {
+            time_clients = 0;
+            C.Add(Instantiate(C_object));
+        }
+    }
+    private void UpdateStats()
+    {
+        if (fame_best < fame) fame_best = fame;
+        if (money_best < money) money_best = money;
+        if (sales_best < sales_day) sales_best = sales_day;
+
+        text_stats.text = "Total sales: " + sales_total + "\n" +
+            "Today sales: " + sales_day + "\n" +
+            "Best day sales: " + sales_best + "\n" +
+            "Best fame: " + fame_best + "\n" +
+            "Most money: " + money_best + "\n" +
+            "Total money invested: " + money_invested + "\n" +
+            "Total money in salaries: " + money_salaries + "\n";
     }
 
     private void OnGUI()
@@ -174,6 +214,12 @@ public class GameController : MonoBehaviour
             float y = Input.mousePosition.y;
             GUI.Box(new Rect(x, Screen.height - y, 100, 25), currentToolTipText);
         }
+    }
+
+    private void ToggleStock()
+    {
+        panel_restock.SetActive(!panel_restock.activeSelf);
+        
     }
     private void Restock()
     {
@@ -190,7 +236,7 @@ public class GameController : MonoBehaviour
             Transform t = SK_needs_restock[i].transform;
 
 
-            GameObject obj = Instantiate(SK_restock_icon, t);
+            GameObject obj = Instantiate(SK_restock_icon,t);
             obj.transform.LookAt(Camera.main.transform);
             SK_needs_restock_icon.Add(obj);
         }
@@ -204,7 +250,9 @@ public class GameController : MonoBehaviour
                 SK_restock.Add(C_points_all[i]);
             }
             else
+            {
                 C_points.Add(C_points_all[i]);
+            }
         }
     }
 
@@ -242,6 +290,10 @@ public class GameController : MonoBehaviour
 
         ResetUpgradingColor();
         
+        if (Physics.Raycast(ray, out hit, 100.0f, LayerMask.GetMask("addsk")))
+        {
+            currentToolTipText = "Cost of hiring: " + SK_money;
+        }
 
         if (Physics.Raycast(ray, out hit, 100.0f, LayerMask.GetMask("extra")))
         {
@@ -282,7 +334,7 @@ public class GameController : MonoBehaviour
                         for (int i = 0; i < parent.childCount; i++)
                         {
                             C_points_all.Add(parent.GetChild(i).gameObject);
-                            SK_points.Add(parent.GetChild(i).gameObject);
+                            //SK_points.Add(parent.GetChild(i).gameObject);
                         }
 
                         money -= upgrade_cost[index];
@@ -334,6 +386,8 @@ public class GameController : MonoBehaviour
         text_chance_to_keep.text = "Curiosity rate: " + (chance_to_keep * 10.0f).ToString("F2") + "%";
         text_fame.text = "Fame: " + Mathf.Round(fame * 100f) / 100f; ;
         text_money.text = "Money: " + Mathf.Round(money * 100f) / 100f;
+
+        time_between_client = 10.0f - Mathf.Log10(fame);
     }
 
     private void ManageClients()
