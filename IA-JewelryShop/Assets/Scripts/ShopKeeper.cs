@@ -10,7 +10,11 @@ public class PlaceStock : ActionTask
         GameController.SK_needs_restock.Remove(agent.GetComponent<ShopKeeper>().current_place_point.gameObject);
         ShopKeeper sk = agent.GetComponent<ShopKeeper>();
 
-        sk.stock_item_objs.transform.GetChild(sk.item_being_placed).gameObject.SetActive(false);
+        for (int i = 0;i<sk.stock_item_objs.transform.childCount;i++)
+        {
+            sk.stock_item_objs.transform.GetChild(i).gameObject.SetActive(false);
+        }
+        //sk.stock_item_objs.transform.GetChild(sk.item_being_placed).gameObject.SetActive(false);
 
         EndAction();
     }
@@ -50,6 +54,6 @@ public class ShopKeeper : MonoBehaviour
 
     void Update()
     {
-        stock_item_objs.transform.position= hand.position;
+        stock_item_objs.transform.position = hand.position;
     }
 }
