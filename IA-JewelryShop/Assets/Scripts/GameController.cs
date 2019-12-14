@@ -257,8 +257,11 @@ public class GameController : MonoBehaviour
             Transform t = SK_needs_restock[i].transform;
 
 
-            GameObject obj = Instantiate(SK_restock_icon,t);
-            obj.transform.LookAt(Camera.main.transform);
+            GameObject obj = Instantiate(SK_restock_icon,
+                new Vector3(t.position.x, t.position.y + 5.0f, t.position.z),
+                Quaternion.LookRotation(Camera.main.transform.position - t.position, Vector3.up));
+
+            //obj.transform.LookAt(Camera.main.transform);
             SK_needs_restock_icon.Add(obj);
         }
 
