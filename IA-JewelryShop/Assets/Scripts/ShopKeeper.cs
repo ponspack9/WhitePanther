@@ -50,6 +50,6 @@ public class ShopKeeper : MonoBehaviour
 
     void Update()
     {
-        stock_item_objs.transform.position = hand.position;
+        stock_item_objs.transform.position= hand.position;
     }
 }

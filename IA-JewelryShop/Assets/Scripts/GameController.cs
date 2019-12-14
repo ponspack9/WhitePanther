@@ -109,6 +109,12 @@ public class GameController : MonoBehaviour
     static public int total_stock = 50;
     public InputField stock_input;
     public Button stock_buy;
+    private bool Upgrade_hover = false;
+    private bool StockIcon_hover = false;
+    private bool SKEmployee_hover = false;
+    private bool Money_hover = false;
+    private bool Fame_hover = false;
+    private bool SalesRate_hover = false;
 
     private void Start()
     {
@@ -246,29 +252,56 @@ public class GameController : MonoBehaviour
 
     private void OnGUI()
     {
+        float x = Input.mousePosition.x;
+        float y = Input.mousePosition.y;
+
         if (SK_hover)
         {
-            float x = Input.mousePosition.x;
-            float y = Input.mousePosition.y;
-            GUI.Box(new Rect(x, Screen.height - y, 200, 25), "Hire shop keeper : " + SK_cost);
+            GUI.Box(new Rect(x, Screen.height - y, 175, 25), "Hire shop keeper : " + SK_cost);
+        }
+        else if (Upgrade_hover)
+        {
+            GUI.Box(new Rect(x, Screen.height - y, 175, 25), "Show available upgrades");
+        }
+        else if (StockIcon_hover)
+        {
+            GUI.Box(new Rect(x, Screen.height - y, 225, 25), "See shop statistics and buy stock");
+        }
+        else if (SKEmployee_hover)
+        {
+            GUI.Box(new Rect(x, Screen.height - y, 150, 25), "Click to change state");
+        }
+        else if (Money_hover)
+        {
+            GUI.Box(new Rect(x, Screen.height - y, 50, 25), "Money");
+        }
+        else if (Fame_hover)
+        {
+            GUI.Box(new Rect(x, Screen.height - y, 200, 25), "Fame / Reputation out of 100");
+        }
+        else if (SalesRate_hover)
+        {
+            GUI.Box(new Rect(x, Screen.height - y, 225, 50), "Percentatge of a sale while a client \n is looking around the shop ");
         }
         else if (currentToolTipText != "")
         {
-            float x = Input.mousePosition.x;
-            float y = Input.mousePosition.y;
+
             GUI.Box(new Rect(x, Screen.height - y, 100, 25), currentToolTipText);
         }
     }
 
     private void PayWorkers()
     {
-        if (pay_workers && !is_day)
+        if (pay_workers && is_day)
         {
             float m = SK_money * SK.Count;
             money -= m;
             money_invested += m;
             money_salaries += m;
             pay_workers = false;
+
+            sales_day = 0;
+            sales_desired = 0;
 
             Cashier.ResetCashiers();
         }
@@ -279,14 +312,7 @@ public class GameController : MonoBehaviour
         panel_restock.SetActive(!panel_restock.activeSelf);
         
     }
-    public void OnPointerEnterSK_add()
-    {
-        SK_hover = true;
-    }
-    public void OnPointerExitSK_add()
-    {
-        SK_hover = false;
-    }
+    
     private void Restock()
     {
         is_stock_left = total_stock > 0;
@@ -447,7 +473,7 @@ public class GameController : MonoBehaviour
         is_day = hour <= 20 && hour >= 8;
         is_can_buy_stock = hour >= 20 && hour <= 23;
         stock_buy.gameObject.SetActive(is_can_buy_stock);
-        if (hour == 10) pay_workers = true;
+        if (hour == 0) pay_workers = true;
 
         // Updating canvas
         text_day.text = (!is_day) ? "Night " + day.ToString() : "Day " + day.ToString();
@@ -463,11 +489,11 @@ public class GameController : MonoBehaviour
         chance_to_leave = (10.0f - chance_to_buy) * 0.1f;
         chance_to_keep = (10.0f - chance_to_buy) * 0.9f;
 
-        text_chance_to_buy.text = "Sale rate: " + (chance_to_buy * 10.0f).ToString("F2") + "%";
+        text_chance_to_buy.text = (chance_to_buy * 10.0f).ToString("F2") + "%";
         text_chance_to_leave.text = "Leave rate: " + (chance_to_leave * 10.0f).ToString("F2") + "%";
         text_chance_to_keep.text = "Curiosity rate: " + (chance_to_keep * 10.0f).ToString("F2") + "%";
-        text_fame.text = "Fame: " + Mathf.Round(fame * 100f) / 100f; ;
-        text_money.text = "Money: " + Mathf.Round(money * 100f) / 100f;
+        text_fame.text = ((int)(fame)).ToString();
+        text_money.text = (Mathf.Round(money * 100f) / 100f).ToString();
 
         time_between_client = 10.0f - Mathf.Log10(fame);
     }
@@ -568,7 +594,8 @@ public class GameController : MonoBehaviour
 
         SK[0].GetComponent<ShopKeeper>().is_reclamed = !reclaimed;
 
-        SK_button0.GetComponentInChildren<Text>().text = (!reclaimed) ? "Serving clients" : "Filling stock";
+        //SK_button0.GetComponentInChildren<Text>().text = (!reclaimed) ? "Serving clients" : "Filling stock";
+        SK_button0.image.sprite = (!reclaimed) ? Resources.Load<Sprite>("sk") : Resources.Load<Sprite>("skstock");
     }
     public void SKChangeState1()
     {
@@ -577,7 +604,7 @@ public class GameController : MonoBehaviour
 
         SK[1].GetComponent<ShopKeeper>().is_reclamed = !reclaimed;
 
-        SK_button1.GetComponentInChildren<Text>().text = (!reclaimed) ? "Serving clients" : "Filling stock";
+        SK_button1.image.sprite = (!reclaimed) ? Resources.Load<Sprite>("sk") : Resources.Load<Sprite>("skstock");
     }
     public void SKChangeState2()
     {
@@ -586,7 +613,7 @@ public class GameController : MonoBehaviour
 
         SK[2].GetComponent<ShopKeeper>().is_reclamed = !reclaimed;
 
-        SK_button2.GetComponentInChildren<Text>().text = (!reclaimed) ? "Serving clients" : "Filling stock";
+        SK_button2.image.sprite = (!reclaimed) ? Resources.Load<Sprite>("sk") : Resources.Load<Sprite>("skstock");
     }
     public void SKChangeState3()
     {
@@ -595,16 +622,73 @@ public class GameController : MonoBehaviour
 
         SK[3].GetComponent<ShopKeeper>().is_reclamed = !reclaimed;
 
-        SK_button3.GetComponentInChildren<Text>().text = (!reclaimed) ? "Serving clients" : "Filling stock";
+        SK_button3.image.sprite = (!reclaimed) ? Resources.Load<Sprite>("sk") : Resources.Load<Sprite>("skstock");
+
     }
 
     // END Shop Keeper ----------------------------
 
+    public void OnPointerEnterSK_add()
+    {
+        SK_hover = true;
+    }
+    public void OnPointerExitSK_add()
+    {
+        SK_hover = false;
+    }
 
+    public void OnPointerEnterUpgrade()
+    {
+        Upgrade_hover = true;
+    }
+    public void OnPointerExitUpgrade()
+    {
+        Upgrade_hover = false;
+    }
 
+    public void OnPointerEnterStockIcon()
+    {
+        StockIcon_hover = true;
+    }
+    public void OnPointerExitStockIcon()
+    {
+        StockIcon_hover = false;
+    }
+    public void OnPointerEnterSKEmployee()
+    {
+        SKEmployee_hover = true;
+    }
+    public void OnPointerExitSKEmployee()
+    {
+        SKEmployee_hover = false;
+    }
 
+    public void OnPointerEnterMoney()
+    {
+        Money_hover = true;
+    }
+    public void OnPointerExitMoney()
+    {
+        Money_hover = false;
+    }
 
+    public void OnPointerEnterSalesRate()
+    {
+        SalesRate_hover = true;
+    }
+    public void OnPointerExitSalesRate()
+    {
+        SalesRate_hover = false;
+    }
 
+    public void OnPointerEnterFame()
+    {
+        Fame_hover = true;
+    }
+    public void OnPointerExitFame()
+    {
+        Fame_hover = false;
+    }
 
     //public float clients_time = 0.0f;
 
