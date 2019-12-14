@@ -399,9 +399,9 @@ MonoBehaviour:
   target_cashier: {x: 0, y: 0, z: 0}
   sprite: {fileID: 0}
   current_index: 0
-  current_point: {fileID: 3041461619784965549, guid: 9a90d932e0b332842bdd2fbc26789ad2,
+  current_point: {fileID: 7853811761527293945, guid: 9a90d932e0b332842bdd2fbc26789ad2,
     type: 3}
-  client_points: {fileID: 421315499841453237, guid: d4e03de345ad60c4e991eedc53330110,
+  client_points: {fileID: 6598330333742710996, guid: d4e03de345ad60c4e991eedc53330110,
     type: 3}
 --- !u!114 &5310345435247187300
 MonoBehaviour:

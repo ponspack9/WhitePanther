@@ -269,7 +269,16 @@ public class GameController : MonoBehaviour
         SK_restock.Clear();
         for (int i = 0; i < C_points_all.Count; i++)
         {
-            if (SK_needs_restock.Contains(C_points_all[i]))
+            bool to_restock = false;
+            for (int j=0;j< SK_needs_restock.Count && !to_restock; j++)
+            {
+                if (SK_needs_restock[j].transform.position == C_points_all[i].transform.position)
+                {
+                    to_restock = true;
+                }
+            }
+
+            if (to_restock)
             {
                 SK_restock.Add(C_points_all[i]);
             }
