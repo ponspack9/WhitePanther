@@ -20,11 +20,9 @@ public class GameController : MonoBehaviour
     private float time_clients = 0.0f;
 
 
-    //[SerializeField]
-    private float fame = 10.0f;
-    //[SerializeField]
-    private float money = 50000.0f;
     [Header("Shop status --------------------------------------------------------")]
+    private float fame = 10.0f;
+    private float money = 50000.0f;
     public float fame_per_sale = 1.5f;
     public float fame_per_angry = 0.5f;
     public float money_per_sale = 150.0f;
@@ -52,9 +50,9 @@ public class GameController : MonoBehaviour
     public Button SK_add;
     public List<GameObject> SK;
     public List<GameObject> SK_points;
+    public List<GameObject> SK_restock;
     static public List<GameObject> SK_needs_restock;
     static public List<GameObject> SK_needs_restock_icon;
-    public List<GameObject> SK_restock;
     public float SK_cashier_time = 6.0f;
     public float SK_cost = 1000.0f;
     public float SK_money = 1000.0f;
@@ -72,6 +70,7 @@ public class GameController : MonoBehaviour
     public int sales_total = 0;
     public int sales_day = 0;
     public int sales_best = 0;
+    public int sales_desired = 0;
     public float fame_best = 0;
     public float money_best = 0;
     public float money_invested = 0;
@@ -97,15 +96,27 @@ public class GameController : MonoBehaviour
 
     public GameObject panel_restock;
     public Text text_stats;
-    
+    public Text text_to_buy;
+
     private string currentToolTipText = "";
     private bool SK_hover = false;
+
+    [Header("Stock --------------------------------------------------------")]
+    private bool is_can_buy_stock = false;
+    private bool pay_workers = false;
+    public bool is_stock_left = true;
+    public int stock_price = 100;
+    static public int total_stock = 50;
+    public InputField stock_input;
+    public Button stock_buy;
 
     private void Start()
     {
         // Canvas ----------------------------
         // time
         slider_time_flow.value = time_flow;
+        stock_buy.onClick.AddListener(BuyStock);
+        stock_input.contentType = InputField.ContentType.IntegerNumber;
         // END Canvas ----------------------------
 
         // Upgrades ----------------------------
@@ -168,13 +179,13 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-
         currentToolTipText = "";
+
         SpawnClients();
 
         Restock();
 
-        ShowUpgrades();
+        ShowAndApplyUpgrades();
 
         AdvanceTime();
 
@@ -184,7 +195,22 @@ public class GameController : MonoBehaviour
 
         UpdateStats();
 
+        PayWorkers();
 
+    }
+
+    private void BuyStock()
+    {
+        int stock_to_buy = int.Parse(stock_input.text);
+        int total_price = stock_price * stock_to_buy;
+
+        if (!is_can_buy_stock || total_price > money) return;
+
+        money -= total_price;
+        total_stock += stock_to_buy;
+        money_invested += total_price;
+
+        stock_buy.gameObject.SetActive(false);
     }
 
     private void SpawnClients()
@@ -203,13 +229,19 @@ public class GameController : MonoBehaviour
         if (money_best < money) money_best = money;
         if (sales_best < sales_day) sales_best = sales_day;
 
-        text_stats.text = "Total sales: " + sales_total + "\n" +
-            "Today sales: " + sales_day + "\n" +
-            "Best day sales: " + sales_best + "\n" +
-            "Best fame: " + fame_best + "\n" +
-            "Most money: " + money_best + "\n" +
-            "Total money invested: " + money_invested + "\n" +
-            "Total money in salaries: " + money_salaries + "\n";
+        text_stats.text = "Total sales: " + sales_total + "\n\n" +
+            "Total money invested: " + money_invested + "\n\n" +
+            "Total money in salaries: " + money_salaries + "\n\n\n"+
+            "Most day sales: " + sales_best + "\n\n" +
+            "Most fame: " + fame_best + "\n\n" +
+            "Most money: " + money_best + "\n\n";
+
+
+        text_to_buy.text = "Today desired sales: " + sales_desired + "\n\n" +
+            "Today sales: " + sales_day + "\n\n" +
+            "Unsuccessful sales: " + (sales_desired - sales_day) + "\n\n\n" +
+            "Stock price: " + stock_price + "\n\n" + 
+            "Remaining stock: " + total_stock + "\n\n";
     }
 
     private void OnGUI()
@@ -228,12 +260,25 @@ public class GameController : MonoBehaviour
         }
     }
 
+    private void PayWorkers()
+    {
+        if (pay_workers && !is_day)
+        {
+            float m = SK_money * SK.Count;
+            money -= m;
+            money_invested += m;
+            money_salaries += m;
+            pay_workers = false;
+
+            Cashier.ResetCashiers();
+        }
+
+    }
     private void ToggleStock()
     {
         panel_restock.SetActive(!panel_restock.activeSelf);
         
     }
-
     public void OnPointerEnterSK_add()
     {
         SK_hover = true;
@@ -244,6 +289,8 @@ public class GameController : MonoBehaviour
     }
     private void Restock()
     {
+        is_stock_left = total_stock > 0;
+
         // Destroying previous icons
         for (int i = 0; i < SK_needs_restock_icon.Count; i++)
         {
@@ -313,7 +360,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void ShowUpgrades()
+    private void ShowAndApplyUpgrades()
     {
         if (!upgrading) return;
 
@@ -365,7 +412,8 @@ public class GameController : MonoBehaviour
                             C_points_all.Add(parent.GetChild(i).gameObject);
                             //SK_points.Add(parent.GetChild(i).gameObject);
                         }
-
+                        
+                        money_invested += upgrade_cost[index];
                         money -= upgrade_cost[index];
                         upgraded.Add(index);
                     }
@@ -396,11 +444,16 @@ public class GameController : MonoBehaviour
             }
         }
 
-        is_day = hour <= 21 && hour >= 8;
+        is_day = hour <= 20 && hour >= 8;
+        is_can_buy_stock = hour >= 20 && hour <= 23;
+        stock_buy.gameObject.SetActive(is_can_buy_stock);
+        if (hour == 10) pay_workers = true;
+
         // Updating canvas
         text_day.text = (!is_day) ? "Night " + day.ToString() : "Day " + day.ToString();
         text_hour.text = (hour < 10) ? "0" + hour.ToString() : hour.ToString();
         text_minute.text = (minute < 10) ? "0" + minute.ToString() : minute.ToString();
+
     }
 
     private void UpdateChances()
@@ -495,6 +548,7 @@ public class GameController : MonoBehaviour
         }
         SK.Add(Instantiate(SK_object));
         money -= SK_cost;
+        money_invested += SK_cost;
 
         if (SK.Count > 3)
         {

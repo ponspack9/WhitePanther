@@ -96,7 +96,7 @@ public class Cashier : MonoBehaviour
 
     public static bool[,] cashiers;
     public static int num_cashiers = 3; // FIXED
-    public static int num_rows = 7;
+    public static int num_rows = 5;
     public static bool initialized = false;
 
     private static Vector3 cashier_1 = new Vector3(14, 0, 11);
@@ -120,6 +120,15 @@ public class Cashier : MonoBehaviour
 
         initialized = true;
 
+    }
+
+    public static void ResetCashiers()
+    {
+        for (int i = 0; i < num_cashiers; i++)
+        {
+            for (int j = 0; j< num_rows;j++)
+                cashiers[i, j] = false;
+        }
     }
 
     public static bool IsThereFreeCashier()

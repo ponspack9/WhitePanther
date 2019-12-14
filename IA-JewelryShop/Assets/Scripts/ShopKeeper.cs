@@ -24,12 +24,9 @@ public class PickStock : ActionTask
 
         sk.item_being_placed = Random.Range(0, 10);
 
-        //for (int i =0;i<sk.stock_item_objs.transform.childCount;i++)
-        //{
-        //    sk.transform.GetChild(i).gameObject.SetActive(false);
-        //}
-
         sk.stock_item_objs.transform.GetChild(sk.item_being_placed).gameObject.SetActive(true);
+
+        GameController.total_stock--;
 
         EndAction();
     }
