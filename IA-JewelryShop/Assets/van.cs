@@ -2,14 +2,13 @@
 using UnityEngine;
 
 
-public class SpawnDelieveryGuy : ActionTask
+public class LeaveDeliveryGuy : ActionTask
 {
     protected override void OnExecute()
     {
-        Client client = agent.GetComponent<Client>();
+        van _van = agent.GetComponentInParent<van>();
 
-        //GameController.C_points.Remove(client.current_point.gameObject);
-        GameController.SK_needs_restock.Add(client.current_point.gameObject);
+        _van.can_leave = true;
 
         EndAction();
     }
@@ -19,6 +18,7 @@ public class van : MonoBehaviour
 {
     public bool can_leave = false;
     private bool coming = true;
+    
 
     private float speed = 6.0f;
     // Start is called before the first frame update
@@ -38,7 +38,7 @@ public class van : MonoBehaviour
             if (transform.position.x >= 9)
             {
                 coming = false;
-                //Instantiate guy
+                transform.GetChild(0).gameObject.SetActive(true);
             }
         }
         else if (can_leave)
