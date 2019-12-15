@@ -231,7 +231,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5310345435580406158}
   - component: {fileID: 5310345435247187309}
-  - component: {fileID: 5310345435247187311}
   - component: {fileID: 5310345435247187304}
   - component: {fileID: 5310345435247187305}
   - component: {fileID: 5310345435247187306}
@@ -281,19 +280,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!65 &5310345435247187311
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5310345435247187301}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2.63, z: 1}
-  m_Center: {x: 0, y: 1.51, z: 0}
 --- !u!195 &5310345435247187304
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -357,6 +343,8 @@ MonoBehaviour:
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"queue_pos":{"_propertyPath":"Client.queue_pos","_name":"queue_pos","_id":"1523421d-1594-4e36-b011-82a96384bf79","$type":"NodeCanvas.Framework.Variable`1[[System.Int32,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"is_anyone_attending":{"_propertyPath":"Client.is_anyone_attending","_name":"is_anyone_attending","_id":"308bb51f-e67b-46dc-8558-3c61454cd769","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"_points_size":{"_name":"_points_size","_id":"7e12fc35-920f-465f-8af3-bfcd135399a7","$type":"NodeCanvas.Framework.Variable`1[[System.Int32,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"Value
+    A":{"_name":"Value A","_id":"77e285dc-0638-47ce-8a3d-e74039731cec","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}}}'
   _objectReferences: []
 --- !u!114 &5310345435247187307

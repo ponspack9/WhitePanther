@@ -102,6 +102,7 @@ public class GameController : MonoBehaviour
     private bool SK_hover = false;
 
     [Header("Stock --------------------------------------------------------")]
+    public GameObject stock_van;
     private bool is_can_buy_stock = false;
     private bool pay_workers = false;
     public bool is_stock_left = true;
@@ -304,6 +305,8 @@ public class GameController : MonoBehaviour
             sales_desired = 0;
 
             Cashier.ResetCashiers();
+
+            Instantiate(stock_van);
         }
 
     }
@@ -365,7 +368,7 @@ public class GameController : MonoBehaviour
     private void ToggleUpgrade()
     {
         upgrading = !upgrading;
-        SK_add.gameObject.SetActive(upgrading);
+        SK_add.gameObject.SetActive(upgrading && SK.Count < 4);
         ResetUpgradingColor();
     }
 
@@ -538,10 +541,13 @@ public class GameController : MonoBehaviour
             if (client.queue_pos == 1)
             {
                 client.is_leaving = true;
+                client.GetComponent<Animator>().SetInteger("idle_animation", 3);
+
             }
             else
             {
                 client.queue_pos = Cashier.AdvanceQueue(client.queue, client.queue_pos);
+                client.GetComponent<Animator>().SetInteger("idle_animation", Random.Range(0, 5));
             }
         }
         client.gameObject.name = "Client [" + client.queue + "," + client.queue_pos + "]";

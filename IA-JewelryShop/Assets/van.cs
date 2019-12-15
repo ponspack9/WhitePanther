@@ -6,9 +6,7 @@ public class LeaveDeliveryGuy : ActionTask
 {
     protected override void OnExecute()
     {
-        van _van = agent.GetComponentInParent<van>();
-
-        _van.can_leave = true;
+        agent.GetComponentInParent<van>().can_leave = true;
 
         EndAction();
     }
