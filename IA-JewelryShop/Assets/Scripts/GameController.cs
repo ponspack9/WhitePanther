@@ -25,8 +25,8 @@ public class GameController : MonoBehaviour
 
 
     [Header("Shop status --------------------------------------------------------")]
-    private float fame = 20.0f;
-    private float money = 5000.0f;
+    private float fame = 60.0f;
+    private float money = 50000.0f;
     public float fame_per_sale = 2.0f;
     public float fame_per_angry = 0.5f;
     public float money_per_sale = 150.0f;
@@ -128,16 +128,6 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        is_day = true;
-        game_over = false;
-        day = 1;
-        hour = 8;
-        minute = 0;
-        time_flow = 7;
-        time = 0;
-        time_between_client = 7;
-        time_clients = 7;
-        fame = 6;
         // Canvas ----------------------------
         restart.onClick.AddListener(Restart);
         quit.onClick.AddListener(Quit);
@@ -170,12 +160,16 @@ public class GameController : MonoBehaviour
 
         // Client ----------------------------
         C = new List<GameObject>();
-        
         C_points = new List<GameObject>();
         C_points_all = new List<GameObject>();
         for (int i = 0; i < C_points_parent.transform.childCount; i++)
         {
             C_points_all.Add(C_points_parent.transform.GetChild(i).gameObject);
+        }
+
+        for (int i=0;i< 10; i++)
+        {
+            SpawnClient();
         }
         // END Client ----------------------------
 
@@ -196,6 +190,7 @@ public class GameController : MonoBehaviour
         {
             SK_points.Add(SK_points_parent.transform.GetChild(i).gameObject);
         }
+        Cashier.ResetCashiers();
 
         //SK_add.OnPointerEnter(new PointerEventData(new EventSystem()));
         // END Shop Keeper ----------------------------
@@ -223,6 +218,8 @@ public class GameController : MonoBehaviour
 
         PayWorkers();
 
+        if (Input.GetKeyDown(KeyCode.C))
+            SpawnClient();
     }
 
     private void BuyStock()
@@ -246,20 +243,25 @@ public class GameController : MonoBehaviour
         if (is_day && !game_over && time_clients >= time_between_client)
         {
             time_clients = 0;
-
-            int i = Random.Range(0, 30);
-            Transform t = (i % 2 == 0) ? C_spawn1 : C_spawn2;
-
-            GameObject client = Instantiate(C_object, t.position,t.rotation);
-
-            client.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().sharedMesh = C_meshes[i/3];
-
-            client.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material = C_materials[i];
-            client.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().material = C_materials[i];
-
-            C.Add(client);
+            SpawnClient();
         }
     }
+
+    private void SpawnClient()
+    {
+        int i = Random.Range(0, 30);
+        Transform t = (i % 2 == 0) ? C_spawn1 : C_spawn2;
+
+        GameObject client = Instantiate(C_object, t.position, t.rotation);
+
+        client.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().sharedMesh = C_meshes[i / 3];
+
+        client.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material = C_materials[i];
+        client.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().material = C_materials[i];
+
+        C.Add(client);
+    }
+
     private void UpdateStats()
     {
         if (fame_best < fame) fame_best = fame;
@@ -529,12 +531,12 @@ public class GameController : MonoBehaviour
 
         time_between_client = 8.0f - Mathf.Log10(fame)*2;
 
-        game_over = fame >= 75 || fame <= 5;
+        game_over = fame >= 90 || fame <= 5;
 
         if (game_over)
         {
             game_over_panel.SetActive(true);
-            game_over_status.text = (fame >= 75) ? "CONGRATULATIONS, YOU WON!" : "GAME OVER";
+            game_over_status.text = (fame >= 90) ? "CONGRATULATIONS, YOU WON!" : "GAME OVER";
             game_over_stats.text = text_stats.text;
 
         }
