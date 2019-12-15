@@ -12,7 +12,14 @@ public class GameController : MonoBehaviour
     public Text game_over_status;
     public Button restart;
     public Button quit;
+    public Button main_menu;
+    public Button restart_esc;
+    public Button quit_esc;
+    public Button main_menu_esc;
+    public GameObject esc_panel;
     public GameObject game_over_panel;
+    public int initial_clients = 6;
+
 
     [Header("Time --------------------------------------------------------")]
     private int day = 1;
@@ -25,10 +32,10 @@ public class GameController : MonoBehaviour
 
 
     [Header("Shop status --------------------------------------------------------")]
-    private float fame = 60.0f;
-    private float money = 50000.0f;
-    public float fame_per_sale = 2.0f;
-    public float fame_per_angry = 0.5f;
+    private float fame = 20.0f;
+    private float money = 7000.0f;
+    public float fame_per_sale = 1.0f;
+    public float fame_per_angry = 0.25f;
     public float money_per_sale = 150.0f;
     
     [Header("Read only")]
@@ -114,7 +121,7 @@ public class GameController : MonoBehaviour
     private bool is_can_buy_stock = false;
     private bool pay_workers = false;
     public bool is_stock_left = true;
-    public int stock_price = 150;
+    public int stock_price = 100;
     static public int total_stock = 25;
     public InputField stock_input;
     public Button stock_buy;
@@ -130,7 +137,11 @@ public class GameController : MonoBehaviour
     {
         // Canvas ----------------------------
         restart.onClick.AddListener(Restart);
-        quit.onClick.AddListener(Quit);
+        quit.onClick.AddListener(Application.Quit);
+        main_menu.onClick.AddListener(OpenMainMenu);
+        restart_esc.onClick.AddListener(Restart);
+        quit_esc.onClick.AddListener(Application.Quit);
+        main_menu_esc.onClick.AddListener(OpenMainMenu);
 
         // time
         stock_buy.onClick.AddListener(BuyStock);
@@ -167,7 +178,7 @@ public class GameController : MonoBehaviour
             C_points_all.Add(C_points_parent.transform.GetChild(i).gameObject);
         }
 
-        for (int i=0;i< 10; i++)
+        for (int i=0;i< initial_clients; i++)
         {
             SpawnClient();
         }
@@ -218,10 +229,14 @@ public class GameController : MonoBehaviour
 
         PayWorkers();
 
-        if (Input.GetKeyDown(KeyCode.C))
-            SpawnClient();
+        if (Input.GetKeyDown(KeyCode.Escape))
+            esc_panel.SetActive(!esc_panel.activeSelf);
     }
 
+    private void OpenMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
     private void BuyStock()
     {
         int stock_to_buy = int.Parse(stock_input.text);
@@ -338,6 +353,11 @@ public class GameController : MonoBehaviour
 
             Cashier.ResetCashiers();
 
+            for (int i = 0; i < initial_clients; i++)
+            {
+                SpawnClient();
+            }
+
             Instantiate(stock_van);
         }
 
@@ -423,6 +443,9 @@ public class GameController : MonoBehaviour
 
     private void ShowAndApplyUpgrades()
     {
+        if (upgraded.Count == extra_showers_parent.transform.childCount)
+            button_upgrade.gameObject.SetActive(false);
+
         if (!upgrading) return;
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -531,12 +554,12 @@ public class GameController : MonoBehaviour
 
         time_between_client = 8.0f - Mathf.Log10(fame)*2;
 
-        game_over = fame >= 90 || fame <= 5;
+        game_over = fame >= 90 || fame <= 5 || money <= -5000;
 
         if (game_over)
         {
             game_over_panel.SetActive(true);
-            game_over_status.text = (fame >= 90) ? "CONGRATULATIONS, YOU WON!" : "GAME OVER";
+            game_over_status.text = !(fame <= 5 || money <= -5000) ? "CONGRATULATIONS, YOU WON!" : "GAME OVER";
             game_over_stats.text = text_stats.text;
 
         }
@@ -545,11 +568,6 @@ public class GameController : MonoBehaviour
     private void Restart()
     {
         SceneManager.LoadScene("MainScene");
-    }
-
-    private void Quit()
-    {
-        Application.Quit();
     }
     private void ManageClients()
     {

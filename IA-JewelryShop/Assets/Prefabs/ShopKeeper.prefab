@@ -1024,7 +1024,8 @@ MonoBehaviour:
   is_reclamed: 1
   queue: -2
   target_cashier: {x: 0, y: 0, z: 0}
-  current_place_point: {fileID: 0}
+  current_place_point: {fileID: 5062455564881001020, guid: 8c9cbdaae58167343a62e5f1f5910b4a,
+    type: 3}
   stock_item_objs: {fileID: 5293024343047698317}
   hand: {fileID: 5642873532719858394}
   item_being_placed: 0

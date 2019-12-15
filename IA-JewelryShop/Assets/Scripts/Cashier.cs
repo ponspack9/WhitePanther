@@ -126,7 +126,7 @@ public class Cashier : MonoBehaviour
     {
         for (int i = 0; i < num_cashiers; i++)
         {
-            for (int j = 1; j< num_rows;j++)
+            for (int j = 0; j< num_rows;j++)
                 cashiers[i, j] = false;
         }
     }
