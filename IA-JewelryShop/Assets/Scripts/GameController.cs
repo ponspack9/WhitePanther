@@ -2,28 +2,32 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
 
     public bool is_day = true;
-    private int initial_clients = 0;
-
+    public bool game_over = false;
+    public Text game_over_stats;
+    public Text game_over_status;
+    public Button restart;
+    public Button quit;
+    public GameObject game_over_panel;
 
     [Header("Time --------------------------------------------------------")]
     private int day = 1;
     private int hour = 8;
     private int minute = 0;
-    private float time_flow = 6.5f;
+    private float time_flow = 7f;
     private float time = 0.0f;
     public float time_between_client = 7.0f;
     private float time_clients = 0.0f;
 
 
     [Header("Shop status --------------------------------------------------------")]
-    private float fame = 10.0f;
-    private float money = 50000.0f;
-    public float fame_per_sale = 1.5f;
+    private float fame = 20.0f;
+    private float money = 5000.0f;
+    public float fame_per_sale = 2.0f;
     public float fame_per_angry = 0.5f;
     public float money_per_sale = 150.0f;
     
@@ -91,7 +95,6 @@ public class GameController : MonoBehaviour
     public Text text_day;
     public Text text_hour;
     public Text text_minute;
-    public Slider slider_time_flow;
 
     public Button button_upgrade;
     public Button button_stock;
@@ -111,8 +114,8 @@ public class GameController : MonoBehaviour
     private bool is_can_buy_stock = false;
     private bool pay_workers = false;
     public bool is_stock_left = true;
-    public int stock_price = 100;
-    static public int total_stock = 50;
+    public int stock_price = 150;
+    static public int total_stock = 25;
     public InputField stock_input;
     public Button stock_buy;
     private bool Upgrade_hover = false;
@@ -122,11 +125,24 @@ public class GameController : MonoBehaviour
     private bool Fame_hover = false;
     private bool SalesRate_hover = false;
 
+
     private void Start()
     {
+        is_day = true;
+        game_over = false;
+        day = 1;
+        hour = 8;
+        minute = 0;
+        time_flow = 7;
+        time = 0;
+        time_between_client = 7;
+        time_clients = 7;
+        fame = 6;
         // Canvas ----------------------------
+        restart.onClick.AddListener(Restart);
+        quit.onClick.AddListener(Quit);
+
         // time
-        slider_time_flow.value = time_flow;
         stock_buy.onClick.AddListener(BuyStock);
         stock_input.contentType = InputField.ContentType.IntegerNumber;
         // END Canvas ----------------------------
@@ -154,10 +170,6 @@ public class GameController : MonoBehaviour
 
         // Client ----------------------------
         C = new List<GameObject>();
-        for (int i = 0; i < initial_clients; i++)
-        {
-            C.Add(Instantiate(C_object));
-        }
         
         C_points = new List<GameObject>();
         C_points_all = new List<GameObject>();
@@ -193,6 +205,8 @@ public class GameController : MonoBehaviour
     {
         currentToolTipText = "";
 
+        if (game_over) return;
+
         SpawnClients();
 
         Restock();
@@ -227,9 +241,9 @@ public class GameController : MonoBehaviour
 
     private void SpawnClients()
     {
-        time_clients += time_flow * Time.deltaTime;
+        time_clients += Time.deltaTime;
 
-        if (time_clients >= time_between_client + time_flow)
+        if (is_day && !game_over && time_clients >= time_between_client)
         {
             time_clients = 0;
 
@@ -274,7 +288,7 @@ public class GameController : MonoBehaviour
 
         if (SK_hover)
         {
-            GUI.Box(new Rect(x, Screen.height - y, 175, 25), "Hire shop keeper : " + SK_cost);
+            GUI.Box(new Rect(x, Screen.height - y, 175, 50), "Hire shop keeper : " + SK_cost + "\nCost per day: " + SK_money);
         }
         else if (Upgrade_hover)
         {
@@ -469,7 +483,6 @@ public class GameController : MonoBehaviour
 
     private void AdvanceTime()
     {
-        time_flow = slider_time_flow.value;
 
         time += Time.deltaTime * time_flow;
 
@@ -504,19 +517,38 @@ public class GameController : MonoBehaviour
     private void UpdateChances()
     {
         // It is in per 10 ( not per cent %)
-        chance_to_buy = Mathf.Log10(fame) + Mathf.Sqrt(fame) / 2;
-        chance_to_leave = (10.0f - chance_to_buy) * 0.1f;
-        chance_to_keep = (10.0f - chance_to_buy) * 0.9f;
+        chance_to_buy = Mathf.Log10(fame) + Mathf.Sqrt(fame) / 4;
+        chance_to_leave = (10.0f - chance_to_buy) * 0.2f;
+        chance_to_keep = (10.0f - chance_to_buy) * 0.8f;
 
         text_chance_to_buy.text = (chance_to_buy * 10.0f).ToString("F2") + "%";
-        text_chance_to_leave.text = "Leave rate: " + (chance_to_leave * 10.0f).ToString("F2") + "%";
-        text_chance_to_keep.text = "Curiosity rate: " + (chance_to_keep * 10.0f).ToString("F2") + "%";
-        text_fame.text = ((int)(fame)).ToString();
-        text_money.text = (Mathf.Round(money * 100f) / 100f).ToString();
+        //text_chance_to_leave.text = "Leave rate: " + (chance_to_leave * 10.0f).ToString("F2") + "%";
+        //text_chance_to_keep.text = "Curiosity rate: " + (chance_to_keep * 10.0f).ToString("F2") + "%";
+        text_fame.text = (fame).ToString("F2");
+        text_money.text = ((int)(money)).ToString();
 
-        time_between_client = 10.0f - Mathf.Log10(fame);
+        time_between_client = 8.0f - Mathf.Log10(fame)*2;
+
+        game_over = fame >= 75 || fame <= 5;
+
+        if (game_over)
+        {
+            game_over_panel.SetActive(true);
+            game_over_status.text = (fame >= 75) ? "CONGRATULATIONS, YOU WON!" : "GAME OVER";
+            game_over_stats.text = text_stats.text;
+
+        }
     }
 
+    private void Restart()
+    {
+        SceneManager.LoadScene("MainScene");
+    }
+
+    private void Quit()
+    {
+        Application.Quit();
+    }
     private void ManageClients()
     {
         for (int i = 0; i < C.Count; i++)
@@ -717,167 +749,5 @@ public class GameController : MonoBehaviour
         Fame_hover = false;
     }
 
-    //public float clients_time = 0.0f;
-
-    //public bool night = false;
-
-    //[Header("Fame --------------------------------------------------------")]
-    //private float time_between_client = 3.0f;
-    //private float clients_rate = 0.25f;
-
-    //[Header("Shop --------------------------------------------------------")]
-    //public List<GameObject> shop_keepers;
-    //public List<GameObject> guards;
-    //public List<GameObject> costumers;
-
-    //private float cosutmer_buying_prob = 20.0f;
-
-    //private bool someone_cashier1 = false;
-    //private bool someone_cashier2 = false;
-
-    //public bool force_to_cashier = false;
-
-    //[Header("Prefabs --------------------------------------------------------")]
-    //public GameObject costumer_prefab;
-    //public GameObject guard_prefab;
-    //public GameObject shopkeeper_prefab;
-
-    //[Header("Canvas --------------------------------------------------------")]
-    //public Text day_text;
-    //public Text hour_text;
-    //public Text minute_text;
-    //public Slider timer_rate_slider;
-
-    //public Text shop_keepers_text;
-    //public Text guards_text;
-    //public Text costumers_text;
-
-    //public Text probability_text;
-
-    //
-
-    //public Vector3 costumer_start_pos = new Vector3(14, 0, 44);
-    //public Vector3 guard_start_pos = new Vector3(14, 0, 44);
-    //public Vector3 shop_keeper_start_pos = new Vector3(8, 0, 10);
-
-    //// Start is called before the first frame update
-    //void Start()
-    //{
-    //    shop_keepers = new List<GameObject>();
-    //    guards       = new List<GameObject>();
-    //    costumers    = new List<GameObject>();
-
-    //    AddGuard();
-    //    AddShopKeeper();
-    //    AddCostumer();
-
-    //    //minute = System.DateTime.Now.Minute;
-    //    //hour = System.DateTime.Now.Hour;
-    //    minute = 0;
-    //    hour = 8;
-
-    //    reclaim_shop_keeper.onClick.AddListener(ReclaimShopKeeper);
-
-    //    timer_rate_slider.value = time_rate;
-    //}
-
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    clients_time += clients_rate * Time.deltaTime;
-
-    //    if (!night && clients_time >= time_between_client)
-    //    {
-    //        clients_time = 0.0f;
-    //        AddCostumer();
-    //    }
-
-
-    //    AdvanceTime();
-
-    //    night = hour >= 21 || hour <= 7;
-    //    someone_cashier1 = false;
-
-    //    for (int i=0;i<costumers.Count;i++)
-    //    {
-    //        if (costumers[i].transform.position == costumers[i].GetComponent<CostumerBehaviour>().cashier1.position)
-    //        {
-    //            someone_cashier1 = true;
-    //        }
-    //        costumers[i].GetComponent<CostumerBehaviour>().sale_prob = cosutmer_buying_prob;
-    //        costumers[i].GetComponent<CostumerBehaviour>().leave = night;
-
-    //        if ((costumers[i].GetComponent<CostumerBehaviour>().leave &&
-    //            costumers[i].GetComponent<CostumerBehaviour>().arrived) || 
-    //            costumers[i].transform.position.z > 45)
-    //        {
-    //            Destroy(costumers[i]);
-    //            costumers.RemoveAt(i);
-    //        }
-    //    }
-
-    //    shop_keepers[0].GetComponent<ShopKeeperBehaviour>().go_cashier = force_to_cashier;
-    //    //shop_keepers[1].GetComponent<ShopKeeperBehaviour>().go_cashier = !night;
-
-    //    guards[0].GetComponent<GuardBehaviour>().quiet = night;
-
-    //    time_rate = timer_rate_slider.value;
-
-    //    probability_text.text = "Probability of a sale: " + cosutmer_buying_prob.ToString() + "%";
-    //    costumers_text.text = "Costumers: " + costumers.Count.ToString();
-    //    shop_keepers_text.text = "Shop keepers: " + shop_keepers.Count.ToString();
-    //    guards_text.text = "Guards: " + guards.Count.ToString();
-    //    reclaim_shop_keeper.GetComponentInChildren<Text>().text = (force_to_cashier) ? "Shop keeper at cashier" : "Shop keeper restocking";
-
-
-    //    if(someone_cashier1 && force_to_cashier && shop_keepers[0].GetComponent<ShopKeeperBehaviour>().arrived)
-    //    {
-    //        cosutmer_buying_prob += 0.025f * Time.deltaTime;
-    //    }
-
-    //}
-    //private void ReclaimShopKeeper()
-    //{
-    //    if (!night)
-    //        force_to_cashier = !force_to_cashier;
-    //    else
-    //        force_to_cashier = false;
-    //}
-
-    //private void AddCostumer()
-    //{
-    //    costumers.Add(Instantiate(costumer_prefab, costumer_start_pos, Quaternion.identity));
-    //}
-    //private void AddShopKeeper()
-    //{
-    //    shop_keepers.Add(Instantiate(shopkeeper_prefab, shop_keeper_start_pos, Quaternion.identity));
-    //}
-    //private void AddGuard()
-    //{
-    //    guards.Add(Instantiate(guard_prefab, guard_start_pos, Quaternion.identity));
-    //}
-    //private void AdvanceTime()
-    //{
-    //    time += Time.deltaTime * time_rate;
-
-    //    if (time >= 1)
-    //    {
-    //        time = 0.0f;
-    //        minute++;
-    //    }
-    //    if (minute >= 60)
-    //    {
-    //        minute = 0;
-    //        hour++;
-    //        if (hour >= 24)
-    //        {
-    //            hour = 0;
-    //            day++;
-    //        }
-    //    }
-    //    // Updating canvas
-    //    day_text.text    = (night) ? "Night " + day.ToString() : "Day " + day.ToString();
-    //    hour_text.text   = (hour < 10) ? "0" + hour.ToString() : hour.ToString();
-    //    minute_text.text = (minute < 10) ? "0" + minute.ToString() : minute.ToString();
-    //}
+   
 }
