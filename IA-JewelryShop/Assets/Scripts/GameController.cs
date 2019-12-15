@@ -368,7 +368,7 @@ public class GameController : MonoBehaviour
     private void ToggleUpgrade()
     {
         upgrading = !upgrading;
-        SK_add.gameObject.SetActive(upgrading && SK.Count < 4);
+        //SK_add.gameObject.SetActive(upgrading && SK.Count < 4);
         ResetUpgradingColor();
     }
 
