@@ -45,6 +45,7 @@ public class GameController : MonoBehaviour
 
     [Header("Shop Keeper --------------------------------------------------------")]
     public GameObject SK_object;
+    public Material[] SK_materials = new Material[3];
     public GameObject SK_points_parent;
     public GameObject SK_restock_icon;
     public Button SK_button0;
@@ -593,7 +594,12 @@ public class GameController : MonoBehaviour
             default:
                 break;
         }
-        SK.Add(Instantiate(SK_object));
+        GameObject sk = Instantiate(SK_object);
+
+        sk.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material = SK_materials[SK.Count%3];
+        sk.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().material = SK_materials[SK.Count%3];
+        SK.Add(sk);
+
         money -= SK_cost;
         money_invested += SK_cost;
 
