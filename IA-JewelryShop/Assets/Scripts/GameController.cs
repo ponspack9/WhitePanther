@@ -34,6 +34,10 @@ public class GameController : MonoBehaviour
 
     [Header("Client --------------------------------------------------------")]
     public GameObject C_object;
+    public Transform C_spawn1;
+    public Transform C_spawn2;
+    public Mesh[] C_meshes = new Mesh[10];
+    public Material[] C_materials = new Material[30];
     public GameObject C_points_parent;
     public List<GameObject> C;
     public List<GameObject> C_points;
@@ -227,7 +231,18 @@ public class GameController : MonoBehaviour
         if (time_clients >= time_between_client + time_flow)
         {
             time_clients = 0;
-            C.Add(Instantiate(C_object));
+
+            int i = Random.Range(0, 30);
+            Transform t = (i % 2 == 0) ? C_spawn1 : C_spawn2;
+
+            GameObject client = Instantiate(C_object, t.position,t.rotation);
+
+            client.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().sharedMesh = C_meshes[i/3];
+
+            client.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material = C_materials[i];
+            client.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().material = C_materials[i];
+
+            C.Add(client);
         }
     }
     private void UpdateStats()
