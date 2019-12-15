@@ -2,18 +2,22 @@
 
 https://github.com/urisabate/WhitePanther
 
-https://github.com/urisabate/WhitePanther/wiki
+https://ponspack9.github.io/IA/
 
+https://ponspack9.github.io/IA/wiki
 
 WhitePanther is a game about managing a jewellry shop.
 
 Your flow of costumers depends on the fame you have, it can not be bought but improved with good managing and happy costumers.
 
-Clients probability to buy something is determined by the level you have and a random factor per client, also the behaviour of the clients
+Clients probability to buy something is determined by the fame you have and a random factor per client, also the behaviour of the clients
 is not much predictable as it involves randomness inside its hearth.
 
 Your main tasks will be balancing the shop keeper to serve the costumers as well as keep him working to restock the products of the shop.
 
+Camera Right mouse + (W, A, S, D, SPACE)
+
+More details inside the website
 
 ## License
 
